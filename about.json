@@ -1,0 +1,46 @@
+{
+	"about":
+	{
+		"developer":	
+		{
+			"company": "ibCom Pty Ltd ATF ibCom Unit Trust and other contributors",
+			"name": "Mark Byers",
+			"phone": "",
+			"email": "mark.byers@ibcom.biz",
+			"scope": "Design & code only",
+			"comments": ""
+		},
+		"app":
+		{
+			"name": "1blankspace All-of-enterprise",
+			"url": "https://app.1blankspace.com",
+			"license": "See http://1blankspace.com/license",
+			"versions":
+			[
+				{
+					"number": "2.0.2",
+					"date": "27 Jun 2014",
+					"comments": "General",
+					"url": "http://1blankspace/updates"
+				}	
+			]
+		},
+		"help":
+		{
+			"uri": "http://1blankspace.com",
+			"introduction":
+			{
+					"use": "Example app using a lot of the mydigitalstructure.com methods.",
+					"technical": "See http://mydigitalstructure/1blankspace"
+			},	
+			"notes":
+			[
+				{
+					"title": "Source Cpde",
+					"use": "Contribution & issues",
+					"technical": "https://github.com/ibcom/1blankspace.git"
+				}
+			]
+		}
+	}				
+}

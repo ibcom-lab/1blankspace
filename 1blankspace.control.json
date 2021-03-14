@@ -1,0 +1,13 @@
+{
+	"control":
+	[
+		{
+			"reports":
+			[
+				{
+					"name": "test"
+				}
+			]
+		}	
+	]
+}

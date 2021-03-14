@@ -1,0 +1,307 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"sH",
+				"sHTML"
+			],
+			[
+				"lenght",
+				"length-1"
+			],
+			[
+				"onC",
+				"onComplete"
+			],
+			[
+				"onCom",
+				"onCompleteWhenCan"
+			],
+			[
+				"pr",
+				"protocol"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/markbyers/ibCom/lab/workings/freshcare.extend-3.1.2.js",
+			"settings":
+			{
+				"buffer_size": 154071,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<div id=\"invoice\" style=\"width: 100%;\">\n<table style=\"width: 100%;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\">\n<tbody>\n<tr>\n<td style=\"text-align:left; vertical-align:top; font-size:14pt;\"><strong>ABC Pty Ltd</strong></td>\n<td style=\"text-align:right; vertical-align:top; width:200px; font-size: 12pt;\"><strong>TAX INVOICE</strong></td>\n</tr>\n</tbody>\n</table>\n\n<table style=\"width:100%;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\">\n<tbody>\n<tr>\n<td style=\"text-align:left; vertical-align:top; font-size:12pt;\">&nbsp;</td>\n<td style=\"text-align:right; vertical-align:top; width:200px; font-size: 12pt;\"><strong>[[Reference]]</strong></td>\n</tr>\n</tbody>\n</table>\n\n<table style=\"width:100%; margin-top:15px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\">\n<tbody>\n<tr>\n<td style=\"text-align:left; vertical-align:top;\">[[Business]]</td>\n<td style=\"text-align:right; vertical-align:top; width:200px;\">[[Due Date]]</td>\n</tr>\n</tbody>\n</table>\n\n<table style=\"width:100%; margin-top:15px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\">\n<tbody>\n<tr>\n<td>[[Description]]</td>\n</tr>\n</tbody>\n</table>\n\n<table style=\"width: 100%; margin-top:15px;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\">\n<tbody>\n<tr>\n\t<td style=\"text-align:left; vertical-align:top; background-color:#f1f1f1;\"><strong>Item</strong></td>\n\t<td style=\"text-align:right; vertical-align:top; background-color:#f1f1f1;\"><strong>GST (AU$)</strong></td>\n\t<td style=\"text-align:right; vertical-align:top; background-color:#f1f1f1;\"><strong>Total (AU$)</strong></td>\n</tr>\n<tr>\n\t<td style=\"font-size:10pt; text-align:left; vertical-align:top;\">[[Item Description]]</td>\n\t<td style=\"font-size:10pt; text-align:right; vertical-align:top;\">[[Item Tax]]</td>\n\t<td style=\"font-size:10pt; text-align:right; vertical-align:top;\">[[Item Amount]]</td>\n</tr>\n</tbody>\n</table>\n\n<table style=\"width: 100%; margin-top:15px; border-top-style:solid; border-top-width:3px; border-color:#f1f1f1;\" border=\"0\" cellspacing=\"0\" cellpadding=\"3\">\n<tbody>\n<tr>\n<td style=\"font-size:8pt; text-align:left; vertical-align:top;\">Date Due:&nbsp;[[Due Date]]<br />Invoice:&nbsp;[[Reference]]</td>\n<td style=\"font-size:12pt; text-align:right; vertical-align:top; width:250px;\"><strong>[[Amount]]</strong></td>\n</tr>\n</tbody>\n</table>\n</div>",
+			"file": "1blankspace.setup.financial.invoice-1.0.0.html",
+			"file_size": 2258,
+			"file_write_time": 131092581320000000,
+			"settings":
+			{
+				"buffer_size": 2258,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/markbyers/ibCom/lab/1blankspace",
+		"/Users/markbyers/ibCom/lab/workings",
+		"/Users/markbyers/Google Drive/ibCom/marketing/websites/1433 (1blankspace-app)"
+	],
+	"file_history":
+	[
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.control-2.1.8.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.format-2.0.6.js",
+		"/Users/markbyers/Google Drive/ibCom/marketing/websites/1433 (1blankspace-app)/1433.control-2.1.8.js",
+		"/Users/markbyers/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.setup.financial-2.0.3.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.financial.invoice-2.0.4.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.messaging.imap-2.0.9.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace-2.1.4.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.setup.messaging-2.0.2.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.format-2.0.5.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.financial.expense-2.0.3.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.financial-2.0.5.js",
+		"/Users/markbyers/ibCom/lab/1blankspace/1blankspace.action-2.0.3.js",
+		"/Users/markbyers/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"render:",
+			"site/1433",
+			"import",
+			"render:",
+			"initT",
+			".exten",
+			"accounts:",
+			"preprocess",
+			"save:",
+			"ns1blankspaceEmailAttachPDF",
+			"tab",
+			"item =",
+			"item:"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"jscripts"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/markbyers/ibCom/lab/workings/freshcare.extend-3.1.2.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 154071,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								84004,
+								84051
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 387.0,
+						"translation.y": 39260.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "1blankspace.setup.financial.invoice-1.0.0.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2258,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								441,
+								441
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.290698088595,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "1blankspace.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 1,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": false,
+	"side_bar_visible": true,
+	"side_bar_width": 231.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
