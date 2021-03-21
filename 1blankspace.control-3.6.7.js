@@ -421,7 +421,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.supportIssue',
-		source: '/site/1903/1blankspace.supportissue-3.6.0.js'
+		source: '/site/1903/1blankspace.supportissue-3.6.7.js'
 	},
 	{
 		nameSpace: '1blankspace.setup.file',
