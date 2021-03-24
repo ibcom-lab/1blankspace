@@ -1614,7 +1614,7 @@ ns1blankspace.setup.user =
 										{
 											var oSearch = new AdvancedSearch();
 											oSearch.method = 'SETUP_EXTERNAL_USER_ACCESS_SEARCH';
-											oSearch.addField('userlogon,spacetext,usercontactpersontext,unrestrictedaccess,user,targetuser,targetusertext,createddate,authenticationlevelminimum,type,typetext');
+											oSearch.addField('userlogon,spacetext,usercontactpersontext,unrestrictedaccess,user,targetuser,targetusertext,createddate,authenticationlevelminimum,type,typetext,acceptsupport');
 											oSearch.rows = 50;
 											oSearch.sort('userlogon', 'asc');
 											oSearch.getResults(function(data) {ns1blankspace.setup.user.external.show(oParam, data)});
@@ -1681,6 +1681,7 @@ ns1blankspace.setup.user =
 																			'" data-created="' + this.createddate +
 																			'" data-type="' + this.type +
 																			'" data-authenticationlevelminimum="' + this.authenticationlevelminimum +
+																			'" data-acceptsupport="' + this.acceptsupport +
 																			'" class="ns1blankspaceRow ns1blankspaceRowSelect ns1blankspaceSetupUserExternal">' +
 																			this.userlogon);
 													
@@ -1782,7 +1783,13 @@ ns1blankspace.setup.user =
 															'<tr class="ns1blankspace">' +
 															'<td class="ns1blankspaceRadio">' +
 															'<input type="radio" id="radioType2" name="radioType" value="2"/>Switch In<br />' +
-															'<input type="radio" id="radioType3" name="radioType" value="3"/>Support<br />' +
+															'<input type="radio" id="radioType3" name="radioType" value="3"/>Support Only<br />' +
+															'</td></tr>');
+
+											aHTML.push('<tr><td class="ns1blankspaceCaption" style="padding-top:10px;">Can Accept Support Issues</td></tr>' +
+															'<tr><td class="ns1blankspaceRadio">' +
+															'<input type="radio" id="radioExternalCanAcceptSupportIssuesY" name="radioExternalCanAcceptSupportIssues" value="Y"/>Yes<br />' +
+															'<input type="radio" id="radioExternalCanAcceptSupportIssuesN" name="radioExternalCanAcceptSupportIssues" value="N"/>No' +
 															'</td></tr>');
 
 											aHTML.push('<tr><td class="ns1blankspaceCaption" style="padding-top:10px;">Access <span class="ns1blankspaceNothing" style="font-weight:300;" id="ns1blankspaceExternalCreated"></span></td></tr>' +
@@ -1859,6 +1866,7 @@ ns1blankspace.setup.user =
 												sData += '&unrestrictedaccess=' + ns1blankspace.util.fs($('input[name="radioExternalAccessUnrestricted"]:checked').val());
 												sData += '&targetuser=' + ns1blankspace.util.fs($('#ns1blankspaceSetupUserExternalTargetUser').attr("data-id"));
 												sData += '&authenticationlevelminimum=' + ns1blankspace.util.fs($('input[name="radioExternalAccessAuthenticationLevel"]:checked').val());
+												sData += '&acceptsupport=' + ns1blankspace.util.fs($('input[name="radioExternalCanAcceptSupportIssues"]:checked').val());
 
 												$.ajax(
 												{
@@ -1910,6 +1918,9 @@ ns1blankspace.setup.user =
 												var iExternalAccessAuthenticationLevel = $('#ns1blankspaceUserExternal_title-' + aXHTMLElementID[1]).attr("data-authenticationlevelminimum");
 												$('[name="radioExternalAccessAuthenticationLevel"][value="' + iExternalAccessAuthenticationLevel + '"]').attr('checked', true);
 
+												var iExternalCanAcceptSupportIssues = $('#ns1blankspaceUserExternal_title-' + aXHTMLElementID[1]).attr("data-acceptsupport");
+												$('[name="radioExternalCanAcceptSupportIssues"][value="' + iExternalCanAcceptSupportIssues + '"]').attr('checked', true);
+												
 												var iType = $('#ns1blankspaceUserExternal_title-' + aXHTMLElementID[1]).attr("data-type");
 												$('[name="radioType"][value="' + iType + '"]').attr('checked', true);
 

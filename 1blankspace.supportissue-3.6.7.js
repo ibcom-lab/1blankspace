@@ -537,10 +537,10 @@ ns1blankspace.supportIssue =
 				ns1blankspace.objectContext = sSearchContext;
 
 				var oSearch = new AdvancedSearch();
-				oSearch.method = 'SUPPORT_ISSUE_SEARCH';		
+				oSearch.method = 'SUPPORT_ISSUE_SEARCH';	
 				oSearch.addField('completeddate,contactbusiness,contactbusinesstext,contactperson,contactpersontext,' +
 								'description,email,lodgeddate,name,phone,processingtype,processingtypetext,reference,' +
-								'severity,severitytext,solution,status,statustext,technicalnotes,title,version,versiontext,' +
+								'severity,severitytext,solution,status,statustext,title,version,versiontext,' +
 								'totaltime,type,typetext,user,usercontactemail,usertext,quotedhours,quotedamount,quoteapproved,' +
 								'sourcespace,sourcespacetext');
 
@@ -551,6 +551,10 @@ ns1blankspace.supportIssue =
 				if (ns1blankspace.supportIssue.data.mode.value == ns1blankspace.supportIssue.data.mode.options.byMe)
 				{
 					oSearch.addCustomOption('showmyloggedissues', 'Y');
+				}
+				else
+				{
+					oSearch.addField('technicalnotes');
 				}
 
 				oSearch.addFilter('id', 'EQUAL_TO', sSearchContext);
