@@ -1907,7 +1907,7 @@ ns1blankspace.supportIssue =
 				})
 				.click(function()
 				{
-					 ns1blankspace.attachments.add(oParam);
+					ns1blankspace.attachments.sourceType(oParam);
 				});
 
 				sXHTMLElementID = 'ns1blankspaceAttachmentsColumn1';
@@ -1921,7 +1921,7 @@ ns1blankspace.supportIssue =
 				oSearch.addField('supportissue.attachment.type,supportissue.attachment.filename,supportissue.attachment.title,' +
 									'supportissue.attachment.description,supportissue.attachment.download,supportissue.attachment.modifieddate,' +
 									'supportissue.attachment.attachment,supportissue.attachment.bucket,supportissue.attachment.createddate,' +
-									'supportissue.attachment.createdusertext,supportissue.attachment.id');
+									'supportissue.attachment.createdusertext,supportissue.attachment.id,supportissue.attachment.url,supportissue.attachment.sourcetype');
 				oSearch.addFilter('id', 'EQUAL_TO', iObjectContext)
 				oSearch.addField('supportissue.attachment.id', 'IS_NOT_NULL');
 				oSearch.rows = ns1blankspace.option.defaultRows;
@@ -1943,6 +1943,9 @@ ns1blankspace.supportIssue =
 							{
 								y[this.replace('supportissue.attachment.', '')] = x[this];
 							});
+
+							if (y.attachment == '') {y = undefined}
+
 							return y;
 						});
 					}

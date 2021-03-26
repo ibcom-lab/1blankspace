@@ -1754,7 +1754,7 @@ ns1blankspace.setup.user =
 											
 											aHTML.push('<table class="ns1blankspaceMain">');
 											
-											aHTML.push('<tr class="ns1blankspaceCaption">' +
+												/*aHTML.push('<tr class="ns1blankspaceCaption">' +
 															'<td class="ns1blankspaceCaption">' +
 															'User' +
 															'</td></tr>' +
@@ -1762,6 +1762,18 @@ ns1blankspace.setup.user =
 															'<td class="ns1blankspaceText">' +
 															'<input id="ns1blankspaceSetupUserExternalName" class="ns1blankspaceText">' +
 															'</td></tr>');
+												*/
+
+												aHTML.push('<tr class="ns1blankspaceCaption">' +
+															'<td class="ns1blankspaceCaption">' +
+															'<div>User ID</div>' +
+															'<div class="ns1blankspaceSubNote">The user you are granting access to will need to supply their <em>User ID</em> to you. ' +
+															'eg. <em>e947c409-fkc9-4016-9200-0e437edeb182</em>.</div>' +
+															'</td></tr>' +
+															'<tr class="ns1blankspace">' +
+															'<td class="ns1blankspaceText">' +
+															'<input id="ns1blankspaceSetupUserExternalUserGUID" class="ns1blankspaceText">' +
+															'</td></tr>');		
 
 											aHTML.push('<tr><td style="padding-bottom:10px;" class="ns1blankspaceNothing">You need to enter all the surname for the search to work.</td></tr>');
 									
@@ -1861,7 +1873,7 @@ ns1blankspace.setup.user =
 												ns1blankspace.status.working();
 
 												var sData = 'id=' + ns1blankspace.util.fs(aXHTMLElementID[1]);
-												sData += '&user=' + ns1blankspace.util.fs($('#ns1blankspaceSetupUserExternalName').attr("data-id"));
+												sData += '&userguid=' + ns1blankspace.util.fs($('#ns1blankspaceSetupUserExternalUserGUID').val());
 												sData += '&type=' + ns1blankspace.util.fs($('input[name="radioType"]:checked').val());
 												sData += '&unrestrictedaccess=' + ns1blankspace.util.fs($('input[name="radioExternalAccessUnrestricted"]:checked').val());
 												sData += '&targetuser=' + ns1blankspace.util.fs($('#ns1blankspaceSetupUserExternalTargetUser').attr("data-id"));
