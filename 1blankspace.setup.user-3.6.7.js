@@ -1774,9 +1774,7 @@ ns1blankspace.setup.user =
 															'<td class="ns1blankspaceText">' +
 															'<input id="ns1blankspaceSetupUserExternalUserGUID" class="ns1blankspaceText">' +
 															'</td></tr>');		
-
-											aHTML.push('<tr><td style="padding-bottom:10px;" class="ns1blankspaceNothing">You need to enter all the surname for the search to work.</td></tr>');
-									
+							
 											aHTML.push('<tr class="ns1blankspaceCaption">' +
 															'<td class="ns1blankspaceCaption">' +
 															'Target User' +
