@@ -3,15 +3,7 @@
  * Licensed as Attribution-ShareAlike 4.0 International
  * http://creativecommons.org/licenses/by-sa/4.0/
  *
- * http://docs.mydigitalstructure.com/community_authentication_msal
- *
- * https://github.com/AzureAD/microsoft-authentication-library-for-js
- * <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.0/js/msal.js"></script>
- *
- * !!!!!! USE 1.0.2 as this version is still being stabilised !!!!!
-
-     <script src="/site/1903/1blankspace.util.msal-1.0.2.js"></script>
-
+ * https://docs.microsoft.com/en-au/azure/active-directory-b2c/b2clogin
  */
 
 "use strict";
