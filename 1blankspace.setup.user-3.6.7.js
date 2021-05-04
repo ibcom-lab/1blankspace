@@ -206,7 +206,7 @@ ns1blankspace.setup.user =
 										oSearch.method = 'SETUP_USER_SEARCH';
 										oSearch.addField('username,contactpersontext,contactperson,lastlogon,disabled,disabledreason,unrestrictedaccess,authenticationlevel,' +
 															'authenticationdelivery,authenticationusingaccesstoken,timezoneoffset,passwordexpiry,contactbusinesstext,contactbusiness,guid,' +
-															'sessiontimeout,relationshipmanagersecuritytype,supportcontactlist' +
+															'sessiontimeout,relationshipmanagersecuritytype,supportcontactlist,urlaccesstype' +
 															',user.contactperson.email,user.contactperson.mobile,user.contactperson.firstname,user.contactperson.surname');
 
 										oSearch.addFilter('id', 'EQUAL_TO', ns1blankspace.objectContext);
@@ -738,6 +738,16 @@ ns1blankspace.setup.user =
 										'</td></tr>');
 						}
 
+						aHTML.push('<tr class="ns1blankspaceCaption">' +
+										'<td class="ns1blankspaceCaption">' +
+										'Authentication URL' +
+										'</td></tr>' +
+										'<tr class="ns1blankspace">' +
+										'<td class="ns1blankspaceRadio">' +
+										'<input type="radio" id="radioAuthenticationURLAccessType1" name="radioAuthenticationURLAccessType" value="1"/>Any URL' +
+										'<br /><input type="radio" id="radioAuthenticationURLAccessType2" name="radioAuthenticationURLAccessType" value="2"/>Only URLs linked to a site in this space' +
+										'</td></tr>');
+
 						aHTML.push('</table>');					
 						
 						$('#ns1blankspaceDetailsColumn1').html(aHTML.join(''));
@@ -825,6 +835,7 @@ ns1blankspace.setup.user =
 							$('[name="radioAuthenticationAccessToken"][value="' + ns1blankspace.objectContextData.authenticationusingaccesstoken + '"]').attr('checked', true);
 							$('#ns1blankspaceDetailsDisabledReason').val(ns1blankspace.objectContextData.disabledreason);
 							$('#ns1blankspaceDetailsTimezoneOffset').val(ns1blankspace.objectContextData.timezoneoffset);
+							$('[name="radioAuthenticationURLAccessType"][value="' + ns1blankspace.objectContextData.urlaccesstype + '"]').attr('checked', true);
 						}
 						else
 						{
@@ -832,7 +843,7 @@ ns1blankspace.setup.user =
 							$('[name="radioAuthenticationLevel"][value="2"]').attr('checked', true);
 							$('[name="radioAuthenticationDelivery"][value="1"]').attr('checked', true);
 							$('[name="radioAuthenticationAccessToken"][value="1"]').attr('checked', true);
-
+							$('[name="radioAuthenticationURLAccessType"][value="1"]').attr('checked', true);
 						}
 
 						$('#ns1blankspaceUserDetailsGenerateTOTP').button(
@@ -1412,6 +1423,7 @@ ns1blankspace.setup.user =
 										sData += '&authenticationlevel=' + $('input[name="radioAuthenticationLevel"]:checked').val();
 										sData += '&authenticationdelivery=' + $('input[name="radioAuthenticationDelivery"]:checked').val();
 										sData += '&authenticationusingaccesstoken=' + $('input[name="radioAuthenticationAccessToken"]:checked').val();
+										sData += '&urlaccesstype=' + $('input[name="radioAuthenticationURLAccessType"]:checked').val();
 
 										var sPassword = $('#ns1blankspaceDetailsPassword').val();
 
