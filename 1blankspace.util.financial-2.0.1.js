@@ -45,7 +45,17 @@ ns1blankspace.util.financial.data
 
 ns1blankspace.util.financial =
 {
-	data: 	{transactions: {totals: {}, raw: []}, objects: [], results: {outOfBalance: [], notReconciled: [], trades: []}},
+	data: 	{
+					transactions: {totals: {}, raw: []}, objects: [], results: {outOfBalance: [], notReconciled: [], trades: []},
+					methods:
+					{
+						2: 'EXPENSE',
+						3: 'PAYMENT',
+						5: 'INVOICE',
+						6: 'RECEIPT',
+						122: 'GENERAL_JOURNAL_ITEM'
+					}
+				},
 
 	rules: 	{
 					AccountIsDebitIfAmountGreaterZeroAndType: [1,3],
@@ -243,8 +253,9 @@ ns1blankspace.util.financial =
 				{
 					var iObject = ns1blankspace.util.getParam(oParam, 'object').value;
 
-					ns1blankspace.util.financial.data.objects.length = 0;
-					ns1blankspace.util.financial.data.results.outOfBalance.length = 0;
+					ns1blankspace.util.financial.data.objects = [];
+					ns1blankspace.util.financial.data.results.outOfBalance = [];
+					ns1blankspace.util.financial.data.results.outOfBalanceBasedOnSource = [];
 
 					$.each(ns1blankspace.util.financial.data.transactions.current, function (i, v)
 					{
@@ -260,24 +271,36 @@ ns1blankspace.util.financial =
 					{	
 						object.total = 0;
 						object.debtorTotal = 0;
+						object.creditorTotal = 0;
 
 						$.each(object.transactions, function (j, transaction)
 						{
 							transaction.factor = 1;
 							ns1blankspace.util.financial.side(transaction);
 							if (transaction.side == 'credit') {transaction.factor = -1}
+
 							object.total = object.total + +(Math.abs(accounting.unformat(transaction.amount)) * transaction.factor).toFixed(2);
 
-							if (iObject == 5)
+							if (iObject == 5 || iObject == 6)
 							{
 								if (transaction.financialaccount.id == ns1blankspace.financial.data.settings.financialaccountdebtors)
 								{
 									object.debtorTotal = object.debtorTotal + +(Math.abs(accounting.unformat(transaction.amount)) * transaction.factor).toFixed(2);
 								}
 							}
+
+							if (iObject == 2 || iObject == 3)
+							{
+								if (transaction.financialaccount.id == ns1blankspace.financial.data.settings.financialaccountcreditors)
+								{
+									object.creditorTotal = object.creditorTotal + +(Math.abs(accounting.unformat(transaction.amount)) * transaction.factor).toFixed(2);
+								}
+							}
 						});
 
 						object.total = + object.total.toFixed(2);
+						object.debtorTotal = Math.abs(accounting.unformat(object.debtorTotal.toFixed(2)));
+						object.creditorTotal = Math.abs(accounting.unformat(object.creditorTotal.toFixed(2)));
 
 						if (object.total != 0)
 						{
@@ -286,6 +309,8 @@ ns1blankspace.util.financial =
 					});
 
 					console.log('Out of balance check complete');
+
+					ns1blankspace.util.financial.source.init(oParam);
 				},
 
 	tax: 		function (oParam, oResponse)
@@ -452,7 +477,7 @@ ns1blankspace.util.financial =
 			
 	notReconciled: 	
 				{
-					data: 		{
+					data: 	{
 									methods:
 									{
 										2: 'EXPENSE',
@@ -548,7 +573,7 @@ ns1blankspace.util.financial =
 
 	source: 	
 				{
-					data: 		{
+					data: 	{
 									objects:
 									[
 										{
@@ -632,19 +657,13 @@ ns1blankspace.util.financial =
 										oSearch.method = 'FINANCIAL_' + oObject.method + '_SEARCH';
 										oSearch.addField('reference');
 
-										if (bAdvanced)
+										if (oObject.id == 69 || oObject.id == 122)
+										{
+											//oSearch.addField('amount');
+										}
+										else
 										{
 											oSearch.addField('amount');
-										}
-
-										if (oObject.id == 5 || oObject.id == 2)
-										{
-											oSearch.addField('creditamount');
-										}
-
-										if (oObject.id == 69)
-										{
-											oSearch.addField('creditamount');
 										}
 
 										if (oObject.contactBusiness != undefined)
@@ -667,10 +686,10 @@ ns1blankspace.util.financial =
 											oSearch.addFilter(oObject.contactBusiness, 'EQUAL_TO', iContactBusiness);
 										}
 
-										if (iID != undefined)
-										{
-											oSearch.addFilter('id', 'GREATER_THAN', iID);
-										}
+										//if (iID != undefined)
+										//{
+										//	oSearch.addFilter('id', 'GREATER_THAN', iID);
+										//}
 
 										oSearch.rows = 250;
 										oSearch.sort('id', 'asc');
@@ -691,7 +710,6 @@ ns1blankspace.util.financial =
 												delete oParam.id;
 												oParam.initialised = false;
 												ns1blankspace.util.financial.source.objectContexts(oParam);
-												
 											}
 											else
 											{
@@ -703,6 +721,39 @@ ns1blankspace.util.financial =
 									{
 										delete oParam.id;
 										delete oParam.objectIndex;
+
+										//map to util.financial.data.objects
+
+										$.each(ns1blankspace.util.financial.data.objects, function (o, object)
+										{
+											object.source = _.find(ns1blankspace.util.financial.source.data.objectContexts[object.object],
+											function (objectContext)
+											{
+												return objectContext.id == object.objectcontext
+											});
+
+											object.debtorBalanced = false;
+											object.creditorBalanced = false;
+
+											if (object.source != undefined)
+											{
+												object.source._amount = accounting.unformat(object.source.amount);
+
+												object.debtorBalanced = (object.source._amount == object.debtorTotal);
+												object.creditorBalanced = (object.source._amount == object.creditorTotal);
+											}
+
+											if ((iObject == 5 || iObject == 6) && !object.debtorBalanced)
+											{
+												ns1blankspace.util.financial.data.results.outOfBalanceBasedOnSource.push(object);
+											}
+
+											if ((iObject == 2 || iObject == 3) && !object.creditorBalanced)
+											{
+												ns1blankspace.util.financial.data.results.outOfBalanceBasedOnSource.push(object);
+											}
+										});
+
 										ns1blankspace.util.onComplete(oParam);
 									}
 								},
