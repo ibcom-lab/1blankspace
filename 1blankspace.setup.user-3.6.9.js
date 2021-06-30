@@ -1544,8 +1544,10 @@ ns1blankspace.setup.user =
 										{
 											var oSearch = new AdvancedSearch();
 											oSearch.method = 'SETUP_EXTERNAL_USER_ACCESS_SEARCH';
-											oSearch.addField('userlogon,spacetext,usercontactpersontext,unrestrictedaccess,user,targetuser,targetusertext,createddate,authenticationlevelminimum,type,typetext,acceptsupport');
-											oSearch.rows = 50;
+											oSearch.addField('userlogon,spacetext,usercontactpersontext,unrestrictedaccess,user,' +
+														'targetuser,targetusertext,createddate,authenticationlevelminimum,type,' +
+														'typetext,acceptsupport,guid');
+											oSearch.rows = 9999;
 											oSearch.sort('userlogon', 'asc');
 											oSearch.getResults(function(data) {ns1blankspace.setup.user.external.show(oParam, data)});
 										}
