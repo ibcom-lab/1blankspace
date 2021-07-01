@@ -79,8 +79,7 @@ ns1blankspace.option = $.extend(true, ns1blankspace.option,
 
 ns1blankspace.option.yodlee =
 {
-	user: 37059,
-	proxyURL: 'https://yodlee.mydigitalstructure-lab.cloud'
+	proxyURL: 'https://yodlee.mydigitalstructure.cloud'
 }
 
 ns1blankspace.option.stripe =
@@ -365,7 +364,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.setup.financial',
-		source: '/site/1903/1blankspace.setup.financial-3.6.7.js'
+		source: '/site/1903/1blankspace.setup.financial-3.6.9.js'
 	},
 	{
 		nameSpace: '1blankspace.setup.action',
@@ -497,7 +496,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.util.financial.bankaccount',
-		source: '/jscripts/1blankspace.util.financial.bankaccount-2.0.3.js'
+		source: '/site/1903/1blankspace.util.financial.bankaccount-3.6.9.js'
 	},
 	{
 		nameSpace: '1blankspace.util.messaging',

@@ -208,8 +208,8 @@ ns1blankspace.setup.user =
 															'authenticationdelivery,authenticationusingaccesstoken,timezoneoffset,passwordexpiry,contactbusinesstext,contactbusiness,guid,' +
 															'sessiontimeout,relationshipmanagersecuritytype,supportcontactlist,urlaccesstype,' +
 															'user.contactperson.email,user.contactperson.mobile,user.contactperson.firstname,user.contactperson.surname,' +
-															'canacceptsupportissues,',
-															'canbeaddedtoexternalconversations,',
+															'canacceptsupportissues,' +
+															'canbeaddedtoexternalconversations,' +
 															'canswitchintootherspaces'
 															);
 
