@@ -431,7 +431,7 @@ ns1blankspace.util.financial.bankAccounts =
 
 				window.fastlink.open(
 				{
-					fastLinkURL: 'https://fl4.preprod.yodlee.com.au/authenticate/ANZDevexPreProd-288/fastlink/?channelAppName=anzdevexpreprod',
+					fastLinkURL: 'https://fl4.prod.yodlee.com.au/authenticate/ANZDevexProd-17/fastlink/?channelAppName=anzdevexprod',
 					accessToken: 'Bearer ' + ns1blankspace.util.financial.bankAccounts.link.data.accessToken,
 					params:
 					{
