@@ -188,12 +188,18 @@ ns1blankspace.util.financial.bankAccounts =
 
 					if (oResponse.data.rows.length == 0)
 					{
+						var iTargetUser = ns1blankspace.user.id;
+						if (ns1blankspace.spaceUser != undefined)
+						{
+							iTargetUser = ns1blankspace.spaceUser
+						}
+
 						var oData =
 						{
 							userguid: ns1blankspace.util.financial.bankAccounts.link.data.userID,
 							type: 5,
 							unrestrictedaccess: 'N',
-							targetuser: ns1blankspace.user.id,
+							targetuser: iTargetUser,
 							datareturn: 'user,guid'
 						}
 
