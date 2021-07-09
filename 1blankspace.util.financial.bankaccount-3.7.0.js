@@ -97,16 +97,12 @@ ns1blankspace.util.financial.bankAccounts =
 
 					aHTML.push('<tr><td class="ns1blankspaceSubNote" style="padding-top:12px;">When you click this button a Yodlee webpage will open and you can then add your banking credentials.  Once complete, just close it and come back to this page.</td></tr>');
 
-					aHTML.push('<tr><td class="ns1blankspaceSubNote" style="padding-top:12px;">Bank transactions will then start to be imported into your space, it can take up to 24 hours for the importing start.  You can view the transactions in the "Import" section of any matching bank accounts you have setup in this space.</td></tr>');
+					aHTML.push('<tr><td class="ns1blankspaceSubNote" style="padding-top:12px;">Bank transactions will then start to be imported into your space, it can take up to 24 hours for the importing start.  You can view the transactions in the "Transactions" section of any matching bank accounts you have setup in this space.  You then need to click "Confirm & Apply Mappings".</td></tr>');
 
 					aHTML.push('<tr><td class="ns1blankspaceAction" style="font-size:0.625em; padding-top:12px;"><div id="ns1blankspaceSetupFinancialsBankingLinkingAccountsContainer"></div></td></tr>');
 				}
 				else
 				{
-					aHTML.push('<tr><td class="ns1blankspaceSubNote" style="padding-top:6px;">If you use one of the following providers to manage your bank accounts, you can get transactions automatically imported into your space;</td></tr>');
-
-					aHTML.push('<tr><td class="ns1blankspaceSubNote"><ul><li>Westpac<li>St George<li>NAB<li>ANZ<li>CBA<li>AMEX (Australia)</ul></td></tr>');
-
 					aHTML.push('<tr><td class="ns1blankspaceSubNote">The transactions are imported using the <a href="yodlee.com" target="_blank">Yodlee</a> service and at no time do we have access to your online bank credentials.</td></tr>');
 
 					aHTML.push('<tr><td class="ns1blankspaceAction" style="font-size:0.625em; padding-top:12px;"><span id="ns1blankspaceSetupFinancialsBankingLinkingEnable">Enable</span></td></tr>');
