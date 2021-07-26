@@ -67,6 +67,7 @@ ns1blankspace.financial.tax =
 					ns1blankspace.objectName = 'tax';
 					ns1blankspace.objectContext = -1;
 					ns1blankspace.viewName = 'Tax (BAS)';
+					ns1blankspace.objectMethod = 'financial_tax_report'
 					
 					if (!bInitialised)
 					{

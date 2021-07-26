@@ -133,7 +133,7 @@ ns1blankspace.financial.initData = function (oParam, oResponse)
 								}
 								else
 								{
-                                    if (response.data.rows.length == 0)
+                                    if (oResponse.data.rows.length == 0)
                                     {
                                         $.ajax(
                                         {

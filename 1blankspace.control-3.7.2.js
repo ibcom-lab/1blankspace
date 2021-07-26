@@ -376,7 +376,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.setup.networkGroup',
-		source: '/site/1903/1blankspace.setup.networkgroup-2.0.3.js'
+		source: '/site/1903/1blankspace.setup.networkgroup-3.7.2.js'
 	},
 	{
 		nameSpace: '1blankspace.setup.project',
@@ -493,6 +493,10 @@ ns1blankspace.scripts =
 	{
 		nameSpace: '1blankspace.contactsearch',
 		source: '/jscripts/1blankspace.contactsearch-2.2.1.js'
+	},
+	{
+		nameSpace: '1blankspace.util.financial.accounts',
+		source: '/site/1903/1blankspace.util.financial.accounts-3.7.2.js'
 	},
 	{
 		nameSpace: '1blankspace.util.financial.bankaccount',
