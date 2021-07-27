@@ -1567,9 +1567,8 @@ ns1blankspace.setup.financial =
 																'</tr>' +
 																'</table>');
 																
-												aHTML.push('<tr><td style="padding-top:16px;">' +
-																'<span style="width:60px;" id="ns1blankspaceFinancialAccountsExport" class="ns1blankspaceAction">Export</span>' +
-																'</td></tr>');				
+												aHTML.push('<span style="width:60px; margin-top:20px;" id="ns1blankspaceFinancialAccountsExport" class="ns1blankspaceAction">Export</span>');
+                                                aHTML.push('<span style="width:60px; margin-top:20px;" id="ns1blankspaceFinancialAccountsImport" class="ns1blankspaceAction">Import</span>');					
 														
 												$('#ns1blankspaceSetupAccountColumnType').html(aHTML.join(''));
 
@@ -1580,6 +1579,24 @@ ns1blankspace.setup.financial =
 													
 													ns1blankspace.setup.financial.accounts.show({type: aId[1], parentAccount: aId[2], step: 2});
 												});
+
+                                                $('#ns1blankspaceFinancialAccountsExport').button(
+                                                {
+                                                    label: "Export"
+                                                })
+                                                .click(function()
+                                                {
+                                                    ns1blankspace.setup.space.export.financial.accounts.init();
+                                                });
+
+                                                $('#ns1blankspaceFinancialAccountsImport').button(
+                                                {
+                                                    label: "Import"
+                                                })
+                                                .click(function()
+                                                {
+                                                    ns1blankspace.setup.space.export.financial.accounts.init();
+                                                });
 											}
 										}	
 									}	
