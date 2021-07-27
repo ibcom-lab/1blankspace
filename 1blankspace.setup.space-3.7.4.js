@@ -1462,11 +1462,11 @@ ns1blankspace.setup.space =
                                                 accounts: [],
                                                 types:
                                                 {
-                                                    1: 'Outgoing (Expense)',
-                                                    2: 'Revenue (Income)',
-                                                    3: 'Asset',
-                                                    4: 'Liability',
-                                                    5: 'Equity'
+                                                    1: {title: 'Outgoing (Expense)'},
+                                                    2: {title: 'Revenue (Income)'},
+                                                    3: {title: 'Asset'},
+                                                    4: {title: 'Liability'},
+                                                    5: {title: 'Equity'}
                                                 }
                                             },
 
@@ -1650,13 +1650,20 @@ ns1blankspace.setup.space =
 
                                                             $.each(ns1blankspace.setup.space.initialise.financials.data.types, function (type, typetext)
                                                             {
-                                                                console.log(type)
-                                                                console.log(typetext)
-                                                            })
+                                                                console.log(typetext);
+
+																type.importAccounts = $.grep(aImportAccounts, function (importAccount) {return importAccount.type == type});
+																console.log(type)
+                                                            });
+
+															//oParam.step = 4
+                                                            //ns1blankspace.setup.space.initialise.financials.add(oParam);
                                                         }
     
                                                         if (iStep == 4)
                                                         { 
+															//need to recode so builds tree.  Type by type - layer by layer ie parentaccount IN_LIST
+
                                                             if (iAccountIndex < aFinancialAccounts.length)
                                                             {
                                                                 ns1blankspace.status.working('Adding account ' + (iAccountIndex + 1) + ' of ' + aFinancialAccounts.length);
@@ -1677,35 +1684,20 @@ ns1blankspace.setup.space =
                                                                 if (aExistingAccount.length == 0)
                                                                 {
                                                                     var oData = 
-                                                                    {
-                                                    
-                                                                        category: oCategory[0].id,
-                                                                        backgroundcolour: oStructure.elements[iStructureElement].backgroundcolour,
-                                                                        caption: oStructure.elements[iStructureElement].caption,
-                                                                        datatype: oStructure.elements[iStructureElement].datatype,
-                                                                        description: oStructure.elements[iStructureElement].description,
-                                                                        displayorder: oStructure.elements[iStructureElement].displayorder,
-                                                                        hint: oStructure.elements[iStructureElement].hint,
-                                                                        notes: oStructure.elements[iStructureElement].notes,
-                                                                        notestype: oStructure.elements[iStructureElement].notestype,
-                                                                        reference: oStructure.elements[iStructureElement].reference,
-                                                                        textcolour: oStructure.elements[iStructureElement].textcolour,
-                                                                        title: oStructure.elements[iStructureElement].title,
-                                                                        alias: oStructure.elements[iStructureElement].alias
-                                                                    }	
+                                                                    { }	
     
                                                                     $.ajax(
                                                                     {
                                                                         type: 'POST',
-                                                                        url: ns1blankspace.util.endpointURI('SETUP_STRUCTURE_ELEMENT_MANAGE'),
+                                                                        url: ns1blankspace.util.endpointURI('SETUP_FINANCIAL_ACCCOUNT_MANAGE'),
                                                                         data: oData,
                                                                         dataType: 'json',
                                                                         success: function(data)
                                                                         {
                                                                             if (data.status == "OK")
                                                                             {
-                                                                                oParam.structureElement = iStructureElement + 1;
-                                                                                ns1blankspace.setup.space.initialise.structures.add(oParam)
+                                                                                oParam.accountIndex = iAccountIndex + 1;
+                                                                                ns1blankspace.setup.space.initialise.financials.add(oParam)
                                                                             }
                                                                             else
                                                                             {
@@ -1718,7 +1710,7 @@ ns1blankspace.setup.space =
                                                             else
                                                             {
                                                                 ns1blankspace.status.clear();
-                                                                $('#ns1blankspaceSetupSpaceInitialiseStructures').html('<div class="ns1blankspaceSub">Financial accounts imported.</div>');
+                                                                $('#ns1blankspaceSetupSpaceInitialiseFinancials').html('<div class="ns1blankspaceSub">Financial accounts imported.</div>');
                                                             }	
                                                         }	
                                                     }					
