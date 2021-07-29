@@ -1568,7 +1568,7 @@ ns1blankspace.setup.financial =
 																'</table>');
 																
 												aHTML.push('<span style="width:60px; margin-top:20px;" id="ns1blankspaceFinancialAccountsExport" class="ns1blankspaceAction">Export</span>');
-                                                aHTML.push('<span style="width:60px; margin-top:20px;" id="ns1blankspaceFinancialAccountsImport" class="ns1blankspaceAction">Import</span>');					
+                                                //aHTML.push('<span style="width:60px; margin-top:20px;" id="ns1blankspaceFinancialAccountsImport" class="ns1blankspaceAction">Import</span>');					
 														
 												$('#ns1blankspaceSetupAccountColumnType').html(aHTML.join(''));
 
@@ -1589,14 +1589,16 @@ ns1blankspace.setup.financial =
                                                     ns1blankspace.setup.space.export.financial.accounts.init();
                                                 });
 
-                                                $('#ns1blankspaceFinancialAccountsImport').button(
+                                                /*
+												$('#ns1blankspaceFinancialAccountsImport').button(
                                                 {
                                                     label: "Import"
                                                 })
                                                 .click(function()
                                                 {
-                                                    ns1blankspace.setup.space.export.financial.accounts.init();
+                                                    ns1blankspace.setup.space.import.financials.init();
                                                 });
+												*/
 											}
 										}	
 									}	
