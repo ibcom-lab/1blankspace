@@ -3661,7 +3661,8 @@ ns1blankspace.setup.space.export.financial =
 									'payrollfinancialaccountallowance,payrollfinancialaccountallowancetext,' +
 									'payrollfinancialaccountsalary,payrollfinancialaccountsalarytext,' +
 									'payrollfinancialaccountsuperannuation,payrollfinancialaccountsuperannuationtext,' +
-									'payrollfinancialaccounttax,payrollfinancialaccounttaxtext');
+									'payrollfinancialaccounttax,payrollfinancialaccounttaxtext,' +
+                                    'guid');
                 oSearch.rows = 1;
                 oSearch.getResults(function(data) {ns1blankspace.setup.space.export.financial.accounts.settings(oParam, data)})	
             }
@@ -3734,7 +3735,26 @@ ns1blankspace.setup.space.export.financial =
 
             aFile.push(aFileItems.join(',\n'));
 
-            aFile.push('\t\t\t]');
+            aFile.push('\t\t\t],');
+
+			aFile.push('\t\t\t"settings":');
+            aFile.push('\t\t\t{');
+
+			aFileSettings = [];
+			
+			$.each(ns1blankspace.setup.space.export.financial.accounts.data.settings, function (key, value)
+			{
+                if (key != 'id')
+                {
+                    if (key == 'guid') {key = 'source'}
+				    aFileSettings.push('\t\t\t\t"' + key + '": "' + value + '"');
+                }
+			});
+
+            aFile.push(aFileSettings.join(',\n'));
+            
+			aFile.push('\t\t\t}');
+
             aFile.push('\t\t}');
             aFile.push('\t}');
             aFile.push('}');

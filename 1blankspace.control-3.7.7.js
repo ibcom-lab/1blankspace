@@ -388,7 +388,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.setup.space',
-		source: '/site/1903/1blankspace.setup.space-3.7.4.js'
+		source: '/site/1903/1blankspace.setup.space-3.7.7.js'
 	},
 	{
 		nameSpace: '1blankspace.setup.structure',
@@ -496,7 +496,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.util.financial.accounts',
-		source: '/site/1903/1blankspace.util.financial.accounts-3.7.2.js'
+		source: '/site/1903/1blankspace.util.financial.accounts-3.7.5.js'
 	},
 	{
 		nameSpace: '1blankspace.util.financial.bankaccount',
@@ -2134,7 +2134,7 @@ ns1blankspace.control =
 				if (ns1blankspace.authenticationUsingAccessToken == 1)
 				{
 					aHTML.push('<table id="ns1blankspaceControlUserCreateSecureKey" style="width:400px; font-size:0.825em">' +
-									'<tr><td>Your user account has access key creation disabled.</td></tr>' +
+									'<tr><td>Your user account has access token creation disabled.</td></tr>' +
 									'<tr><td>Please contact your system administrator for more information.</td></tr></table>');
 
 				}
