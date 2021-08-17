@@ -1580,11 +1580,17 @@ ns1blankspace.financial.bankAccount =
 												
 													var oTransaction = ns1blankspace.financial.bankAccount.mapping.create.data.transactions[iIndex];
 
-                                                    //14AUG2021 status: 2,
+													var iStatus = 2;
+													
+													if ($('#ns1blankspaceBankAccountImportTransactions_status').prop('checked') == true)
+													{
+														iStatus = 4
+													}
+													
 													var oData =
 													{
 														id: iBankTransactionsID,
-														status: 3,
+														status: iStatus,
 														object: iObject,
 														objectcontext: iObjectContext
 													}
@@ -2037,15 +2043,37 @@ ns1blankspace.financial.bankAccount =
 													if (oParam != undefined)
 													{
 														if (oParam.fileSource != undefined) {iFileSource = oParam.fileSource}
-													}		
+													}
+													
+													ns1blankspace.financial.bankAccount.import.items.balanceDebits = 0;
+													ns1blankspace.financial.bankAccount.import.items.balanceCredits = 0;
 
-													if (oResponse === undefined)
+													if (oResponse == undefined)
 													{	
 														var oSearchText = ns1blankspace.util.getParam(oParam, 'searchText');
-
 														if (oSearchText.exists)
 														{
 															ns1blankspace.financial.bankAccount.import.items.searchText = oSearchText.value;
+														}
+
+														var oSearchStartDate = ns1blankspace.util.getParam(oParam, 'startDate');
+														if (oSearchStartDate.exists)
+														{
+															ns1blankspace.financial.bankAccount.import.items.searchStartDate = oSearchStartDate.value;
+														}
+														else
+														{
+															ns1blankspace.financial.bankAccount.import.items.searchStartDate = '';
+														}
+
+														var oSearchEndDate = ns1blankspace.util.getParam(oParam, 'endDate');
+														if (oSearchEndDate.exists)
+														{
+															ns1blankspace.financial.bankAccount.import.items.searchEndDate = oSearchEndDate.value;
+														}
+														else
+														{
+															ns1blankspace.financial.bankAccount.import.items.searchEndDate = '';
 														}
 
 														ns1blankspace.financial.bankAccount["import"].items.data = {};
@@ -2056,7 +2084,7 @@ ns1blankspace.financial.bankAccount =
 																		'<tr class="ns1blankspaceContainer">' +
 																		'<td id="ns1blankspaceImportItemsColumn1">' + ns1blankspace.xhtml.loading + '</td>')
 
-														aHTML.push('<td id="ns1blankspaceImportItemsColumn2" style="width:100px;"></td>');
+														aHTML.push('<td id="ns1blankspaceImportItemsColumn2" style="width:200px;"></td>');
 
 														aHTML.push('</tr>' +
 																		'</table>');				
@@ -2093,6 +2121,16 @@ ns1blankspace.financial.bankAccount =
 																oSearch.addFilter('amount', 'EQUAL_TO', numeral(ns1blankspace.financial.bankAccount.import.items.searchText).value());
 															}
 															oSearch.addBracket(')');
+														}
+
+														if (ns1blankspace.financial.bankAccount.import.items.searchStartDate != '')
+														{
+															oSearch.addFilter('posteddate', 'GREATER_THAN_OR_EQUAL_TO', ns1blankspace.financial.bankAccount.import.items.searchStartDate);
+														}
+
+														if (ns1blankspace.financial.bankAccount.import.items.searchEndDate != '')
+														{
+															oSearch.addFilter('posteddate', 'LESS_THAN_OR_EQUAL_TO', ns1blankspace.financial.bankAccount.import.items.searchEndDate);
 														}
 
 														if (ns1blankspace.financial.bankAccount.import.items.searchMissingOnly)
@@ -2213,11 +2251,16 @@ ns1blankspace.financial.bankAccount =
 																				'<span style="font-weight:100; font-size:0.625em; margin-left:2px;" class="ns1blankspaceSub">Reset transactions</span>' +
 																				'</td></tr>');
 
-																aHTML.push('<tr><td style="padding-top:20px; font-size:0.75em;" class="ns1blankspaceSub">' +
-																					'If you don\'t plan to reconcile against a bank statement then you can create payments and receipts for any transactions with contact and financial account information, else click Reconcile in the side menu.</td></tr>');
+																//aHTML.push('<tr><td style="padding-top:14px; font-size:0.75em;" class="ns1blankspaceSub">' +
+																//					'If you don\'t plan to reconcile against a bank statement then you can create payments and receipts for any transactions with contact and financial account information, else click Reconcile in the side menu.</td></tr>');
 
-																aHTML.push('<tr><td style="padding-top:8px; padding-bottom:16px;"><span id="ns1blankspaceBankAccountImportCreateItems" class="ns1blankspaceAction">' +
+																aHTML.push('<tr><td style="padding-top:8px; padding-bottom:10px;"><span id="ns1blankspaceBankAccountImportCreateItems" class="ns1blankspaceAction">' +
 																			'Create payments & receipts</span></td></tr>');
+
+																aHTML.push('<tr><td style="padding-top:0px;">' +		
+																			'<input type="checkbox" id="ns1blankspaceBankAccountImportTransactions_status" data-1blankspace="ignore" style="margin:0px; padding:0px; border: 0px; margin-top:1px;">' +
+																			'<span style="font-weight:100; font-size:0.625em; margin-left:2px;" class="ns1blankspaceSub">Set as Matched</span>' +
+																			'</td></tr>');
 
 																//if (ns1blankspace.financial.data.settings.accountingmethod == 1)
 																//{	
@@ -2232,7 +2275,26 @@ ns1blankspace.financial.bankAccount =
 															}
 														}
 
-														aHTML.push('<tr><td style="padding-top:8px;">' +
+														aHTML.push('<tr>' +
+																		'<td class="ns1blankspaceSubNote" style="padding-top:2px;" style="width:98px;">' +
+																		'From' +
+																		'</td></tr>' +
+																		'<tr><td class="ns1blankspaceDate" style="padding-top:0px;">' +
+																		'<input id="ns1blankspaceBankTransactionsStartDate" data-1blankspace="ignore" class="ns1blankspaceDate" style="width:98px;">' +
+																		'</td></tr>');
+															
+														aHTML.push('<tr>' +
+																		'<td class="ns1blankspaceSubNote" style="padding-top:0px;" style="width:98px;">' +
+																		'To' +
+																		'</td></tr>' +
+																		'<tr><td class="ns1blankspaceDate" style="padding-top:0px;">' +
+																		'<input id="ns1blankspaceBankTransactionsEndDate" data-1blankspace="ignore" class="ns1blankspaceDate" style="width:98px;">' +
+																		'</td></tr>');
+
+														aHTML.push('<tr><td class="ns1blankspaceSubNote" style="padding-top:0px;">' +
+																	'Contains' +
+																	'</td></tr>' +
+																	'<tr><td style="padding-top:0px;">' +
 																		'<input id="ns1blankspaceImportItemsSearchText" class="ns1blankspaceText" data-1blankspace="ignore" style="width:98px;">' +
 																		'</td></tr>');
 
@@ -2243,10 +2305,20 @@ ns1blankspace.financial.bankAccount =
 														aHTML.push('<tr><td style="padding-top:14px;">' +
 																		'<span style="width:98px;" id="ns1blankspaceImportItemsSearchMissingOnly" class="ns1blankspaceAction">If Missing</span>' +
 																		'</td></tr>');
+
+														aHTML.push('<tr><td><span id="ns1blankspaceBankAccountImportBalances" class=""></td></tr>');
 															
 														aHTML.push('</table>');					
 														
 														$('#ns1blankspaceImportItemsColumn2').html(aHTML.join(''));
+
+														$('#ns1blankspaceBankAccountImportBalances').html(
+															'<div class="ns1blankspaceCaption">Debits</div>' +
+															'<div class="ns1blankspaceSub">$' + ns1blankspace.financial.bankAccount.import.items.balanceDebits.formatMoney() + '</div>' +
+															'<div class="ns1blankspaceCaption" style="padding-top:12px;">Credits</div>' +
+															'<div class="ns1blankspaceSub">$' + ns1blankspace.financial.bankAccount.import.items.balanceCredits.formatMoney() + '</div>');
+
+														ns1blankspace.util.initDatePicker({select: 'input.ns1blankspaceDate'});
 
 														$('#ns1blankspaceImportItemsSearchMissingOnly').button(
 														{
@@ -2266,6 +2338,9 @@ ns1blankspace.financial.bankAccount =
 														.click(function() 
 														{
 															oParam = ns1blankspace.util.setParam(oParam, 'searchText', $('#ns1blankspaceImportItemsSearchText').val());
+															oParam = ns1blankspace.util.setParam(oParam, 'startDate', $('#ns1blankspaceBankTransactionsStartDate').val());
+															oParam = ns1blankspace.util.setParam(oParam, 'endDate', $('#ns1blankspaceBankTransactionsEndDate').val());
+
 															ns1blankspace.financial.bankAccount.import.items.show(oParam);
 														})
 														.css('width', '98px');
@@ -2279,7 +2354,9 @@ ns1blankspace.financial.bankAccount =
 													    	}
 													    });	
 
-														$('#ns1blankspaceImportItemsSearchText').val(ns1blankspace.financial.bankAccount.import.items.searchText)
+														$('#ns1blankspaceImportItemsSearchText').val(ns1blankspace.financial.bankAccount.import.items.searchText);
+														$('#ns1blankspaceBankTransactionsStartDate').val(ns1blankspace.financial.bankAccount.import.items.searchStartDate);
+														$('#ns1blankspaceBankTransactionsEndDate').val(ns1blankspace.financial.bankAccount.import.items.searchEndDate);
 
 														$('#ns1blankspaceBankAccountImportNew').button(
 														{
@@ -2342,6 +2419,17 @@ ns1blankspace.financial.bankAccount =
 
 													if (oRow.processeddate != '')
 													{
+														if (oRow.category == 2)
+														{
+															ns1blankspace.financial.bankAccount.import.items.balanceDebits = 
+																ns1blankspace.financial.bankAccount.import.items.balanceDebits + Math.abs(numeral(oRow.amount).value());
+														}
+														else
+														{
+															ns1blankspace.financial.bankAccount.import.items.balanceCredits = 
+																ns1blankspace.financial.bankAccount.import.items.balanceCredits + Math.abs(numeral(oRow.amount).value());
+														}
+
 														aHTML.push('<tr id="ns1blankspaceFinancialImportItem_container-' + oRow.id + '" data-externalid="' + oRow.externalid + '">');
 														aHTML.push('<td style="font-size:0.875em; padding:6px;">');
 
