@@ -1,0 +1,67 @@
+﻿{
+	"template":
+	{
+		"financials":
+		{
+			"root":
+			{
+				"account": "10098"
+			},
+			"accounts":
+			[
+				{"title": "[Asset]",  "description": "", "code": "", "type": "3", "typetext": "Asset", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10098", "parentaccounttext": "[Financial Accounts]", "postable": "N", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "[Equity]",  "description": "", "code": "", "type": "5", "typetext": "Equity", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10098", "parentaccounttext": "[Financial Accounts]", "postable": "N", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "[Liability]",  "description": "", "code": "", "type": "4", "typetext": "Liability", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10098", "parentaccounttext": "[Financial Accounts]", "postable": "N", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "[Outgoing (Expense)]",  "description": "", "code": "", "type": "1", "typetext": "Outgoing (Expense)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10098", "parentaccounttext": "[Financial Accounts]", "postable": "N", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "[Outgoing (Expense)]",  "description": "", "code": "", "type": "1", "typetext": "Outgoing (Expense)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10098", "parentaccounttext": "[Financial Accounts]", "postable": "N", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "[Revenue (Income)]",  "description": "", "code": "", "type": "2", "typetext": "Revenue (Income)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10098", "parentaccounttext": "[Financial Accounts]", "postable": "N", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "Asset 1",  "description": "", "code": "A1", "type": "3", "typetext": "Asset", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10101", "parentaccounttext": "[Asset]", "postable": "Y", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "Equity 1",  "description": "", "code": "E1", "type": "5", "typetext": "Equity", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10103", "parentaccounttext": "[Equity]", "postable": "Y", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "Expense 1 A",  "description": "", "code": "", "type": "1", "typetext": "Outgoing (Expense)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10107", "parentaccounttext": "Expense 1 Header", "postable": "Y", "taxtype": "1", "taxtypeincomingtext": "GST Applies", "taxtypeoutgoingtext": "GST Applies", "area": "", "areatext": ""},
+				{"title": "Expense 1 Header",  "description": "", "code": "E1H", "type": "1", "typetext": "Outgoing (Expense)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10099", "parentaccounttext": "[Outgoing (Expense)]", "postable": "N", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "Expense 2",  "description": "", "code": "E1H-E2", "type": "1", "typetext": "Outgoing (Expense)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10099", "parentaccounttext": "[Outgoing (Expense)]", "postable": "Y", "taxtype": "1", "taxtypeincomingtext": "GST Applies", "taxtypeoutgoingtext": "GST Applies", "area": "", "areatext": ""},
+				{"title": "Liability 1",  "description": "", "code": "L1", "type": "4", "typetext": "Liability", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10102", "parentaccounttext": "[Liability]", "postable": "Y", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "Liability 2 Payroll",  "description": "", "code": "L3P", "type": "4", "typetext": "Liability", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10102", "parentaccounttext": "[Liability]", "postable": "Y", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "Liability 2 Tax",  "description": "", "code": "L2T", "type": "4", "typetext": "Liability", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10102", "parentaccounttext": "[Liability]", "postable": "Y", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "Revenue 1 Header",  "description": "", "code": "R1H", "type": "2", "typetext": "Revenue (Income)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10100", "parentaccounttext": "[Revenue (Income)]", "postable": "N", "taxtype": "", "taxtypeincomingtext": "", "taxtypeoutgoingtext": "", "area": "", "areatext": ""},
+				{"title": "Revenue 2",  "description": "", "code": "R1H-R2", "type": "2", "typetext": "Revenue (Income)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10110", "parentaccounttext": "Revenue 1 Header", "postable": "Y", "taxtype": "3", "taxtypeincomingtext": "GST Free - Other", "taxtypeoutgoingtext": "GST Free - Other", "area": "", "areatext": ""},
+				{"title": "Unallocated",  "description": "", "code": "-", "type": "2", "typetext": "Revenue (Income)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10100", "parentaccounttext": "[Revenue (Income)]", "postable": "Y", "taxtype": "1", "taxtypeincomingtext": "GST Applies", "taxtypeoutgoingtext": "GST Applies", "area": "", "areatext": ""},
+				{"title": "Unallocated",  "description": "", "code": "-", "type": "1", "typetext": "Outgoing (Expense)", "class": "1", "classtext": "Operations", "expensecostofsale": "N", "expensepayroll": "N", "parentaccount": "10099", "parentaccounttext": "[Outgoing (Expense)]", "postable": "Y", "taxtype": "1", "taxtypeincomingtext": "GST Applies", "taxtypeoutgoingtext": "GST Applies", "area": "", "areatext": ""}
+			],
+			"settings":
+			{
+				"financialaccountsalescommission": "",
+				"financialaccountsalescommissiontext": "",
+				"financialaccountdebtors": "10112",
+				"financialaccountdebtorstext": "Asset 1",
+				"financialaccountcreditors": "10113",
+				"financialaccountcreditorstext": "Liability 1",
+				"financialaccountcash": "",
+				"financialaccountcashtext": "",
+				"financialaccountwriteoff": "",
+				"financialaccountwriteofftext": "",
+				"financialaccountfinancialservicescommission": "",
+				"financialaccountfinancialservicescommissiontext": "",
+				"financialaccountproductinventory": "",
+				"financialaccountproductinventorytext": "",
+				"financialaccountproductpurchases": "",
+				"financialaccountproductpurchasestext": "",
+				"financialaccountproductincome": "",
+				"financialaccountproductincometext": "",
+				"financialaccountretainedearnings": "",
+				"financialaccountretainedearningstext": "",
+				"financialaccountcurrentearnings": "",
+				"financialaccountcurrentearningstext": "",
+				"payrollfinancialaccountsalary": "10116",
+				"payrollfinancialaccountsalarytext": "Liability 2 Payroll",
+				"payrollfinancialaccounttax": "10115",
+				"payrollfinancialaccounttaxtext": "Liability 2 Tax",
+				"payrollfinancialaccountallowance": "10116",
+				"payrollfinancialaccountallowancetext": "Liability 2 Payroll",
+				"payrollfinancialaccountsuperannuation": "10116",
+				"payrollfinancialaccountsuperannuationtext": "Liability 2 Payroll",
+				"source": ""
+			}
+		}
+	}
+}
