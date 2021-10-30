@@ -47,7 +47,7 @@ ns1blankspace.project =
 
 						var oSearch = new AdvancedSearch();
 						oSearch.method = 'PROJECT_SEARCH';
-						oSearch.addField('reference,description,contactbusinesstext,contactpersontext,startdate');
+						oSearch.addField('reference,description,contactbusinesstext,contactpersontext,contactbusiness,contactperson,startdate');
 						oSearch.rf = 'json';
 						oSearch.rows = ns1blankspace.option.defaultRows;
 						oSearch.sort('modifieddate', 'desc');
@@ -519,7 +519,32 @@ ns1blankspace.project =
 										'<tr class="ns1blankspace">' +
 										'<td class="ns1blankspaceDate">' +
 										'<input id="ns1blankspaceDetailsEndDate" class="ns1blankspaceDate">' +
+										'</td></tr>');
+
+                        aHTML.push('<tr class="ns1blankspaceCaption">' +
+										'<td class="ns1blankspaceCaption">' +
+										'Business' +
+										'</td></tr>' +
+										'<tr class="ns1blankspace">' +
+										'<td class="ns1blankspaceText">' +
+										'<input id="ns1blankspaceDetailsContactBusiness" class="ns1blankspaceSelect"' +
+											' data-method="CONTACT_BUSINESS_SEARCH"' +
+											' data-columns="tradename">' +
 										'</td></tr>');	
+							
+						aHTML.push('<tr class="ns1blankspaceCaption">' +
+										'<td class="ns1blankspaceCaption">' +
+										'Person' +
+										'</td></tr>' +
+										'<tr class="ns1blankspace">' +
+										'<td class="ns1blankspaceText">' +
+										'<input id="ns1blankspaceDetailsContactPerson" class="ns1blankspaceSelect"' +
+											' data-method="CONTACT_PERSON_SEARCH"' +
+											' data-columns="firstname-space-surname"' +
+											' data-parent="ns1blankspaceDetailsContactBusiness"' +
+											' data-parent-search-id="contactbusiness"' +
+											' data-parent-search-text="tradename">' +
+										'</td></tr>');
 
 						aHTML.push('</table>');					
 						
@@ -554,6 +579,10 @@ ns1blankspace.project =
 							$('[name="radioStatus"][value="' + ns1blankspace.objectContextData.status + '"]').attr('checked', true);
 							$('#ns1blankspaceDetailsStartDate').val(ns1blankspace.util.fd(ns1blankspace.objectContextData.startdate));
 							$('#ns1blankspaceDetailsEndDate').val(ns1blankspace.util.fd(ns1blankspace.objectContextData.enddate));
+                            $('#ns1blankspaceDetailsContactBusiness').attr('data-id', ns1blankspace.objectContextData.contactbusiness);
+							$('#ns1blankspaceDetailsContactBusiness').val(ns1blankspace.objectContextData.contactbusinesstext.formatXHTML());
+                            $('#ns1blankspaceDetailsContactPerson').attr('data-id', ns1blankspace.objectContextData.contactperson);
+							$('#ns1blankspaceDetailsContactPerson').val(ns1blankspace.objectContextData.contactpersontext.formatXHTML());
 						}
 						else
 						{
@@ -917,6 +946,8 @@ ns1blankspace.project =
 										sData += '&startdate=' + ns1blankspace.util.fs($('#ns1blankspaceDetailsStartDate').val());
 										sData += '&enddate=' + ns1blankspace.util.fs($('#ns1blankspaceDetailsEndDate').val());
 										sData += '&status=' + ns1blankspace.util.fs($('input[name="radioStatus"]:checked').val());
+                                        sData += '&contactbusiness=' + ns1blankspace.util.fs($('#ns1blankspaceDetailsContactBusiness').attr("data-id"));
+                                        sData += '&contactperson=' + ns1blankspace.util.fs($('#ns1blankspaceDetailsContactPerson').attr("data-id"));
 									}
 									
 									if ($('#ns1blankspaceMainDescription').html() != '')

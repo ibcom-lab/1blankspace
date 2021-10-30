@@ -288,7 +288,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.project',
-		source: '/site/1903/1blankspace.project-2.0.2.js'
+		source: '/site/1903/1blankspace.project-3.9.9.js'
 	},
 	{
 		nameSpace: '1blankspace.projectTask',
