@@ -999,7 +999,7 @@ ns1blankspace.admin.space =
 						oSearch.method = 'ADMIN_SPACE_SEARCH';
 						oSearch.addField('datausagedate,datausagemegabytes,disabled,site,sitetext,status,statustext');
 						oSearch.addFilter('id', 'EQUAL_TO', ns1blankspace.objectContextData.space);
-						oSearch.addCustomOption('allregistrationspaces', (ns1blankspace.admin.space.data.superUser?'Y':'N'));
+						oSearch.addCustomOption('allspaces', (ns1blankspace.admin.space.data.superUser?'Y':'N'));
 						oSearch.getResults(function(data) {ns1blankspace.admin.space.billing(oParam, data)})	
 					}	
 					else
