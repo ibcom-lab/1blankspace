@@ -674,7 +674,7 @@ ns1blankspace.financial.bankAccount =
 														'matchtype,matchtypetext,project,projecttext,status,statustext,' +
 														'taxtype,taxtypeexpensetext,taxtyperevenuetext,type,typetext');
 
-									if (ns1blankspace.financial.bankAccount.import.items.searchText != '')
+									if (ns1blankspace.financial.bankAccount.mapping.searchText != '')
 									{
 										oSearch.addBracket('(')
 
@@ -697,7 +697,7 @@ ns1blankspace.financial.bankAccount =
 									
 									if (oResponse.data.rows.length == 0)
 									{
-										if (ns1blankspace.financial.bankAccount.import.items.searchText != '')
+										if (ns1blankspace.financial.bankAccount.mapping.searchText != '')
 										{
 											aHTML.push('<table><tr><td class="ns1blankspaceNothing">' +
 													'There are no mappings that match this search.' +
