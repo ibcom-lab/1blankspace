@@ -889,6 +889,11 @@ ns1blankspace.admin.space =
 						
 						var sData = 'registration=' + ns1blankspace.util.fs(ns1blankspace.objectContext) +
 										'&membership=' + ns1blankspace.util.fs(aXHTMLElementID[1]);
+
+						if (ns1blankspace.user.super)
+						{
+							sData = sData + '&allspaces=Y'
+						}
 									
 						$.ajax(
 						{
