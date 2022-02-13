@@ -1,0 +1,363 @@
+2: 
+{
+    format:
+    {
+        header:
+        {
+            mustBeSetDefault: true,
+            fields:
+            [
+                {
+                    name: 'OrgName',
+                    param: 'contactBusinessText'
+                },
+                {
+                    name: 'OrgABN',
+                    param: 'contactBusinessABN',
+                    help: 'Set the ABN on the business contact for this space.',
+                    caption: 'Entity ABN'
+                },
+                 {
+                    name: 'OrgWPN',
+                    value: '',
+                    help: 'The WPN (if applicable) of the organisation reporting STP data. This should only be used if there is no ABN.',
+                    caption: 'Entity WPN (If no ABN)'
+                },
+                {
+                    name: 'BranchID',
+                    param: 'branchID',
+                    caption: 'Branch ID',
+                    help: 'The branch number of an organisation. ' +
+                            'Used for organisations that wish to sub-divide their activities in dealing with their tax obligations. ' +
+                            'It is used to identify the correct branch of an organisation for the PAYGW obligation. ' +
+                            'If the Payer does not have a branch number, this must be set to 1.'
+                },
+                {
+                    name: 'BMSID',
+                    value: 'mydigitalstructure',
+                    caption: 'BMS ID',
+                    help: 'This identifies the Business Management System software used by the employer. ' +
+                        'This is allocated to each instance of a payroll solution and allows multiple payroll ' + 
+                        'reports submitted separately to be allocated to the same payee. ' +
+                        'It must be unique within an ABN/branch. ' +
+                        'Once established for that payroll instance, it should not be changed without reference to the ' +
+                        'STP Business Implementation Guide (BIG).'
+                },
+                 {
+                    name: 'PreviousBMSID',
+                    value: '',
+                    caption: 'Previous BMS ID',
+                    help: 'Used if your software has (for some reason) changed BMS IDs. This should almost never happen.'
+                },
+                {
+                    name: 'PayrollGroupID',
+                    param: 'payrollGroupID'
+                },
+                {
+                    name: 'ProductID',
+                    param: 'atoProductID',
+                    caption: 'Product ID',
+                    help: 'Software developers must obtain a Product ID from the ATO ' +
+                        'If you are not a software developer leave this value blank.'
+                },
+                {
+                    name: 'EventDate',
+                    dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                    param: 'now',
+                    help: 'Date on which a payment has been made by an entity. Example: "2018-03-31T00:00:00"',
+                    spec: 'PAYEVNT 0002 2017/0003 2018: PaymentRecord.Transaction.Date'
+                },
+                {
+                    name: 'PaymentDate',
+                    param: 'payDate',
+                    dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                    caption: 'Payment date'
+                },
+                {
+                    name: 'PayrollTrxID',
+                    param: 'guid'
+                },
+                {
+                    name: 'IsUpdate',
+                    param: 'isUpdate',
+                    help: '"true" or "false". Signifies that the pay event submitted is an update event.'
+                },
+                {
+                    name: 'IsFullFileReplacement',
+                    param: 'isFull',
+                    help: '"true" or "false". Signifies that the pay event submitted is a full file replacement.'
+                },
+                {
+                    name: 'DeclarationAcceptedBy',
+                    param: 'declarationAcceptedBy'
+                },
+                {
+                    name: 'EmployerPeriodW1',
+                    param: 'employerPeriodW1',
+                    caption: 'Period W1 value'
+                },
+                {
+                    name: 'EmployerPeriodW2',
+                    param: 'employerPeriodW2',
+                    caption: 'Period W2 value'
+                },
+                {
+                    name: 'RegisteredAgentABN',
+                    param: 'registeredAgentABN',
+                    onlyIfData: true,
+                    mustBeSet: false
+                },
+                {
+                    name: 'RegisteredAgentNumber',
+                    param: 'registeredAgentNumber',
+                    onlyIfData: true,
+                    mustBeSet: false
+                },
+                {
+                    name: 'RegisteredAgentDecAcceptedBy',
+                    param: 'registeredAgentDecAcceptedBy',
+                    onlyIfData: true,
+                    mustBeSet: false
+                },
+                {
+                    name: 'RegisteredAgentEmail',
+                    param: 'registeredAgentEmail',
+                    onlyIfData: true,
+                    mustBeSet: false
+                },
+                {
+                    name: 'RegisteredAgentPhone',
+                    param: 'registeredAgentPhone',
+                    onlyIfData: true,
+                    mustBeSet: false
+                },
+                {
+                    name: 'RecordID',
+                    value: '0',
+                    help: 'This should be 0.'
+                },
+				{
+					name: 'RunDateTimeStamp',
+					param: 'createddate',
+					help: 'The date (and time) that this pay event was processed (within your payroll system).'
+				},
+				{
+					name: 'PayUpdateDate',
+					param: 'paydate',
+					help: 'The date the payment (monies) are to be paid to the employees.'
+				},
+                {
+                    name: 'EventRecords',
+                    value: [],
+                    mustBeSet: false
+                }
+            ]
+        },
+
+        item:
+        [
+            {
+                parentName: 'EventRecords',
+                mustBeSetDefault: true,
+                fields:
+                [
+                    {
+                        name: 'PayeePayrollID',
+                        field: 'employee.employeenumber',
+                        help: 'Set the Employee\'s Number.',
+                        caption: 'Payroll number',
+                        help: 'ID given to an employee (payee) in the payroll system identified by the BMSID provided',
+                        spec: 'PAYEVNT 0002 2017/0003 2018: Identifiers.EmploymentPayrollNumber.Identifier'
+                    },
+                    {
+                        name: 'PayeeTFN',
+                        field: 'employee.taxfilenumber',
+                        help: 'Set the Employee\'s Tax File Number.',
+                        caption: 'Employee TFN',
+                        numeric: true
+                    },
+                    {
+                        name: 'ContractorABN',
+                        value: '',
+                        help: 'If employee (payee) is a contractor, the ABN of the contractor must be supplied',
+                        mustBeSet: false
+                    },
+                    {
+                        name: 'PayeeFamilyName',
+                        field: 'employee.contactperson.surname',
+                        help: 'Set the Employee\'s Surname.',
+                        caption: 'Family name'
+                    },
+                    {
+                        name: 'PayeeFirstName',
+                        field: 'employee.contactperson.firstname',
+                        help: 'Set the Employee\'s First Name.',
+                        caption: 'Given name'
+                    },
+                    {
+                        name: 'PayeeOtherName',
+                        value: '',
+                        mustBeSet: false,
+                        caption: 'Middle name'
+                    },
+                    {
+                        name: 'PayeeDateOfBirth',
+                        field: 'employee.contactperson.dateofbirth',
+                        help: 'Set the Employee\'s Date of Birth.',
+                        dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                        caption: 'Date of birth'
+                    },
+                   
+                    {
+                        name: 'PayeeAddressLine1',
+                        field: 'employee.contactperson.streetaddress1',
+                        help: 'Set the Employee\'s Street Address.',
+                        caption: 'Address 1'
+                    },
+                    {
+                        name: 'PayeeAddressLine2',
+                        field: 'employee.contactperson.streetaddress2',
+                        mustBeSet: false,
+                        caption: 'Address 2'
+                    },
+                    {
+                        name: 'PayeeSuburb',
+                        field: 'employee.contactperson.streetsuburb',
+                        help: 'Set the Employee\'s Suburb.',
+                        caption: 'Suburb'
+                    },
+                    {
+                        name: 'PayeeState',
+                        field: 'employee.contactperson.streetstate',
+                        help: 'Set the Employee\'s State; "AAT", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC" or "WA"',
+                        caption: 'State/territory'
+                    },
+                    {
+                        name: 'PayeePostcode',
+                        field: 'employee.contactperson.streetpostcode',
+                        help: 'Set the Employee\'s Post Code.',
+                        caption: 'Postcode'
+                    },
+                    {
+                        name: 'PayeeCountry',
+                        value: 'au',
+                        caption: 'Country'
+                    },
+                    {
+                        name: 'PayeeEmail',
+                        field: 'employee.contactperson.email',
+                        help: 'Set the Employee\'s Email Address.',
+                        caption: 'Email',
+                        mustBeSet: false
+                    },
+                    {
+                        name: 'PayeePhone',
+                        field: 'employee.contactperson.mobile',
+                        help: 'Set the Employee\'s Mobile Phone Number.',
+                        caption: 'Phone',
+                        mustBeSet: false
+                    },
+					{
+                        name: 'PayeeCommencementDate',
+                        field: 'employee.employmentstartdate',
+                        help: 'This is the Employee\'s Start Date.',
+                        dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                        caption: 'Hired date'
+                    },
+                    {
+                        name: 'PayeeCessationDate',
+                        field: 'employee.employmentenddate',
+                        mustBeSet: false,
+                        dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                        caption: 'Termination date'
+                    },
+                    {
+                        name: 'PeriodStartDate',
+                        field: 'startdate',
+                        dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                        caption: 'Pay period start date'
+                    },
+                    {
+                        name: 'PeriodEndDate',
+                        field: 'enddate',
+                        dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                        caption: 'Pay period end date'
+                    },
+                    {
+                        name: 'FinalEventIndicator',
+                        param: 'isFinalForYear',
+                        defaultValue: 'false',
+                        caption: 'Final EOY pay indicator'
+                    },
+					{
+						name: 'EmploymentBasisCode',
+						field: 'xxx',
+						mustBeSet: true,
+						caption: 'Employment Basis',
+						help: 'Indicates whether this employee is full-time, part-time, casual, etc. [F/P/C/L/V/D/N]'
+					},
+					{
+						name: 'CessationTypeCode',
+						field: 'xxx',
+						mustBeSet: true,
+						caption: 'Cessation Type',
+						help: 'Describes the type of termination this employee is subject to i.e. redundancy, death, etc. [V/I/D/R/F/C/T]'
+					},
+					{
+						name: 'TaxTreatmentCode',
+						field: 'xxx',
+						mustBeSet: true,
+						caption: 'Tax Treatment',
+						help: 'Indicates the PAYGW tax scales and other components that have been applied by the payer to determine payee withholding amounts. Must be included in every pay event.'
+					},
+					{
+						name: 'TaxOffsetAmount',
+						field: 'xxx',
+						mustBeSet: true,
+						caption: 'Tax Offset Amount',
+						help: 'The annual tax offset amount that some payees may provide to their payers to reduce the amount of withholding, when specific criteria or concessions apply. For example, invalid or invalid carer tax offset; or zone or overseas forces tax offset.'
+					},
+                    {
+						name: 'IncomeStreams',
+						value: [],
+						mustBeSet: true,
+						help: 'Contains the pay values for the employee.'
+					},
+					{
+						name: 'PayeeDeductions',
+						value: [],
+						mustBeSet: false,
+						help: 'Contains any reportable deductions for the employee.
+					},
+					{
+						name: 'SuperEntitlements',
+						value: [],
+						mustBeSet: false,
+						help: 'Contains any reportable superannuation entitlements for the employee.
+					},
+					{
+						name: 'ReportableFringeBenefits',
+						value: [],
+						mustBeSet: false,
+						help: 'Contains any reportable fringe benefits for the employee.
+					}
+                ]
+            },
+			{
+                parentName: 'IncomeStreams',
+                mustBeSetDefault: true,
+                fields:
+                [
+                    {
+                        name: 'x',
+                        field: 'employee.employeenumber',
+                        help: 'Set the Employee\'s Number.',
+                        caption: 'Payroll number',
+                        help: 'ID given to an employee (payee) in the payroll system identified by the BMSID provided',
+                        spec: 'PAYEVNT 0002 2017/0003 2018: Identifiers.EmploymentPayrollNumber.Identifier'
+                    }
+				]
+			}
+        ]
+    }
+}

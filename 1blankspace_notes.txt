@@ -1,7 +1,0 @@
-https://app.mydigitalstructure-lab.cloud
-https://app-next.mydigitalstructure-lab.cloud
-
-update OBMS_FinancialAccountType set value = 'Outgoing (Expense)' where typeid = 1
-
-
-
