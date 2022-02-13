@@ -6854,450 +6854,453 @@ ns1blankspace.financial.payroll.totals =
 
 									data:
 									{
-										format:
-										{
-											header:
-											{
-												mustBeSetDefault: true,
-												fields:
-												[
-													{
-														name: 'OrgName',
-														param: 'contactBusinessText'
-													},
-													{
-														name: 'OrgABN',
-														param: 'contactBusinessABN',
-														help: 'Set the ABN on the business contact for this space.',
-														caption: 'Entity ABN'
-													},
-													{
-														name: 'BranchID',
-														param: 'branchID',
-														caption: 'Branch ID',
-														help: 'The branch number of an organisation. ' +
-                                        		'Used for organisations that wish to sub-divide their activities in dealing with their tax obligations. ' +
-                                        		'It is used to identify the correct branch of an organisation for the PAYGW obligation. ' +
-                                        		'If the Payer does not have a branch number, this must be set to 1.'
-													},
-													{
-														name: 'BMSID',
-														value: 'mydigitalstructure',
-														caption: 'BMS ID',
-														help: 'This identifies the Business Management System software used by the employer. ' +
-                                        		'This is allocated to each instance of a payroll solution and allows multiple payroll ' + 
-                                        		'reports submitted separately to be allocated to the same payee. ' +
-                                         		'It must be unique within an ABN/branch. ' +
-                                        		'Once established for that payroll instance, it should not be changed without reference to the ' +
-                                        		'STP Business Implementation Guide (BIG).'
-													},
-													{
-														name: 'PayrollGroupID',
-														param: 'payrollGroupID'
-													},
-													{
-														name: 'ProductID',
-														param: 'atoProductID',
-														caption: 'Product ID',
-														help: 'Software developers must obtain a Product ID from the ATO ' +
-                                        				'If you are not a software developer leave this value blank.'
-													},
-													{
-														name: 'EventDate',
-														dateFormat: 'YYYY-MM-DDTHH:mm:ss',
-														param: 'now',
-														help: 'Date on which a payment has been made by an entity. Example: "2018-03-31T00:00:00"',
-                                        	spec: 'PAYEVNT 0002 2017/0003 2018: PaymentRecord.Transaction.Date'
-													},
-													{
-														name: 'PaymentDate',
-														param: 'payDate',
-														dateFormat: 'YYYY-MM-DDTHH:mm:ss',
-														caption: 'Payment date'
-													},
-													{
-														name: 'PayrollTrxID',
-														param: 'guid'
-													},
-													{
-														name: 'IsUpdate',
-														param: 'isUpdate',
-														help: '"true" or "false". Signifies that the pay event submitted is an update event.'
-													},
-													{
-														name: 'IsFullFileReplacement',
-														param: 'isFull',
-														help: '"true" or "false". Signifies that the pay event submitted is a full file replacement.'
-													},
-													{
-														name: 'DeclarationAcceptedBy',
-														param: 'declarationAcceptedBy'
-													},
-													{
-														name: 'EmployerPeriodW1',
-														param: 'employerPeriodW1',
-														caption: 'Period W1 value'
-													},
-													{
-														name: 'EmployerPeriodW2',
-														param: 'employerPeriodW2',
-														caption: 'Period W2 value'
-													},
-													{
-														name: 'RegisteredAgentABN',
-														param: 'registeredAgentABN',
-														onlyIfData: true,
-														mustBeSet: false
-													},
-													{
-														name: 'RegisteredAgentNumber',
-														param: 'registeredAgentNumber',
-														onlyIfData: true,
-														mustBeSet: false
-													},
-													{
-														name: 'RegisteredAgentDecAcceptedBy',
-														param: 'registeredAgentDecAcceptedBy',
-														onlyIfData: true,
-														mustBeSet: false
-													},
-													{
-														name: 'RegisteredAgentEmail',
-														param: 'registeredAgentEmail',
-														onlyIfData: true,
-														mustBeSet: false
-													},
-													{
-														name: 'RegisteredAgentPhone',
-														param: 'registeredAgentPhone',
-														onlyIfData: true,
-														mustBeSet: false
-													},
-													{
-														name: 'RecordID',
-														value: '0',
-														help: 'This should be 0.'
-													},
-													{
-														name: 'EventRecords',
-														value: [],
-														mustBeSet: false
-													}
-												]
-											},
+										1:
+                                        {
+                                            format:
+                                            {
+                                                header:
+                                                {
+                                                    mustBeSetDefault: true,
+                                                    fields:
+                                                    [
+                                                        {
+                                                            name: 'OrgName',
+                                                            param: 'contactBusinessText'
+                                                        },
+                                                        {
+                                                            name: 'OrgABN',
+                                                            param: 'contactBusinessABN',
+                                                            help: 'Set the ABN on the business contact for this space.',
+                                                            caption: 'Entity ABN'
+                                                        },
+                                                        {
+                                                            name: 'BranchID',
+                                                            param: 'branchID',
+                                                            caption: 'Branch ID',
+                                                            help: 'The branch number of an organisation. ' +
+                                                    'Used for organisations that wish to sub-divide their activities in dealing with their tax obligations. ' +
+                                                    'It is used to identify the correct branch of an organisation for the PAYGW obligation. ' +
+                                                    'If the Payer does not have a branch number, this must be set to 1.'
+                                                        },
+                                                        {
+                                                            name: 'BMSID',
+                                                            value: 'mydigitalstructure',
+                                                            caption: 'BMS ID',
+                                                            help: 'This identifies the Business Management System software used by the employer. ' +
+                                                    'This is allocated to each instance of a payroll solution and allows multiple payroll ' + 
+                                                    'reports submitted separately to be allocated to the same payee. ' +
+                                                    'It must be unique within an ABN/branch. ' +
+                                                    'Once established for that payroll instance, it should not be changed without reference to the ' +
+                                                    'STP Business Implementation Guide (BIG).'
+                                                        },
+                                                        {
+                                                            name: 'PayrollGroupID',
+                                                            param: 'payrollGroupID'
+                                                        },
+                                                        {
+                                                            name: 'ProductID',
+                                                            param: 'atoProductID',
+                                                            caption: 'Product ID',
+                                                            help: 'Software developers must obtain a Product ID from the ATO ' +
+                                                            'If you are not a software developer leave this value blank.'
+                                                        },
+                                                        {
+                                                            name: 'EventDate',
+                                                            dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                                                            param: 'now',
+                                                            help: 'Date on which a payment has been made by an entity. Example: "2018-03-31T00:00:00"',
+                                                spec: 'PAYEVNT 0002 2017/0003 2018: PaymentRecord.Transaction.Date'
+                                                        },
+                                                        {
+                                                            name: 'PaymentDate',
+                                                            param: 'payDate',
+                                                            dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                                                            caption: 'Payment date'
+                                                        },
+                                                        {
+                                                            name: 'PayrollTrxID',
+                                                            param: 'guid'
+                                                        },
+                                                        {
+                                                            name: 'IsUpdate',
+                                                            param: 'isUpdate',
+                                                            help: '"true" or "false". Signifies that the pay event submitted is an update event.'
+                                                        },
+                                                        {
+                                                            name: 'IsFullFileReplacement',
+                                                            param: 'isFull',
+                                                            help: '"true" or "false". Signifies that the pay event submitted is a full file replacement.'
+                                                        },
+                                                        {
+                                                            name: 'DeclarationAcceptedBy',
+                                                            param: 'declarationAcceptedBy'
+                                                        },
+                                                        {
+                                                            name: 'EmployerPeriodW1',
+                                                            param: 'employerPeriodW1',
+                                                            caption: 'Period W1 value'
+                                                        },
+                                                        {
+                                                            name: 'EmployerPeriodW2',
+                                                            param: 'employerPeriodW2',
+                                                            caption: 'Period W2 value'
+                                                        },
+                                                        {
+                                                            name: 'RegisteredAgentABN',
+                                                            param: 'registeredAgentABN',
+                                                            onlyIfData: true,
+                                                            mustBeSet: false
+                                                        },
+                                                        {
+                                                            name: 'RegisteredAgentNumber',
+                                                            param: 'registeredAgentNumber',
+                                                            onlyIfData: true,
+                                                            mustBeSet: false
+                                                        },
+                                                        {
+                                                            name: 'RegisteredAgentDecAcceptedBy',
+                                                            param: 'registeredAgentDecAcceptedBy',
+                                                            onlyIfData: true,
+                                                            mustBeSet: false
+                                                        },
+                                                        {
+                                                            name: 'RegisteredAgentEmail',
+                                                            param: 'registeredAgentEmail',
+                                                            onlyIfData: true,
+                                                            mustBeSet: false
+                                                        },
+                                                        {
+                                                            name: 'RegisteredAgentPhone',
+                                                            param: 'registeredAgentPhone',
+                                                            onlyIfData: true,
+                                                            mustBeSet: false
+                                                        },
+                                                        {
+                                                            name: 'RecordID',
+                                                            value: '0',
+                                                            help: 'This should be 0.'
+                                                        },
+                                                        {
+                                                            name: 'EventRecords',
+                                                            value: [],
+                                                            mustBeSet: false
+                                                        }
+                                                    ]
+                                                },
 
-											item:
-											[
-												{
-													parentName: 'EventRecords',
-													mustBeSetDefault: true,
-													fields:
-													[
-														{
-															name: 'PayeePayrollID',
-															field: 'employee.employeenumber',
-															help: 'Set the Employee\'s Number.',
-															caption: 'Payroll number',
-															help: 'ID given to an employee (payee) in the payroll system identified by the BMSID provided',
-                                             spec: 'PAYEVNT 0002 2017/0003 2018: Identifiers.EmploymentPayrollNumber.Identifier'
-														},
-														{
-															name: 'PayeeTFN',
-															field: 'employee.taxfilenumber',
-															help: 'Set the Employee\'s Tax File Number.',
-															caption: 'Employee TFN',
-															numeric: true
-														},
-														{
-															name: 'ContractorABN',
-															value: '',
-															help: 'If employee (payee) is a contractor, the ABN of the contractor must be supplied',
-															mustBeSet: false
-														},
-														{
-															name: 'PayeeFamilyName',
-															field: 'employee.contactperson.surname',
-															help: 'Set the Employee\'s Surname.',
-															caption: 'Family name'
-														},
-														{
-															name: 'PayeeFirstName',
-															field: 'employee.contactperson.firstname',
-															help: 'Set the Employee\'s First Name.',
-															caption: 'Given name'
-														},
-														{
-															name: 'PayeeOtherName',
-															value: '',
-															mustBeSet: false,
-															caption: 'Middle name'
-														},
-														{
-															name: 'PayeeDateOfBirth',
-															field: 'employee.contactperson.dateofbirth',
-															help: 'Set the Employee\'s Date of Birth.',
-															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
-															caption: 'Date of birth'
-														},
-														{
-															name: 'PayeeCommencementDate',
-															field: 'employee.employmentstartdate',
-															help: 'This is the Employee\'s Start Date.',
-															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
-															caption: 'Hired date'
-														},
-														{
-															name: 'PayeeCessationDate',
-															field: 'employee.employmentenddate',
-															mustBeSet: false,
-															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
-															caption: 'Termination date'
-														},
-														{
-															name: 'PayeeAddressLine1',
-															field: 'employee.contactperson.streetaddress1',
-															help: 'Set the Employee\'s Street Address.',
-															caption: 'Address 1'
-														},
-														{
-															name: 'PayeeAddressLine2',
-															field: 'employee.contactperson.streetaddress2',
-															mustBeSet: false,
-															caption: 'Address 2'
-														},
-														{
-															name: 'PayeeSuburb',
-															field: 'employee.contactperson.streetsuburb',
-															help: 'Set the Employee\'s Suburb.',
-															caption: 'Suburb'
-														},
-														{
-															name: 'PayeeState',
-															field: 'employee.contactperson.streetstate',
-															help: 'Set the Employee\'s State; "AAT", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC" or "WA"',
-															caption: 'State/territory'
-														},
-														{
-															name: 'PayeePostcode',
-															field: 'employee.contactperson.streetpostcode',
-															help: 'Set the Employee\'s Post Code.',
-															caption: 'Postcode'
-														},
-														{
-															name: 'PayeeCountry',
-															value: 'au',
-															caption: 'Country'
-														},
-														{
-															name: 'PayeeEmail',
-															field: 'employee.contactperson.email',
-															help: 'Set the Employee\'s Email Address.',
-															caption: 'Email',
-															mustBeSet: false
-														},
-														{
-															name: 'PayeePhone',
-															field: 'employee.contactperson.mobile',
-															help: 'Set the Employee\'s Mobile Phone Number.',
-															caption: 'Phone',
-															mustBeSet: false
-														},
-														{
-															name: 'PeriodStartDate',
-															field: 'startdate',
-															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
-															caption: 'Pay period start date'
-														},
-														{
-															name: 'PeriodEndDate',
-															field: 'enddate',
-															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
-															caption: 'Pay period end date'
-														},
-														{
-															name: 'FinalEventIndicator',
-															param: 'isFinalForYear',
-															defaultValue: 'false',
-															caption: 'Final EOY pay indicator'
-														},
-														{
-															name: 'PayeeGrossPayments',
-															field: 'grosssalary',
-															mustBeSet: false,
-															currency: true,
-															caption: 'Employee gross pay'
-														},
-														{
-															name: 'PayeeCDEPPaymentAmount',
-															value: '',
-															mustBeSet: false,
-															currency: true,
-															caption: 'Employee CDEP',
-															help: 'Payee CDEP Payment Amount',
-                                             spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.IndividualNonBusinessCommunityDevelopmentEmploymentProject.Amount'
-														},
-														{
-															name: 'PayeeTotalINBPAYGWAmount',
-															_field: 'taxbeforerebate',
-															field: 'tax',
-															mustBeSet: true,
-															currency: true,
-															caption: 'Employee tax'
-														},
-														{
-															name: 'PayeeExemptForeignIncomeAmount',
-															value: '',
-															mustBeSet: false,
-															currency: true,
-															caption: 'Foreign income',
-															help: 'Payee Exempt Foreign Income Amount',
-                                             spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.IndividualNonBusinessExemptForeignEmploymentIncome.Amount'
-														},
-														{
-															name: 'SuperGuaranteeAmount',
-															field: 'superannuation',
-															currency: true,
-															caption: 'Super guarantee amount'
-														},
-														{
-															name: 'OTEAmount',
-															value: '',
-															mustBeSet: false,
-															currency: true,
-															help: 'This is the value, during the relevant period, for what an individual has earned ' +
-                                                      'during their ordinary hours of work.' +
-                                                      'Note: You must provide a value for either "OTEAmount" or "SuperGuaranteeAmount"' +
-                                                      'or both (recommended).',
-                                             spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.OrdinaryTimeEarnings.Amount'
-														},
-														{
-															name: 'ReportableEmployerSuperContribution',
-															value: '',
-															mustBeSet: false,
-															currency: true,
-															caption: 'Reportable Employer Super Contribution (RESC)',
-															help: 'This is the value, during the relevant period, for employer superannuation contributions ' +
-                                                      'that are additional to the compulsory contributions where the employee influenced ' +
-                                                      'the rate or amount of contribution.',
-                                             spec: 'PAYEVNT 0002 2017/0003 2018: SuperannuationContribution.EmployerReportable.Amount'
-														},
-														{
-															name: 'PayeeLumpSumPaymentAType',
-															value: '',
-															mustBeSet: false,
-															currency: true
-														},
-														{
-															name: 'PayeeLumpSumPaymentA',
-															value: '',
-															mustBeSet: false,
-															currency: true
-														},
-														{
-															name: 'PayeeLumpSumPaymentB',
-															value: '',
-															mustBeSet: false,
-															currency: true
-														},
-														{
-															name: 'PayeeLumpSumPaymentD',
-															value: '',
-															mustBeSet: false,
-															currency: true
-														},
-														{
-															name: 'PayeeLumpSumPaymentE',
-															value: '',
-															mustBeSet: false,
-															currency: true
-														},
-														{
-															name: 'PayeeRFBTaxableAmount',
-															value: '',
-															mustBeSet: false,
-															currency: true
-														},
-														{
-															name: 'PayeeRFBTaxableAmount',
-															value: '',
-															mustBeSet: false,
-															currency: true
-														},
-														{
-															name: 'PayeeRFBExemptAmount',
-															value: '',
-															mustBeSet: false,
-															currency: true
-														},
-														{
-															name: 'PayeeResidencyStatus',
-															value: 'Resident',
-															mustBeSet: false
-														},
-														{
-															name: 'PayeeTaxFreeThresholdClaimed',
-															field: 'employee.taxfreethreshold',
-															caption: 'Claiming threshold indicator',
-															defaultValue: 'false',
-															help: ''
-														},
-														{
-															name: 'PayeeHELPIndicator',
-															field: 'employee.deducthelp',
-															defaultValue: 'false',
-															caption: 'HELP inductor'
-														},
-														{
-															name: 'PayeeTradeSupportLoanIndicator',
-															value: 'false',
-															caption: 'TSL indicator' 
-														},
-														{
-															name: 'PayeeStudentLoanIndicator',
-															value: 'false',
-															caption: 'SFSS indicator'
-														},
-														{
-															name: 'PayeeDeclarerIdentifier',
-															value: '',
-															mustBeSet: false,
-															caption: 'Signed by'
-														},
-														{
-															name: 'PayeeDeclarationDate',
-															field: 'employee.employmentstartdate',
-															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
-															caption: 'Signature date'
-														},
-														{
-															name: 'PayeeDeclarationAcceptanceIndicator',
-															value: 'true',
-															caption: 'TFN Accepted'
-														},
-														{
-															name: 'PayeeAllowancesDescription',
-															value: 'General',
-															mustBeSet: false,
-															caption: 'Other allowance 1 description'
-														},
-														{
-															name: 'PayeeAllowancesValue',
-															field: 'allowances',
-															mustBeSet: false,
-															caption: 'Other allowance 1 value',
-															currency: true
-														},
-														{
-															name: 'PayeeDeductionsFees',
-															field: 'deductions',
-															mustBeSet: false,
-															caption: 'Union fees',
-															currency: true
-														}
-													]
-												}
-											]
-										}
+                                                item:
+                                                [
+                                                    {
+                                                        parentName: 'EventRecords',
+                                                        mustBeSetDefault: true,
+                                                        fields:
+                                                        [
+                                                            {
+                                                                name: 'PayeePayrollID',
+                                                                field: 'employee.employeenumber',
+                                                                help: 'Set the Employee\'s Number.',
+                                                                caption: 'Payroll number',
+                                                                help: 'ID given to an employee (payee) in the payroll system identified by the BMSID provided',
+                                                spec: 'PAYEVNT 0002 2017/0003 2018: Identifiers.EmploymentPayrollNumber.Identifier'
+                                                            },
+                                                            {
+                                                                name: 'PayeeTFN',
+                                                                field: 'employee.taxfilenumber',
+                                                                help: 'Set the Employee\'s Tax File Number.',
+                                                                caption: 'Employee TFN',
+                                                                numeric: true
+                                                            },
+                                                            {
+                                                                name: 'ContractorABN',
+                                                                value: '',
+                                                                help: 'If employee (payee) is a contractor, the ABN of the contractor must be supplied',
+                                                                mustBeSet: false
+                                                            },
+                                                            {
+                                                                name: 'PayeeFamilyName',
+                                                                field: 'employee.contactperson.surname',
+                                                                help: 'Set the Employee\'s Surname.',
+                                                                caption: 'Family name'
+                                                            },
+                                                            {
+                                                                name: 'PayeeFirstName',
+                                                                field: 'employee.contactperson.firstname',
+                                                                help: 'Set the Employee\'s First Name.',
+                                                                caption: 'Given name'
+                                                            },
+                                                            {
+                                                                name: 'PayeeOtherName',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                caption: 'Middle name'
+                                                            },
+                                                            {
+                                                                name: 'PayeeDateOfBirth',
+                                                                field: 'employee.contactperson.dateofbirth',
+                                                                help: 'Set the Employee\'s Date of Birth.',
+                                                                dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                                                                caption: 'Date of birth'
+                                                            },
+                                                            {
+                                                                name: 'PayeeCommencementDate',
+                                                                field: 'employee.employmentstartdate',
+                                                                help: 'This is the Employee\'s Start Date.',
+                                                                dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                                                                caption: 'Hired date'
+                                                            },
+                                                            {
+                                                                name: 'PayeeCessationDate',
+                                                                field: 'employee.employmentenddate',
+                                                                mustBeSet: false,
+                                                                dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                                                                caption: 'Termination date'
+                                                            },
+                                                            {
+                                                                name: 'PayeeAddressLine1',
+                                                                field: 'employee.contactperson.streetaddress1',
+                                                                help: 'Set the Employee\'s Street Address.',
+                                                                caption: 'Address 1'
+                                                            },
+                                                            {
+                                                                name: 'PayeeAddressLine2',
+                                                                field: 'employee.contactperson.streetaddress2',
+                                                                mustBeSet: false,
+                                                                caption: 'Address 2'
+                                                            },
+                                                            {
+                                                                name: 'PayeeSuburb',
+                                                                field: 'employee.contactperson.streetsuburb',
+                                                                help: 'Set the Employee\'s Suburb.',
+                                                                caption: 'Suburb'
+                                                            },
+                                                            {
+                                                                name: 'PayeeState',
+                                                                field: 'employee.contactperson.streetstate',
+                                                                help: 'Set the Employee\'s State; "AAT", "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC" or "WA"',
+                                                                caption: 'State/territory'
+                                                            },
+                                                            {
+                                                                name: 'PayeePostcode',
+                                                                field: 'employee.contactperson.streetpostcode',
+                                                                help: 'Set the Employee\'s Post Code.',
+                                                                caption: 'Postcode'
+                                                            },
+                                                            {
+                                                                name: 'PayeeCountry',
+                                                                value: 'au',
+                                                                caption: 'Country'
+                                                            },
+                                                            {
+                                                                name: 'PayeeEmail',
+                                                                field: 'employee.contactperson.email',
+                                                                help: 'Set the Employee\'s Email Address.',
+                                                                caption: 'Email',
+                                                                mustBeSet: false
+                                                            },
+                                                            {
+                                                                name: 'PayeePhone',
+                                                                field: 'employee.contactperson.mobile',
+                                                                help: 'Set the Employee\'s Mobile Phone Number.',
+                                                                caption: 'Phone',
+                                                                mustBeSet: false
+                                                            },
+                                                            {
+                                                                name: 'PeriodStartDate',
+                                                                field: 'startdate',
+                                                                dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                                                                caption: 'Pay period start date'
+                                                            },
+                                                            {
+                                                                name: 'PeriodEndDate',
+                                                                field: 'enddate',
+                                                                dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                                                                caption: 'Pay period end date'
+                                                            },
+                                                            {
+                                                                name: 'FinalEventIndicator',
+                                                                param: 'isFinalForYear',
+                                                                defaultValue: 'false',
+                                                                caption: 'Final EOY pay indicator'
+                                                            },
+                                                            {
+                                                                name: 'PayeeGrossPayments',
+                                                                field: 'grosssalary',
+                                                                mustBeSet: false,
+                                                                currency: true,
+                                                                caption: 'Employee gross pay'
+                                                            },
+                                                            {
+                                                                name: 'PayeeCDEPPaymentAmount',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true,
+                                                                caption: 'Employee CDEP',
+                                                                help: 'Payee CDEP Payment Amount',
+                                                spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.IndividualNonBusinessCommunityDevelopmentEmploymentProject.Amount'
+                                                            },
+                                                            {
+                                                                name: 'PayeeTotalINBPAYGWAmount',
+                                                                _field: 'taxbeforerebate',
+                                                                field: 'tax',
+                                                                mustBeSet: true,
+                                                                currency: true,
+                                                                caption: 'Employee tax'
+                                                            },
+                                                            {
+                                                                name: 'PayeeExemptForeignIncomeAmount',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true,
+                                                                caption: 'Foreign income',
+                                                                help: 'Payee Exempt Foreign Income Amount',
+                                                spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.IndividualNonBusinessExemptForeignEmploymentIncome.Amount'
+                                                            },
+                                                            {
+                                                                name: 'SuperGuaranteeAmount',
+                                                                field: 'superannuation',
+                                                                currency: true,
+                                                                caption: 'Super guarantee amount'
+                                                            },
+                                                            {
+                                                                name: 'OTEAmount',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true,
+                                                                help: 'This is the value, during the relevant period, for what an individual has earned ' +
+                                                        'during their ordinary hours of work.' +
+                                                        'Note: You must provide a value for either "OTEAmount" or "SuperGuaranteeAmount"' +
+                                                        'or both (recommended).',
+                                                spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.OrdinaryTimeEarnings.Amount'
+                                                            },
+                                                            {
+                                                                name: 'ReportableEmployerSuperContribution',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true,
+                                                                caption: 'Reportable Employer Super Contribution (RESC)',
+                                                                help: 'This is the value, during the relevant period, for employer superannuation contributions ' +
+                                                        'that are additional to the compulsory contributions where the employee influenced ' +
+                                                        'the rate or amount of contribution.',
+                                                spec: 'PAYEVNT 0002 2017/0003 2018: SuperannuationContribution.EmployerReportable.Amount'
+                                                            },
+                                                            {
+                                                                name: 'PayeeLumpSumPaymentAType',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeLumpSumPaymentA',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeLumpSumPaymentB',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeLumpSumPaymentD',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeLumpSumPaymentE',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeRFBTaxableAmount',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeRFBTaxableAmount',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeRFBExemptAmount',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeResidencyStatus',
+                                                                value: 'Resident',
+                                                                mustBeSet: false
+                                                            },
+                                                            {
+                                                                name: 'PayeeTaxFreeThresholdClaimed',
+                                                                field: 'employee.taxfreethreshold',
+                                                                caption: 'Claiming threshold indicator',
+                                                                defaultValue: 'false',
+                                                                help: ''
+                                                            },
+                                                            {
+                                                                name: 'PayeeHELPIndicator',
+                                                                field: 'employee.deducthelp',
+                                                                defaultValue: 'false',
+                                                                caption: 'HELP inductor'
+                                                            },
+                                                            {
+                                                                name: 'PayeeTradeSupportLoanIndicator',
+                                                                value: 'false',
+                                                                caption: 'TSL indicator' 
+                                                            },
+                                                            {
+                                                                name: 'PayeeStudentLoanIndicator',
+                                                                value: 'false',
+                                                                caption: 'SFSS indicator'
+                                                            },
+                                                            {
+                                                                name: 'PayeeDeclarerIdentifier',
+                                                                value: '',
+                                                                mustBeSet: false,
+                                                                caption: 'Signed by'
+                                                            },
+                                                            {
+                                                                name: 'PayeeDeclarationDate',
+                                                                field: 'employee.employmentstartdate',
+                                                                dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+                                                                caption: 'Signature date'
+                                                            },
+                                                            {
+                                                                name: 'PayeeDeclarationAcceptanceIndicator',
+                                                                value: 'true',
+                                                                caption: 'TFN Accepted'
+                                                            },
+                                                            {
+                                                                name: 'PayeeAllowancesDescription',
+                                                                value: 'General',
+                                                                mustBeSet: false,
+                                                                caption: 'Other allowance 1 description'
+                                                            },
+                                                            {
+                                                                name: 'PayeeAllowancesValue',
+                                                                field: 'allowances',
+                                                                mustBeSet: false,
+                                                                caption: 'Other allowance 1 value',
+                                                                currency: true
+                                                            },
+                                                            {
+                                                                name: 'PayeeDeductionsFees',
+                                                                field: 'deductions',
+                                                                mustBeSet: false,
+                                                                caption: 'Union fees',
+                                                                currency: true
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
 									},
 
 									init: function (oParam)
