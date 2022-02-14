@@ -327,19 +327,19 @@
 						name: 'PayeeDeductions',
 						value: [],
 						mustBeSet: false,
-						help: 'Contains any reportable deductions for the employee.
+						help: 'Contains any reportable deductions for the employee.'
 					},
 					{
 						name: 'SuperEntitlements',
 						value: [],
 						mustBeSet: false,
-						help: 'Contains any reportable superannuation entitlements for the employee.
+						help: 'Contains any reportable superannuation entitlements for the employee.'
 					},
 					{
 						name: 'ReportableFringeBenefits',
 						value: [],
 						mustBeSet: false,
-						help: 'Contains any reportable fringe benefits for the employee.
+						help: 'Contains any reportable fringe benefits for the employee.'
 					}
                 ]
             },
@@ -349,12 +349,318 @@
                 fields:
                 [
                     {
-                        name: 'x',
-                        field: 'employee.employeenumber',
-                        help: 'Set the Employee\'s Number.',
-                        caption: 'Payroll number',
-                        help: 'ID given to an employee (payee) in the payroll system identified by the BMSID provided',
-                        spec: 'PAYEVNT 0002 2017/0003 2018: Identifiers.EmploymentPayrollNumber.Identifier'
+                        name: 'IncomeStreamTypeCode',
+                        field: 'x',
+                        caption: Income Stream Type',
+                        help: 'The type of withholding payment that is being reported. i.e. SAW for Salary and Wages.',
+                        spec: ''
+                    },
+					{
+						name: 'IncomeStreamCountryCode',
+						field: 'x',
+						caption: 'Income Stream Country',
+						help: 'This represents the Country Code as prescribed by AS4590 and inherited from ISO 3166. Where income involves other tax jurisdictions, the income must be provided for the specific country for that tax jurisdiction. Australia has tax treaties with many countries to reduce or eliminate double taxation caused by overlapping tax jurisdictions. Refer to the BIG for more details.',
+						spec: ''
+					},
+					{
+                        name: 'PAYGWAmount',
+                        field: 'x',
+                        caption: PAYGW Amount',
+                        help: 'The --year-to-date-- amount withheld under the Pay As You Go (PAYG) arrangement.',
+                        spec: ''
+                    },
+					{
+                        name: 'ForeignTaxPaidAmount',
+                        value: '0',
+                        caption: Foreign Tax Paid Amount',
+                        help: 'The --year-to-date-- amount of foreign tax withheld.',
+                        spec: ''
+                    },
+					{
+                        name: 'ExemptForeignIncomeAmount',
+                        value: '0',
+                        caption: Exempt Foreign Income Amount',
+                        help: 'The --year-to-date-- amount of foreign employment income exempt from income tax in Australia.',
+                        spec: ''
+                    },
+					{
+                        name: 'GrossAmount',
+                        field: 'x',
+                        caption: Gross Amount',
+                        help: 'The --year-to-date-- gross remuneration amount less other amounts reported elsewhere.',
+                        spec: ''
+                    },
+					{
+                        name: 'OvertimeAmount',
+                        field: 'x',
+                        caption: Overtime Amount',
+                        help: 'The --year-to-date-- gross overtime amount.',
+                        spec: ''
+                    },
+					{
+                        name: 'BonusesandCommissionsAmount',
+                        field: 'x',
+                        caption: Bonuses and Commissions Amount',
+                        help: 'The --year-to-date-- gross bonuses and commissions amount.',
+                        spec: ''
+                    },
+					{
+                        name: 'DirectorsFeesAmount',
+                        field: 'x',
+                        caption: Directors Fees Amount',
+                        help: 'The --year-to-date-- directors' fees amount.',
+                        spec: ''
+                    },
+					{
+                        name: 'CDEPAmount',
+                        field: 'x',
+                        caption: CDEP Amount',
+                        help: 'The --year-to-date-- amount of payments made under a Community Development Employment Project (CDEP) scheme.',
+                        spec: ''
+                    },
+					{
+						name: 'PaidLeave',
+						value: [],
+						mustBeSet: false,
+						help: 'A tuple of various paid leave components.'
+					},
+					{
+						name: 'PayeeAllowances',
+						value: [],
+						mustBeSet: false,
+						help: 'A tuple of various allowance components.'
+					},
+					{
+						name: 'SalarySacrifice',
+						value: [],
+						mustBeSet: false,
+						help: 'A tuple of various salary sacrifice components.'
+					},
+					{
+						name: 'LumpSumPayments',
+						value: [],
+						mustBeSet: false,
+						help: 'A tuple of various lump sum components.'
+					},
+					{
+						name: 'TerminationPayments',
+						value: [],
+						mustBeSet: false,
+						help: 'A tuple of various ETP components.'
+					}
+				]
+			},
+			{
+                parentName: 'PaidLeave',
+                mustBeSetDefault: true,,
+				specURI: 'https://sandbox.singletouch.com.au/Support/PaidLeaveItem',
+                fields:
+                [
+                    {
+                        name: 'Type',
+                        field: 'x',
+                        caption: 'Paid Leave Type',
+                        help: 'The type code for leave item [C/U/P/W/A/O].',
+                        spec: ''
+                    },
+					{
+                        name: 'Amount',
+                        field: 'x',
+                        caption: 'Paid Leave Amount',
+                        help: 'The --year-to-date-- amount for the particular leave type.',
+                        spec: ''
+                    }
+				]
+			},
+			{
+                parentName: 'PayeeAllowances',
+                mustBeSetDefault: true,
+				specURI: 'https://sandbox.singletouch.com.au/Support/AllowanceItem',
+                fields:
+                [
+                    {
+                        name: 'Type',
+                        field: 'x',
+                        caption: 'Allowance Type',
+                        help: 'The type code for the allowance item [CD/AD/LD/MD/RD/TD/KN/QN/OD].',
+                        spec: ''
+                    },
+					{
+                        name: 'AllowanceDescription',
+                        field: 'x',
+                        caption: 'Allowance Description',
+                        help: 'This is the description or justification of the type of allowance paid to an individual that is not classified elsewhere. [ND: NON-DECUCTIBLE/U1: UNIFORM/V1: PRIVATE VEHICLE/H1: HOME OFFICE/T1: TRANSPORT/FARES/G1: GENERAL/Jobkeeper & Jobmaker as is].  When reporting other allowances, report the code as above + the pay component description.
+						Example: "ND Cents pr km Home Office"".',
+                        spec: ''
+                    },
+					{
+                        name: 'Amount',
+                        field: 'x',
+                        caption: 'Allowance Amount',
+                        help: 'The --year-to-date-- amount for the particular allowance type.',
+                        spec: ''
+                    }
+				]
+			},
+			{
+                parentName: 'SalarySacrifice',
+                mustBeSetDefault: true,
+				specURI: 'https://sandbox.singletouch.com.au/Support/SalarySacrificeItem',
+                fields:
+                [
+                    {
+                        name: 'Type',
+                        field: 'x',
+                        caption: 'SalarySacrifice Type',
+                        help: 'The type code for fringe benefit item [S/O].
+                        spec: ''
+                    },
+					{
+                        name: 'Amount',
+                        field: 'x',
+                        caption: Salary Sacrifice Amount',
+                        help: 'The --year-to-date-- amount for the particular salary sacrifice item.',
+                        spec: ''
+                    }
+				]
+			},
+			{
+                parentName: 'LumpSumPayments',
+                mustBeSetDefault: true,
+				specURI: 'https://sandbox.singletouch.com.au/Support/LumpSumItem',
+                fields:
+                [
+                    {
+                        name: 'Type',
+                        field: 'x',
+                        caption: 'Lump Sum Payment Type',
+                        help: '"The type code for the lump sum item. [R/T/B/D/E/W]',
+                        spec: ''
+                    },
+					{
+                        name: 'Amount',
+                        field: 'x',
+                        caption: 'Lump Sum Payment Amount',
+                        help: 'The --year-to-date-- amount for the particular lump sum type.',
+                        spec: ''
+                    },
+					{
+                        name: 'LumpSum_E_FinancialYear',
+                        field: 'x',
+                        caption: 'Lump Sum E Financial Year',
+                        help: 'The financial year in which the Lump Sum E amount is to be distributed. Should only be supplied if the Type provided is "E".',
+                        spec: ''
+                    }
+				]
+			},
+			{
+                parentName: 'TerminationPayments',
+                mustBeSetDefault: true,
+				specURI: 'https://sandbox.singletouch.com.au/Support/TerminationPaymentItem',
+                fields:
+                [
+                    {
+                        name: 'ETPCode',
+                        field: 'x',
+                        caption: 'ETP Code',
+                        help: 'The ETP code of the termination payment item. [R/O/S/P/D/N/B/T]',
+                        spec: ''
+                    },
+					{
+                        name: 'PayeeETPPaymentDate',
+                        field: 'x',
+                        caption: 'Payee ET PPayment Date',
+                        help: This is the date when the employment termination payment was made to the employee.',
+                        spec: ''
+                    },
+					{
+                        name: 'PayeeTerminationPaymentTaxFreeComponent',
+                        field: 'x',
+                        caption: 'Payee Termination Payment Tax Free Component',
+                        help: 'This is the value, during the relevant period, for the tax free component of the Employment Termination Payment (ETP)',
+                        spec: ''
+                    },
+					{
+                        name: 'PayeeTerminationTaxableComponent',
+                        field: 'x',
+                        caption: 'PayeeTerminationTaxableComponent',
+                        help: 'This is the value, during the relevant period, for the taxable component of an individual's employment termination payment.',
+                        spec: ''
+                    }
+
+					{
+                        name: 'PayeeTotalETPPAYGWAmount',
+                        field: 'x',
+                        caption: 'PayeeTotalETPPAYGWAmount',
+                        help: 'This is the value, during the relevant period, for the amount withheld from the Employment Termination Payment (ETP) as Pay As You Go (PAYG) withholding.',
+                        spec: ''
+                    },
+				
+				]
+			},
+			{
+                parentName: 'PayeeDeductions',
+                mustBeSetDefault: true,
+				specURI: 'https://sandbox.singletouch.com.au/Support/DeductionItem',
+                fields:
+                [
+                    {
+                        name: 'Type',
+                        field: 'x',
+                        caption: 'Type',
+                        help: 'The type code for the deduction item. [F/W/G/D]',
+                        spec: ''
+                    },
+					{
+                        name: 'Amount',
+                        field: 'x',
+                        caption: 'Amount',
+                        help: 'The --year-to-date-- amount for the particular deduction type.',
+                        spec: ''
+                    }
+				]
+			},
+			{
+                parentName: 'SuperEntitlements',
+                mustBeSetDefault: true,
+				specURI: 'https://sandbox.singletouch.com.au/Support/SuperEntitlementsItem',
+                fields:
+                [
+                    {
+                        name: 'Type',
+                        field: 'x',
+                        caption: 'Type',
+                        help: "The type code for fringe benefit item. [L/O/R]',
+                        spec: ''
+                    },
+					{
+                        name: 'Amount',
+                        field: 'x',
+                        caption: 'Amount',
+                        help: 'The --year-to-date-- amount for the particular super entitlement item.',
+                        spec: ''
+                    }
+				]
+			},
+			{
+                parentName: 'ReportableFringeBenefits',
+                mustBeSetDefault: true,
+				specURI: 'https://sandbox.singletouch.com.au/Support/ReportableFringeBenefitsItem',
+                fields:
+                [
+                    {
+                        name: 'Type',
+                        field: 'x',
+                        caption: 'Type',
+                        help: ""The type code for fringe benefit item. [T/X]',
+                        spec: ''
+                    },
+					{
+                        name: 'Amount',
+                        field: 'x',
+                        caption: 'Amount',
+                        help: 'The --year-to-date-- amount for the particular fringe benefits item.',
+                        spec: ''
                     }
 				]
 			}
