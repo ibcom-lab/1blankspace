@@ -55,4 +55,19 @@ https://api.singletouch.com.au/api/STPEvent2020
 
 https://sandbox.singletouch.com.au/Support/STPEventViewModel2020
 
+## myds Data:
+
+var oSearch = new AdvancedSearch();
+oSearch.method = 'SETUP_FINANCIAL_PAYROLL_LINE_TYPE_SEARCH';		
+oSearch.addField('includeinallowancesnontaxable,includeinallowancestaxable,includeindeductions,includeingrosssalary,' +
+                    'includeinleave,includeinleaveloading,includeinleavetype,includeinleavetypetext,includeinposttaxsuper,' +
+                    'includeinsalarysacrificesuper,includeinstandardhours,includeinsuper,includeintaxadjustments,notes,title,fixed');
+oSearch.rows = 100;
+oSearch.sort('title', 'asc');
+oSearch.getResults(function(oResponse)
+{
+    ns1blankspace.setup.financial.payroll.data.linetypes = oResponse.data.rows;
+    ns1blankspace.setup.financial.payroll.linetypes.show(oParam);
+});
+
 

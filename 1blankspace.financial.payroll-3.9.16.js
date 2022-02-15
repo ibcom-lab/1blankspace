@@ -6850,7 +6850,8 @@ ns1blankspace.financial.payroll.totals =
 								},
 
 					report: 	{
-									//STP - https://sandbox.singletouch.com.au/Support/StpEventModel
+									//STP - 1: https://sandbox.singletouch.com.au/Support/StpEventModel
+                                    //      2: https://sandbox.singletouch.com.au/Support/StpEventModel2020
 
 									data:
 									{
@@ -7324,7 +7325,8 @@ ns1blankspace.financial.payroll.totals =
                                                             name: 'OrgWPN',
                                                             value: '',
                                                             help: 'The WPN (if applicable) of the organisation reporting STP data. This should only be used if there is no ABN.',
-                                                            caption: 'Entity WPN (If no ABN)'
+                                                            caption: 'Entity WPN (If no ABN)',
+                                                            mustBeSet: false
                                                         },
                                                         {
                                                             name: 'BranchID',
@@ -7350,7 +7352,8 @@ ns1blankspace.financial.payroll.totals =
                                                             name: 'PreviousBMSID',
                                                             value: '',
                                                             caption: 'Previous BMS ID',
-                                                            help: 'Used if your software has (for some reason) changed BMS IDs. This should almost never happen.'
+                                                            help: 'Used if your software has (for some reason) changed BMS IDs. This should almost never happen.',
+                                                            mustBeSet: false
                                                         },
                                                         {
                                                             name: 'PayrollGroupID',
@@ -8085,7 +8088,7 @@ ns1blankspace.financial.payroll.totals =
 													oSearch.getResults(function(oResponse)
 													{
 														ns1blankspace.financial.payroll.data.payPeriod = oResponse.data.rows[0];
-														ns1blankspace.financial.payroll.totals.employees.report.payPeriod(oParam)
+														ns1blankspace.financial.payroll.totals.employees.report.payPeriodItems(oParam)
 													});
 												}
 											}
@@ -8121,14 +8124,63 @@ ns1blankspace.financial.payroll.totals =
 
 											oParam.guid = oParam.guid + '-' + moment(ns1blankspace.financial.payroll.data.payPeriod.startdate, ns1blankspace.option.dateFormats).format('YYYY-MM-DD')  + '-' + moment(ns1blankspace.financial.payroll.data.payPeriod.paydate, ns1blankspace.option.dateFormats).format('YYYY-MM-DD'),
 
-											ns1blankspace.financial.payroll.totals.employees.report.create(oParam)
+											ns1blankspace.financial.payroll.totals.employees.report.payPeriodItems(oParam)
 										}
 									},
+
+                                    payPeriodItems: function (oParam, oResponse)
+                                    {
+                                        //total by type and employee
+                                        //https://docs.mydigitalstructure.cloud/FINANCIAL_PAYROLL_PAY_RECORD_ITEM_SEARCH
+
+                                        if (oResponse == undefined)
+										{
+											var oSearch = new AdvancedSearch();
+											oSearch.method = 'FINANCIAL_PAYROLL_PAY_RECORD_ITEM_SEARCH';
+											oSearch.addField('payrecorditem.payrecord.employee');
+                                            oSearch.addField('type');
+                                            oSearch.addField('sum(total) total');
+											
+                                            if (ns1blankspace.financial.payroll.data.startDate !== undefined)
+                                            {
+                                                oSearch.addFilter('payrecorditem.payrecord.payperiod.paydate', 'GREATER_THAN_OR_EQUAL_TO', ns1blankspace.financial.payroll.data.startDate)
+                                            }
+                                                
+                                            if (ns1blankspace.financial.payroll.data.endDate != undefined)
+                                            {
+                                                oSearch.addFilter('payrecorditem.payrecord.payperiod.paydate', 'LESS_THAN_OR_EQUAL_TO', ns1blankspace.financial.payroll.data.endDate)
+                                            }
+                                            
+                                            oSearch.rows = 99999;
+											oSearch.getResults(function(data)
+											{
+												ns1blankspace.financial.payroll.totals.employees.report.payPeriodItems(oParam, data)
+											});
+										}
+										else
+										{
+                                            ns1blankspace.financial.payroll.data.payPeriodItems = oResponse.data.rows;
+
+                                            _.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
+                                            {
+                                                oSummary.items = _.filter(ns1blankspace.financial.payroll.data.payPeriodItems, function (oPayPeriodItem)
+                                                {
+                                                    return oSummary.id == oPayPeriodItem['payrecorditem.payrecord.employee']
+                                                });
+                                            });
+                                        
+											ns1blankspace.financial.payroll.totals.employees.report.create(oParam)
+	
+                                        }
+                                    },
 
 									create: function (oParam, oResponse)
 									{
 										var bCaptionOnly = true;
-										var oFormat = ns1blankspace.financial.payroll.totals.employees.report.data.format;
+                                        var sFormatVersion = '2';
+
+                                        //3.9.16
+										var oFormat = ns1blankspace.financial.payroll.totals.employees.report.data[sFormatVersion].format;
 										var oSummaries = ns1blankspace.financial.payroll.data.summaries;
 										var oData = {};
 										var oItemData = {};
