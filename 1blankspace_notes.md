@@ -70,4 +70,19 @@ oSearch.getResults(function(oResponse)
     ns1blankspace.setup.financial.payroll.linetypes.show(oParam);
 });
 
+## myds Functional updates
+
+FINANCIAL_PAYROLL_EMPLOYEE_MANAGE
+
+- type:
+[F/P/C/L/V/D/N]
+
+- terminationType:
+[V/I/D/R/F/C/T]
+
+
+
+
+
+
 

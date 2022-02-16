@@ -7444,12 +7444,14 @@ ns1blankspace.financial.payroll.totals =
                                                         },
                                                         {
                                                             name: 'RunDateTimeStamp',
-                                                            param: 'createddate',
+                                                            param: 'paydate',
+															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
                                                             help: 'The date (and time) that this pay event was processed (within your payroll system).'
                                                         },
                                                         {
                                                             name: 'PayUpdateDate',
                                                             param: 'paydate',
+															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
                                                             help: 'The date the payment (monies) are to be paid to the employees.'
                                                         },
                                                         {
@@ -7597,52 +7599,56 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'EmploymentBasisCode',
-                                                                field: 'xxx',
+                                                                value: 'F',
                                                                 mustBeSet: true,
                                                                 caption: 'Employment Basis',
                                                                 help: 'Indicates whether this employee is full-time, part-time, casual, etc. [F/P/C/L/V/D/N]'
                                                             },
                                                             {
                                                                 name: 'CessationTypeCode',
-                                                                field: 'xxx',
-                                                                mustBeSet: true,
+                                                                value: '',
+                                                                mustBeSet: false,
                                                                 caption: 'Cessation Type',
                                                                 help: 'Describes the type of termination this employee is subject to i.e. redundancy, death, etc. [V/I/D/R/F/C/T]'
                                                             },
                                                             {
                                                                 name: 'TaxTreatmentCode',
-                                                                field: 'xxx',
+                                                                field: 'lognotes',
                                                                 mustBeSet: true,
                                                                 caption: 'Tax Treatment',
                                                                 help: 'Indicates the PAYGW tax scales and other components that have been applied by the payer to determine payee withholding amounts. Must be included in every pay event.'
                                                             },
                                                             {
                                                                 name: 'TaxOffsetAmount',
-                                                                field: 'xxx',
+                                                                value: '0',
                                                                 mustBeSet: true,
                                                                 caption: 'Tax Offset Amount',
                                                                 help: 'The annual tax offset amount that some payees may provide to their payers to reduce the amount of withholding, when specific criteria or concessions apply. For example, invalid or invalid carer tax offset; or zone or overseas forces tax offset.'
                                                             },
                                                             {
                                                                 name: 'IncomeStreams',
+																caption: 'Income Streams',
                                                                 value: [],
                                                                 mustBeSet: true,
                                                                 help: 'Contains the pay values for the employee.'
                                                             },
                                                             {
                                                                 name: 'PayeeDeductions',
+																caption: 'Payee Deductions',
                                                                 value: [],
                                                                 mustBeSet: false,
                                                                 help: 'Contains any reportable deductions for the employee.'
                                                             },
                                                             {
                                                                 name: 'SuperEntitlements',
+																caption: 'Super Entitlements',
                                                                 value: [],
                                                                 mustBeSet: false,
                                                                 help: 'Contains any reportable superannuation entitlements for the employee.'
                                                             },
                                                             {
                                                                 name: 'ReportableFringeBenefits',
+																caption: 'Reportable Fringe Benefits',
                                                                 value: [],
                                                                 mustBeSet: false,
                                                                 help: 'Contains any reportable fringe benefits for the employee.'
@@ -7652,77 +7658,86 @@ ns1blankspace.financial.payroll.totals =
                                                     {
                                                         parentName: 'IncomeStreams',
                                                         mustBeSetDefault: true,
+														specURI: 'https://sandbox.singletouch.com.au/Support/IncomeStreamItem',
                                                         fields:
                                                         [
                                                             {
                                                                 name: 'IncomeStreamTypeCode',
-                                                                field: 'x',
+                                                                value: 'SAW',
                                                                 caption: 'Income Stream Type',
                                                                 help: 'The type of withholding payment that is being reported. i.e. SAW for Salary and Wages.',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'IncomeStreamCountryCode',
-                                                                field: 'x',
+                                                                value: 'AU',
                                                                 caption: 'Income Stream Country',
                                                                 help: 'This represents the Country Code as prescribed by AS4590 and inherited from ISO 3166. Where income involves other tax jurisdictions, the income must be provided for the specific country for that tax jurisdiction. Australia has tax treaties with many countries to reduce or eliminate double taxation caused by overlapping tax jurisdictions. Refer to the BIG for more details.',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'PAYGWAmount',
-                                                                field: 'x',
+                                                                summary: 'taxbeforerebate',
                                                                 caption: 'PAYGW Amount',
                                                                 help: 'The --year-to-date-- amount withheld under the Pay As You Go (PAYG) arrangement.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'ForeignTaxPaidAmount',
                                                                 value: '0',
                                                                 caption: 'Foreign Tax Paid Amount',
                                                                 help: 'The --year-to-date-- amount of foreign tax withheld.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'ExemptForeignIncomeAmount',
                                                                 value: '0',
                                                                 caption: 'Exempt Foreign Income Amount',
                                                                 help: 'The --year-to-date-- amount of foreign employment income exempt from income tax in Australia.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'GrossAmount',
-                                                                field: 'x',
+                                                                summary: 'grosssalary',
                                                                 caption: 'Gross Amount',
                                                                 help: 'The --year-to-date-- gross remuneration amount less other amounts reported elsewhere.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'OvertimeAmount',
-                                                                field: 'x',
+                                                                value: '0',
                                                                 caption: 'Overtime Amount',
                                                                 help: 'The --year-to-date-- gross overtime amount.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'BonusesandCommissionsAmount',
-                                                                field: 'x',
+                                                                value: '0',
                                                                 caption: 'Bonuses and Commissions Amount',
                                                                 help: 'The --year-to-date-- gross bonuses and commissions amount.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'DirectorsFeesAmount',
-                                                                field: 'x',
+                                                                value: '0',
                                                                 caption: 'Directors Fees Amount',
                                                                 help: 'The --year-to-date-- directors fees amount.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'CDEPAmount',
-                                                                field: 'x',
+                                                                value: '0',
                                                                 caption: 'CDEP Amount',
                                                                 help: 'The --year-to-date-- amount of payments made under a Community Development Employment Project (CDEP) scheme.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'PaidLeave',
@@ -7758,6 +7773,7 @@ ns1blankspace.financial.payroll.totals =
                                                     },
                                                     {
                                                         parentName: 'PaidLeave',
+														source: 'items',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/PaidLeaveItem',
                                                         fields:
@@ -8088,7 +8104,9 @@ ns1blankspace.financial.payroll.totals =
 													oSearch.getResults(function(oResponse)
 													{
 														ns1blankspace.financial.payroll.data.payPeriod = oResponse.data.rows[0];
-														ns1blankspace.financial.payroll.totals.employees.report.payPeriodItems(oParam)
+														ns1blankspace.financial.payroll.data.report = _.assign({}, ns1blankspace.financial.payroll.data.payPeriod);
+														
+														ns1blankspace.financial.payroll.totals.employees.report.payPeriod(oParam)
 													});
 												}
 											}
@@ -8123,6 +8141,14 @@ ns1blankspace.financial.payroll.totals =
 											oParam.employerPeriodW2 = numeral(numeral(ns1blankspace.financial.payroll.data.payPeriod.taxbeforerebate).value()).format('0.00');
 
 											oParam.guid = oParam.guid + '-' + moment(ns1blankspace.financial.payroll.data.payPeriod.startdate, ns1blankspace.option.dateFormats).format('YYYY-MM-DD')  + '-' + moment(ns1blankspace.financial.payroll.data.payPeriod.paydate, ns1blankspace.option.dateFormats).format('YYYY-MM-DD'),
+
+											ns1blankspace.financial.payroll.data.report = _.assign(ns1blankspace.financial.payroll.data.report,
+											{
+												employerPeriodW1: oParam.employerPeriodW1,
+												employerPeriodW2: oParam.employerPeriodW2,
+												guid: oParam.guid
+
+											});
 
 											ns1blankspace.financial.payroll.totals.employees.report.payPeriodItems(oParam)
 										}
@@ -8169,6 +8195,52 @@ ns1blankspace.financial.payroll.totals =
                                                 });
                                             });
                                         
+											ns1blankspace.financial.payroll.totals.employees.report.payPeriodLogs(oParam)
+	
+                                        }
+                                    },
+
+									payPeriodLogs: function (oParam, oResponse)
+                                    {
+                                        //https://docs.mydigitalstructure.cloud/FINANCIAL_PAYROLL_PAY_PROCESS_LOG_SEARCH
+
+                                        if (oResponse == undefined)
+										{
+											var oSearch = new AdvancedSearch();
+											oSearch.method = 'FINANCIAL_PAYROLL_PAY_PROCESS_LOG_SEARCH';
+											oSearch.addField('employee');
+                                            oSearch.addField('notes');
+											
+                                            if (ns1blankspace.financial.payroll.data.startDate !== undefined)
+                                            {
+                                                oSearch.addFilter('log.payperiod.paydate', 'GREATER_THAN_OR_EQUAL_TO', ns1blankspace.financial.payroll.data.startDate)
+                                            }
+                                                
+                                            if (ns1blankspace.financial.payroll.data.endDate != undefined)
+                                            {
+                                                oSearch.addFilter('log.payperiod.paydate', 'LESS_THAN_OR_EQUAL_TO', ns1blankspace.financial.payroll.data.endDate)
+                                            }
+                                            
+                                            oSearch.rows = 99999;
+											oSearch.getResults(function(data)
+											{
+												ns1blankspace.financial.payroll.totals.employees.report.payPeriodLogs(oParam, data)
+											});
+										}
+										else
+										{
+                                            ns1blankspace.financial.payroll.data.payPeriodLogs = oResponse.data.rows;
+
+                                            _.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
+                                            {
+                                                oSummary.logs = _.filter(ns1blankspace.financial.payroll.data.payPeriodLogs, function (payPeriodLog)
+                                                {
+                                                    return oSummary.id == payPeriodLog['employee']
+                                                });
+
+												oSummary.lognotes = _.join(_.map(oSummary.logs, 'notes'), ', ');
+                                            });
+                                        
 											ns1blankspace.financial.payroll.totals.employees.report.create(oParam)
 	
                                         }
@@ -8189,6 +8261,11 @@ ns1blankspace.financial.payroll.totals =
 
 										ns1blankspace.financial.payroll.totals.employees.report.data.object = undefined;
 										ns1blankspace.financial.payroll.totals.employees.report.data.errors = [];
+										ns1blankspace.financial.payroll.totals.employees.report.data.format = oFormat;
+
+										var oParamReport = ns1blankspace.financial.payroll.data.report;
+										
+										oParam = _.assign(oParam, oParamReport);
 
 										$.each(oSummaries, function (s, oSummary)
 										{
@@ -8281,131 +8358,181 @@ ns1blankspace.financial.payroll.totals =
 													}
 												});
 
-												var oDataFileItem;
-
-												$.each(oSummaries, function (s, oSummary)
+												var oHeaderFormatItem = _.find(ns1blankspace.financial.payroll.totals.employees.report.data.format.header.fields, function (field)
 												{
-													oItemData = {id: oSummary.id};
-													oDataFileItem = {};
+													return (field.name == oItem.parentName)
+												});
 
-													oSummary['employee.taxfreethreshold'] = (oSummary['employee.taxfreethreshold']=='Y'?'true':'false')
-													oSummary['employee.deducthelp'] = (oSummary['employee.deducthelp']=='Y'?'true':'false')
+												if (oHeaderFormatItem != undefined)
+												{
+													var oDataFileItem;
 
-													$.each(oItem.fields, function (f, oField)
+													$.each(oSummaries, function (s, oSummary)
 													{
-														bMustBeSet = oField.mustBeSet;
-														
-														if (!_.isUndefined(oField.value))
+														oItemData = {id: oSummary.id};
+														oDataFileItem = {};
+
+														oSummary['employee.taxfreethreshold'] = (oSummary['employee.taxfreethreshold']=='Y'?'true':'false')
+														oSummary['employee.deducthelp'] = (oSummary['employee.deducthelp']=='Y'?'true':'false')
+
+														$.each(oItem.fields, function (f, oField)
 														{
-															oItemData[oField.name] = oField.value;
-														}
-														else
-														{
-															if (!_.isUndefined(oField.field))
+															bMustBeSet = oField.mustBeSet;
+															
+															if (!_.isUndefined(oField.value))
 															{
-																oItemData[oField.name] = _.trim(oSummary[oField.field]);
+																if (!_.isArray(oField.value))
+																{
+																	oItemData[oField.name] = oField.value;
+																}
+																else
+																{
+																	//Get items - oField
+																	oItemData[oField.name] = ns1blankspace.financial.payroll.totals.employees.report.createItems(oField, oSummary)
+																}
 															}
-															else if (!_.isUndefined(oField.param))
+															else
 															{
-																oItemData[oField.name] = _.trim(oParam[oField.param]);
-															}
-															else if (!_.isUndefined(oField.defaultValue))
-															{
-																oItemData[oField.name] = oField.defaultValue;
-															}
-														}
-
-														if (oField.onlyIfData && oItemData[oField.name] == undefined)
-														{
-															delete oItemData[oField.name]
-														}
-
-														if (oField.onlyIfNotZero && oItemData[oField.name] == 0)
-														{
-															delete oItemData[oField.name]
-														}
-
-														if (oField.currency)
-														{
-															if (oItemData[oField.name] == '' || oItemData[oField.name] == undefined)
-															{
-																oItemData[oField.name] = '0'
-															}
-
-															oItemData[oField.name] = numeral(numeral(oItemData[oField.name]).value()).format('0.00');
-														}
-
-														if (oField.numeric)
-														{
-															if (oItemData[oField.name] == '' || oItemData[oField.name] == undefined)
-															{
-																oItemData[oField.name] = '0'
+																if (!_.isUndefined(oField.field))
+																{
+																	oItemData[oField.name] = _.trim(oSummary[oField.field]);
+																}
+																else if (!_.isUndefined(oField.param))
+																{
+																	oItemData[oField.name] = _.trim(oParam[oField.param]);
+																}
+																else if (!_.isUndefined(oField.defaultValue))
+																{
+																	oItemData[oField.name] = oField.defaultValue;
+																}
 															}
 
-															oItemData[oField.name] = numeral(oItemData[oField.name]).value();
-														}
-
-														if (oField.dateFormat != undefined)
-														{
-															var oDate = moment(oItemData[oField.name], ns1blankspace.option.dateFormats)
-
-															if (oDate.isValid())
+															if (oField.onlyIfData && oItemData[oField.name] == undefined)
 															{
-																oItemData[oField.name] = oDate.format(oField.dateFormat);
+																delete oItemData[oField.name]
 															}
-														}
 
-														if (bCaptionOnly && oField.caption == undefined)
-														{
-															delete oItemData[oField.name]
-														}
-
-														if (bMustBeSet && (oItemData[oField.name] == undefined || oItemData[oField.name] == ''))
-														{
-															ns1blankspace.financial.payroll.totals.employees.report.data.errors.push(
+															if (oField.onlyIfNotZero && oItemData[oField.name] == 0)
 															{
-																type: 'item',
-																name: oField.name,
-																id: oSummary.id,
-																help: oField.help
-															});
-														}
+																delete oItemData[oField.name]
+															}
 
-														if (oItemData[oField.name] != undefined && oField.caption != undefined)
-														{
-															oDataFileItem[oField.caption] = oItemData[oField.name];
+															if (oField.currency)
+															{
+																if (oItemData[oField.name] == '' || oItemData[oField.name] == undefined)
+																{
+																	oItemData[oField.name] = '0'
+																}
+
+																oItemData[oField.name] = numeral(numeral(oItemData[oField.name]).value()).format('0.00');
+															}
+
+															if (oField.numeric)
+															{
+																if (oItemData[oField.name] == '' || oItemData[oField.name] == undefined)
+																{
+																	oItemData[oField.name] = '0'
+																}
+
+																oItemData[oField.name] = numeral(oItemData[oField.name]).value();
+															}
 
 															if (oField.dateFormat != undefined)
 															{
-																var oDate = moment(oDataFileItem[oField.caption], oField.dateFormat)
+																var oDate = moment(oItemData[oField.name], ns1blankspace.option.dateFormats)
 
 																if (oDate.isValid())
 																{
-																	oDataFileItem[oField.caption] = oDate.format('D/M/YYYY');
+																	oItemData[oField.name] = oDate.format(oField.dateFormat);
 																}
 															}
+
+															if (bCaptionOnly && oField.caption == undefined)
+															{
+																delete oItemData[oField.name]
+															}
+
+															if (bMustBeSet && (oItemData[oField.name] == undefined || oItemData[oField.name] == ''))
+															{
+																ns1blankspace.financial.payroll.totals.employees.report.data.errors.push(
+																{
+																	type: 'item',
+																	name: oField.name,
+																	id: oSummary.id,
+																	help: oField.help
+																});
+															}
+
+															if (oItemData[oField.name] != undefined && oField.caption != undefined)
+															{
+																oDataFileItem[oField.caption] = oItemData[oField.name];
+
+																if (oField.dateFormat != undefined)
+																{
+																	var oDate = moment(oDataFileItem[oField.caption], oField.dateFormat)
+
+																	if (oDate.isValid())
+																	{
+																		oDataFileItem[oField.caption] = oDate.format('D/M/YYYY');
+																	}
+																}
+															}
+														});
+
+														ns1blankspace.financial.payroll.totals.employees.report.data.fileData.push(
+																	$.extend(true, _.clone(ns1blankspace.financial.payroll.totals.employees.report.data.fileHeader), _.clone(oDataFileItem)))
+
+														if (_.isArray(oData[oItem.parentName]))
+														{
+															oData[oItem.parentName].push(oItemData);
+														}
+														else
+														{
+															oData[oItem.parentName] = oItemData;
 														}
 													});
-
-													ns1blankspace.financial.payroll.totals.employees.report.data.fileData.push(
-																$.extend(true, _.clone(ns1blankspace.financial.payroll.totals.employees.report.data.fileHeader), _.clone(oDataFileItem)))
-
-													if (_.isArray(oData[oItem.parentName]))
-													{
-														oData[oItem.parentName].push(oItemData);
-													}
-													else
-													{
-														oData[oItem.parentName] = oItemData;
-													}
-
-												});
+												}
 											});
 
 											ns1blankspace.financial.payroll.totals.employees.report.data.object = oData;
 
 											ns1blankspace.financial.payroll.totals.employees.report.status(oParam)
 										}	
+									},
+
+									createItems: function (oField, oSummary)
+									{
+										var itemsData = [];
+										var itemData = {};
+
+										var oFormatItem = _.find(ns1blankspace.financial.payroll.totals.employees.report.data.format.item, function (formatItem)
+										{
+											return (formatItem.parentName == oField.name)
+										});
+
+										if (oFormatItem != undefined)
+										{									 
+											_.each(oFormatItem.fields, function (field)
+											{
+												if (field.value != undefined)
+												{
+													itemData[field.name] = field.value;
+												}
+												else if (field.summary != undefined)
+												{
+													itemData[field.name] = oSummary[field.summary];
+												}
+
+												if (field.currency)
+												{
+													itemData[field.name] = numeral(itemData[field.name]).format('0.00')
+												}
+											});
+
+											itemsData.push(itemData);
+										}
+										
+										return itemsData;
 									},
 
 									status: function (oParam, oResponse)
@@ -8503,82 +8630,123 @@ ns1blankspace.financial.payroll.totals =
 													var sPayrollID;
 													var aErrors;
 
-													aItemHTML = ['<div class="panel-group" id="' + key + '">']
+													//Is this in the format.header.fields
 
-													$.each(value, function (v, itemValue)
+													var oHeaderFormatItem = _.find(ns1blankspace.financial.payroll.totals.employees.report.data.format.header.fields, function (field)
 													{
-														if (itemValue['PayeePayrollID'] == '' || itemValue['PayeePayrollID'] == undefined)
-														{
-															sPayrollID = ''
-														}
-														else
-														{
-															sPayrollID = ' (' + itemValue['PayeePayrollID'] + ')'
-														}
-
-														sStatus = '';
-
-														aErrors = _.filter(ns1blankspace.financial.payroll.totals.employees.report.data.errors,
-																			function (error)
-																			{
-																				return (error.type == 'item' && error.id == itemValue.id)
-																			});
-
-														if (aErrors.length != 0)
-														{
-															sStatus = '<i style="color:red; text-align:center; margin-right:6px; margin-left:3px;" class="glyphicon glyphicon-warning-sign"></i>'
-														}
-
-														aItemHTML.push('<div class="panel panel-default">' +
-   																		'<div class="panel-heading">' +
-   																			'<a data-toggle="collapse" data-parent="#' + key + '" href="#' + key + v + '">' +
-   																			sStatus + 
-   																			itemValue['PayeeFirstName'] + ' ' + itemValue['PayeeFamilyName'] + 
-   																			sPayrollID +
-   																			'</a>' +
-      																	'</div>')
-      
-      												aItemHTML.push('<div id="' + key + v + '" class="panel-collapse collapse">' +
-																	      	'<div class="panel-body">' +
-																	      	'<table class="table table-condensed table-hover" style="font-size:0.825em;">')
-
-      												$.each(itemValue, function (ivkey, itemValueValue)
-														{
-															if (ivkey != 'id')
-															{
-																sStatus = '';
-																oError = _.find(ns1blankspace.financial.payroll.totals.employees.report.data.errors,
-																				function (error)
-																				{
-																					return (error.name == ivkey && error.type == 'item' && error.id == itemValue.id)
-																				});
-
-																sValue = itemValueValue;
-
-																if (oError != undefined)
-																{
-																	sStatus = '<i style="color:red; text-align:center;" class="glyphicon glyphicon-warning-sign"></i>';
-																	if (oError.help != undefined)
-																	{
-																		sValue = '<span class="text-muted"><em>' + oError.help + '</em></span>';
-																	}
-																}
-
-																aItemHTML.push(
-																	'<tr><td style="width:10px;">' + sStatus + '</td><td>' + ivkey + '</td><td>' + sValue + '</td></tr>');
-															}	
-														});
-
-      												aItemHTML.push('</table>' +
-      																	'</div>' + 
-																	    	'</div></div>');					
-
+														return (field.name == key)
 													});
 
-													aItemHTML.push('</div>');
+													if (oHeaderFormatItem != undefined)
+													{
+														aItemHTML = ['<div class="panel-group" id="' + key + '">']
 
-													aHTML.push(
-														'<tr><td style="width:10px;"></td><td>' + key + '</td><td>' + aItemHTML.join('') + '</td></tr>');
+														$.each(value, function (v, itemValue)
+														{
+															if (itemValue['PayeePayrollID'] == '' || itemValue['PayeePayrollID'] == undefined)
+															{
+																sPayrollID = ''
+															}
+															else
+															{
+																sPayrollID = ' (' + itemValue['PayeePayrollID'] + ')'
+															}
+
+															sStatus = '';
+
+															aErrors = _.filter(ns1blankspace.financial.payroll.totals.employees.report.data.errors,
+																				function (error)
+																				{
+																					return (error.type == 'item' && error.id == itemValue.id)
+																				});
+
+															if (aErrors.length != 0)
+															{
+																sStatus = '<i style="color:red; text-align:center; margin-right:6px; margin-left:3px;" class="glyphicon glyphicon-warning-sign"></i>'
+															}
+
+															aItemHTML.push('<div class="panel panel-default">' +
+																			'<div class="panel-heading">' +
+																				'<a data-toggle="collapse" data-parent="#' + key + '" href="#' + key + v + '">' +
+																				sStatus + 
+																				itemValue['PayeeFirstName'] + ' ' + itemValue['PayeeFamilyName'] + 
+																				sPayrollID +
+																				'</a>' +
+																			'</div>')
+		
+														aItemHTML.push('<div id="' + key + v + '" class="panel-collapse collapse">' +
+																				'<div class="panel-body">' +
+																				'<table class="table table-condensed table-striped" style="font-size:0.825em;">')
+
+														$.each(itemValue, function (ivkey, itemValueValue)
+															{
+																if (ivkey != 'id')
+																{
+																	sStatus = '';
+																	oError = _.find(ns1blankspace.financial.payroll.totals.employees.report.data.errors,
+																					function (error)
+																					{
+																						return (error.name == ivkey && error.type == 'item' && error.id == itemValue.id)
+																					});
+
+																	sValue = itemValueValue;
+
+																	if (oError != undefined)
+																	{
+																		sStatus = '<i style="color:red; text-align:center;" class="glyphicon glyphicon-warning-sign"></i>';
+																		if (oError.help != undefined)
+																		{
+																			sValue = '<span class="text-muted"><em>' + oError.help + '</em></span>';
+																		}
+																	}
+
+																	if (_.isPlainObject(sValue))
+																	{
+																		sValue = JSON.stringify(sValue)
+																	}
+
+																	if (_.isArray(sValue))
+																	{
+																		if (sValue.length == 0)
+																		{
+																			sValue = "NO DATA"
+																		}
+																		else if (sValue.length == 1)
+																		{
+																			var aValue = [];
+
+																			aValue.push('<table class="table table-condensed table-striped">');
+																			_.each(_.first(sValue), function (value, key)
+																			{
+																				aValue.push('<tr><td class="col-sm-5">' + key + '</td><td class="col-sm-7">' + value + '</td></tr>');
+																			});
+																			aValue.push('</table>');
+																			
+																			sValue = aValue.join('');
+																		}
+																		else
+																		{
+
+																		}
+																		
+																	}
+
+																	aItemHTML.push(
+																		'<tr><td style="width:10px;">' + sStatus + '</td><td>' + ivkey + '</td><td>' + sValue + '</td></tr>');
+																}	
+															});
+
+														aItemHTML.push('</table>' +
+																			'</div>' + 
+																				'</div></div>');					
+
+														});
+
+														aItemHTML.push('</div>');
+
+														aHTML.push(
+															'<tr><td style="width:10px;"></td><td>' + key + '</td><td>' + aItemHTML.join('') + '</td></tr>');
+													}
 												}
 											});
 										}
