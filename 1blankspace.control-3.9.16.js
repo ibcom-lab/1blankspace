@@ -404,7 +404,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.setup.website',
-		source: '/site/1903/1blankspace.setup.website-3.9.14.js'
+		source: '/site/1903/1blankspace.setup.website-3.9.16.js'
 	},
 	{
 		nameSpace: '1blankspace.setup.websiteForm',
