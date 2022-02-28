@@ -328,7 +328,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.financial.credit',
-		source: '/site/1903/1blankspace.financial.credit-2.0.7.js'
+		source: '/site/1903/1blankspace.financial.credit-3.9.17.js'
 	},
 	{
 		nameSpace: '1blankspace.financial.journal',
