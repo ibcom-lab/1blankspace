@@ -606,7 +606,7 @@ ns1blankspace.setup.website =
 										'/site/' + ns1blankspace.objectContextData.id + '/' +
 										'</td></tr>');
 
-                        aHTML.push('<tr><td class="ns1blankspaceSummaryCaption">Who Can Access This Site</td></tr>' +
+                        aHTML.push('<tr><td class="ns1blankspaceSummaryCaption">Authentication Using This Site</td></tr>' +
 										'<tr><td id="ns1blankspaceSummarySiteStatus" class="ns1blankspaceSummary">' +
 										ns1blankspace.objectContextData.useraccesstypetext +
 										'</td></tr>');
@@ -694,7 +694,7 @@ ns1blankspace.setup.website =
                                         
                         aHTML.push('<tr class="ns1blankspaceCaption">' +
 										'<td class="ns1blankspaceCaption">' +
-										'Who Can Access This Site' +
+										'Authentication Using This Site' +
 										'</td></tr>' +
 										'<tr class="ns1blankspace">' +
 										'<td class="ns1blankspaceRadio">' +
