@@ -7445,7 +7445,8 @@ ns1blankspace.financial.payroll.totals =
                                                         {
                                                             name: 'RunDateTimeStamp',
                                                             param: 'paydate',
-															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
+															dateFormat: 'YYYY-MM-DDTHH:mm:ssZ',
+															dateUTC: true,
                                                             help: 'The date (and time) that this pay event was processed (within your payroll system).'
                                                         },
                                                         {
@@ -7822,7 +7823,8 @@ ns1blankspace.financial.payroll.totals =
                                                                 summary: 'allowances',
                                                                 caption: 'Allowance Amount',
                                                                 help: 'The --year-to-date-- amount for the particular allowance type.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             }
                                                         ]
                                                     },
@@ -7844,7 +7846,8 @@ ns1blankspace.financial.payroll.totals =
                                                                 field: 'x',
                                                                 caption: 'Salary Sacrifice Amount',
                                                                 help: 'The --year-to-date-- amount for the particular salary sacrifice item.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             }
                                                         ]
                                                     },
@@ -7866,14 +7869,16 @@ ns1blankspace.financial.payroll.totals =
                                                                 field: 'x',
                                                                 caption: 'Lump Sum Payment Amount',
                                                                 help: 'The --year-to-date-- amount for the particular lump sum type.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'LumpSum_E_FinancialYear',
                                                                 field: 'x',
                                                                 caption: 'Lump Sum E Financial Year',
                                                                 help: 'The financial year in which the Lump Sum E amount is to be distributed. Should only be supplied if the Type provided is "E".',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             }
                                                         ]
                                                     },
@@ -7886,38 +7891,41 @@ ns1blankspace.financial.payroll.totals =
                                                         [
                                                             {
                                                                 name: 'ETPCode',
-                                                                field: 'x',
+                                                                value: 'O',
                                                                 caption: 'ETP Code',
-                                                                help: 'The ETP code of the termination payment item. [R/O/S/P/D/N/B/T]',
+                                                                help: 'The ETP code of the termination payment item. [R/O/S/P/D/N/B/T] [Default 0,Other Reason',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'PayeeETPPaymentDate',
-                                                                field: 'x',
-                                                                caption: 'Payee ET PPayment Date',
+                                                                summary: 'enddate',
+                                                                caption: 'Payee ETP Payment Date',
                                                                 help: 'This is the date when the employment termination payment was made to the employee.',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'PayeeTerminationPaymentTaxFreeComponent',
-                                                                field: 'x',
+                                                                value: '0',
                                                                 caption: 'Payee Termination Payment Tax Free Component',
                                                                 help: 'This is the value, during the relevant period, for the tax free component of the Employment Termination Payment (ETP)',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'PayeeTerminationTaxableComponent',
-                                                                field: 'x',
+                                                                value: '0',
                                                                 caption: 'PayeeTerminationTaxableComponent',
                                                                 help: 'This is the value, during the relevant period, for the taxable component of an individual\'s employment termination payment.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                             {
                                                                 name: 'PayeeTotalETPPAYGWAmount',
-                                                                field: 'x',
+                                                                source: 'total',
                                                                 caption: 'PayeeTotalETPPAYGWAmount',
                                                                 help: 'This is the value, during the relevant period, for the amount withheld from the Employment Termination Payment (ETP) as Pay As You Go (PAYG) withholding.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             },
                                                         
                                                         ]
@@ -7941,7 +7949,8 @@ ns1blankspace.financial.payroll.totals =
                                                                 source: 'total',
                                                                 caption: 'Amount',
                                                                 help: 'The --year-to-date-- amount for the particular deduction type.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             }
                                                         ]
                                                     },
@@ -7964,7 +7973,8 @@ ns1blankspace.financial.payroll.totals =
                                                                 source: 'total',
                                                                 caption: 'Amount',
                                                                 help: 'The --year-to-date-- amount for the particular super entitlement item.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             }
                                                         ]
                                                     },
@@ -7986,7 +7996,8 @@ ns1blankspace.financial.payroll.totals =
                                                                 source: 'total',
                                                                 caption: 'Amount',
                                                                 help: 'The --year-to-date-- amount for the particular fringe benefits item.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             }
                                                         ]
                                                     }
@@ -8412,6 +8423,11 @@ ns1blankspace.financial.payroll.totals =
 
 														if (oDate.isValid())
 														{
+															if (field.dateUTC)
+															{
+																oDate = oDate.utc();
+															}
+
 															oData[field.name] = oDate.format(field.dateFormat);
 														}
 													}
@@ -8641,10 +8657,35 @@ ns1blankspace.financial.payroll.totals =
                                                                 itemData[field.name] = summarySource[field.source];
                                                             }
 
-                                                            if (field.currency)
-                                                            {
-                                                                itemData[field.name] = numeral(itemData[field.name]).format('0.00')
-                                                            }
+															if (field.currency)
+															{
+																if (itemData[field.name] == '' || itemData[field.name] == undefined)
+																{
+																	itemData[field.name] = '0'
+																}
+
+																itemData[field.name] = numeral(numeral(itemData[field.name]).value()).format('0.00');
+															}
+
+															if (field.numeric)
+															{
+																if (itemData[field.name] == '' || itemData[field.name] == undefined)
+																{
+																	itemData[field.name] = '0'
+																}
+
+																itemData[field.name] = numeral(itemData[field.name]).value();
+															}
+
+															if (field.dateFormat != undefined)
+															{
+																var oDate = moment(itemData[field.name], ns1blankspace.option.dateFormats)
+
+																if (oDate.isValid())
+																{
+																	itemData[field.name] = oDate.format(field.dateFormat);
+																}
+															}
                                                         });
 
                                                         itemsData.push(itemData);
@@ -9427,12 +9468,24 @@ ns1blankspace.financial.payroll.totals =
 										{
 											ns1blankspace.status.working('Sending to ATO...');
 
-											var sURL = 'https://api.singletouch.com.au/api/STPEvent2018'
-											
-											if (ns1blankspace.session.labInstance)
+											var oURLs = 
 											{
-												sURL = 'https://sandbox-api.singletouch.com.au/api/STPEvent2018'
+												1: 
+												{
+													production: 'https://api.singletouch.com.au/api/STPEvent2018',
+													sandbox: 'https://sandbox-api.singletouch.com.au/api/STPEvent2018'
+												},
+												2: 
+												{
+													production: 'https://api.singletouch.com.au/api/STPEvent2020',
+													sandbox: 'https://sandbox-api.singletouch.com.au/api/STPEvent2020'
+												}
 											}
+
+											var sVersion = '2';
+											var sType = 'sandbox';
+
+											var sURL = oURLs[sVersion][sType];
 
 											var oData = 
 											{
