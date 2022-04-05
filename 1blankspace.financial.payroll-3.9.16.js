@@ -7775,13 +7775,14 @@ ns1blankspace.financial.payroll.totals =
                                                     },
                                                     {
                                                         parentName: 'PaidLeave',
-														source: 'items',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/PaidLeaveItem',
+														source: '_leave',
                                                         fields:
                                                         [
                                                             {
                                                                 name: 'Type',
+																source: 'type',
                                                                 value: 'C',
                                                                 caption: 'Paid Leave Type',
                                                                 help: 'The type code for leave item [C/U/P/W/A/O].',
@@ -7789,7 +7790,7 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'Amount',
-                                                                field: 'x',
+                                                                source: 'total',
                                                                 caption: 'Paid Leave Amount',
                                                                 help: 'The --year-to-date-- amount for the particular leave type.',
                                                                 spec: ''
@@ -7880,6 +7881,7 @@ ns1blankspace.financial.payroll.totals =
                                                         parentName: 'TerminationPayments',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/TerminationPaymentItem',
+														source: '_termination',
                                                         fields:
                                                         [
                                                             {
@@ -7924,19 +7926,19 @@ ns1blankspace.financial.payroll.totals =
                                                         parentName: 'PayeeDeductions',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/DeductionItem',
-                                                        source: '_deducations',
+                                                        source: '_deductions',
                                                         fields:
                                                         [
                                                             {
                                                                 name: 'Type',
-                                                                field: 'x',
+                                                                source: 'type',
                                                                 caption: 'Type',
                                                                 help: 'The type code for the deduction item. [F/W/G/D]',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'Amount',
-                                                                field: 'x',
+                                                                source: 'total',
                                                                 caption: 'Amount',
                                                                 help: 'The --year-to-date-- amount for the particular deduction type.',
                                                                 spec: ''
@@ -7947,18 +7949,19 @@ ns1blankspace.financial.payroll.totals =
                                                         parentName: 'SuperEntitlements',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/SuperEntitlementsItem',
+														source: '_superannuation',
                                                         fields:
                                                         [
                                                             {
                                                                 name: 'Type',
-                                                                field: 'x',
+                                                                source: 'type',
                                                                 caption: 'Type',
                                                                 help: 'The type code for fringe benefit item. [L/O/R]',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'Amount',
-                                                                field: 'x',
+                                                                source: 'total',
                                                                 caption: 'Amount',
                                                                 help: 'The --year-to-date-- amount for the particular super entitlement item.',
                                                                 spec: ''
@@ -7973,14 +7976,14 @@ ns1blankspace.financial.payroll.totals =
                                                         [
                                                             {
                                                                 name: 'Type',
-                                                                field: 'x',
+                                                                source: 'type',
                                                                 caption: 'Type',
                                                                 help: 'The type code for fringe benefit item. [T/X]',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'Amount',
-                                                                field: 'x',
+                                                                source: 'total',
                                                                 caption: 'Amount',
                                                                 help: 'The --year-to-date-- amount for the particular fringe benefits item.',
                                                                 spec: ''
@@ -8293,26 +8296,14 @@ ns1blankspace.financial.payroll.totals =
 
                                     payPeriodSuperannuation: function (oParam, oResponse)
                                     {
-                                        var itemTypes = ns1blankspace.financial.payroll.util.linetypes.search({text: ' Superannuation', ids: true})
-
-                                        _.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
+	                                    _.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
                                         {
-                                            _.each(itemTypes, function (itemType)
-                                            {
-                                               var item =  _.find(oSummary.items, function (item)
-                                                            {
-                                                                return (itemType == item.type)
-                                                            });
-
-                                                if (item != undefined)
-                                                {
-                                                    oSummary._superannuation.push(
-                                                    {
-                                                        type: itemType,
-                                                        total: item.total
-                                                    });
-                                                }
-                                            });
+											oSummary._superannuation.push(
+											{
+												type: 'R',
+												total: oSummary['superannuation']
+											});
+                                               
                                         });
 
                                         ns1blankspace.financial.payroll.totals.employees.report.payPeriodLogs(oParam)
@@ -8630,7 +8621,7 @@ ns1blankspace.financial.payroll.totals =
 
 										if (oFormatItem != undefined)
 										{									 
-                                            //if source ie array then loop - sourceL '_deducations'
+                                            //if source ie array then loop - sourceL '_deductions'
                                             if (oFormatItem.source != undefined)
                                             {
                                                 if (_.isArray(oSummary[oFormatItem.source]))
@@ -8645,7 +8636,7 @@ ns1blankspace.financial.payroll.totals =
                                                             {
                                                                 itemData[field.name] = field.value;
                                                             }
-                                                            else if (field.summary != undefined)
+                                                            else if (field.source != undefined)
                                                             {
                                                                 itemData[field.name] = summarySource[field.source];
                                                             }
@@ -8666,7 +8657,14 @@ ns1blankspace.financial.payroll.totals =
                                                 {
                                                     if (field.value != undefined)
                                                     {
-                                                        itemData[field.name] = field.value;
+														if (!_.isArray(field.value))
+														{
+															itemData[field.name] = field.value;
+														}
+														else
+														{
+															itemData[field.name] = ns1blankspace.financial.payroll.totals.employees.report.createItems(field, oSummary)
+														}
                                                     }
                                                     else if (field.summary != undefined)
                                                     {
@@ -8867,10 +8865,30 @@ ns1blankspace.financial.payroll.totals =
 																			var aValue = [];
 
 																			aValue.push('<table class="table table-condensed table-striped">');
+
 																			_.each(_.first(sValue), function (value, key)
 																			{
+																				if (_.isArray(value))
+																				{
+																					var aValueValue = [];
+																					aValueValue.push('<table class="table table-condensed table-striped">');
+
+																					_.each(value, function (valueValue)
+																					{
+																						_.each(valueValue, function (_valueValue, _valueKey)
+																						{
+																							aValueValue.push('<tr><td class="col-sm-5">' + _valueKey + '</td><td class="col-sm-7">' + _valueValue + '</td></tr>');
+																						});
+																					});
+
+																					aValueValue.push('</table>');
+																			
+																					value = aValueValue.join('');
+																				}
+
 																				aValue.push('<tr><td class="col-sm-5">' + key + '</td><td class="col-sm-7">' + value + '</td></tr>');
 																			});
+
 																			aValue.push('</table>');
 																			
 																			sValue = aValue.join('');
