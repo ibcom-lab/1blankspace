@@ -7782,10 +7782,9 @@ ns1blankspace.financial.payroll.totals =
                                                         [
                                                             {
                                                                 name: 'Type',
-																source: 'type',
-                                                                value: 'C',
+                                                                value: 'O',
                                                                 caption: 'Paid Leave Type',
-                                                                help: 'The type code for leave item [C/U/P/W/A/O].',
+                                                                help: 'The type code for leave item [C/U/P/W/A/O] [Detail O,Other Paid Leave].',
                                                                 spec: ''
                                                             },
                                                             {
@@ -7793,7 +7792,8 @@ ns1blankspace.financial.payroll.totals =
                                                                 source: 'total',
                                                                 caption: 'Paid Leave Amount',
                                                                 help: 'The --year-to-date-- amount for the particular leave type.',
-                                                                spec: ''
+                                                                spec: '',
+																currency: true
                                                             }
                                                         ]
                                                     },
