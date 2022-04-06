@@ -6857,6 +6857,21 @@ ns1blankspace.financial.payroll.totals =
 									{
 										1:
                                         {
+											urls:
+											{
+												production: 'https://api.singletouch.com.au/api/STPEvent2018',
+												sandbox: 'https://sandbox-api.singletouch.com.au/api/STPEvent2018'
+											},
+											tenants:	
+											{
+												production: 'singletouch.onmicrosoft.com/b2c_1_singletouch',
+												sandbox: 'singletouchsandbox.onmicrosoft.com/b2c_1_singletouch'
+											},
+											msals:	
+											{
+												production: 'https://msal.mydigitalstructure.cloud',
+												sandbox: 'https://app-next.1blankspace.com/msal'
+											},
                                             format:
                                             {
                                                 header:
@@ -7304,6 +7319,21 @@ ns1blankspace.financial.payroll.totals =
                                         },
                                         2: 
                                         {
+											urls:
+											{
+												production: 'https://api.singletouch.com.au/api/STPEvent2020',
+												sandbox: 'https://sandbox-api.singletouch.com.au/api/STPEvent2020'
+											},
+											tenants:	
+											{
+												production: 'singletouch.onmicrosoft.com/b2c_1_singletouch',
+												sandbox: 'singletouchsandbox.onmicrosoft.com/b2c_1_singletouch'
+											},
+											msals:	
+											{
+												production: 'https://msal.mydigitalstructure.cloud',
+												sandbox: 'https://app-next.1blankspace.com/msal'
+											},
                                             format:
                                             {
                                                 header:
@@ -9063,22 +9093,31 @@ ns1blankspace.financial.payroll.totals =
 																',submitOnline:true'
 											}
 
-											if (ns1blankspace.session.labInstance)
+											var sVersion = '2';
+											var oTenants = ns1blankspace.financial.payroll.totals.employees.report.data[sVersion].tenants;
+											var oMSALs = ns1blankspace.financial.payroll.totals.employees.report.data[sVersion].msals;
+											var sType = 'sandbox';
+
+											oMSAL.tenant = oTenants[sType];
+											
+											/*if (ns1blankspace.session.labInstance)
 											{
 												oMSAL.tenant = 'singletouchsandbox.onmicrosoft.com/b2c_1_singletouch'
 											}
 											else
 											{
 												oMSAL.tenant = 'singletouch.onmicrosoft.com/b2c_1_singletouch'
-											}
+											}*/
 
 											ns1blankspace.unloadWarning = false;
 
-											var sMSALURI = 'https://msal.mydigitalstructure.cloud'
-											if (ns1blankspace.session.labInstance)
+											var sMSALURI = oMSALs[sType]
+											//'https://msal.mydigitalstructure.cloud'
+											
+											/*if (ns1blankspace.session.labInstance)
 											{
-												sMSALURI = 'https://app-next-1blankspace.mydigitalstructure-lab.cloud/msal'
-											}
+												sMSALURI = 'https://app-next-1blankspace.mydigitalstructure.cloud/msal'
+											}*/
 
 											location.href = sMSALURI + '/#msal:' + window.btoa(JSON.stringify(oMSAL))	
 										});
@@ -9468,24 +9507,11 @@ ns1blankspace.financial.payroll.totals =
 										{
 											ns1blankspace.status.working('Sending to ATO...');
 
-											var oURLs = 
-											{
-												1: 
-												{
-													production: 'https://api.singletouch.com.au/api/STPEvent2018',
-													sandbox: 'https://sandbox-api.singletouch.com.au/api/STPEvent2018'
-												},
-												2: 
-												{
-													production: 'https://api.singletouch.com.au/api/STPEvent2020',
-													sandbox: 'https://sandbox-api.singletouch.com.au/api/STPEvent2020'
-												}
-											}
-
 											var sVersion = '2';
+											var oURLs = ns1blankspace.financial.payroll.totals.employees.report.data[sVersion].urls;
 											var sType = 'sandbox';
 
-											var sURL = oURLs[sVersion][sType];
+											var sURL = oURLs[sType];
 
 											var oData = 
 											{
