@@ -20,13 +20,13 @@ ns1blankspace.util.msal =
             auth:
             {
                 clientId: '25859eef-b92a-49dc-b18e-416aba48ee4b',
-                authority: 'https://singletouch.b2clogin.com/tfp/singletouchsandbox.onmicrosoft.com/b2c_1_singletouch',
+                authority: 'https://singletouchsandbox.b2clogin.com/tfp/singletouchsandbox.onmicrosoft.com/b2c_1_singletouch',
                 validateAuthority: false
             },
             cache:
             {
                 cacheLocation: 'localStorage',
-                storeAuthStateInCookie: true
+                storeAuthStateInCookie: false //true
             },
             scopes:
             [

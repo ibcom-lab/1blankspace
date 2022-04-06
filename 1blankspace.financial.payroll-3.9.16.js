@@ -9097,6 +9097,7 @@ ns1blankspace.financial.payroll.totals =
 											var oTenants = ns1blankspace.financial.payroll.totals.employees.report.data[sVersion].tenants;
 											var oMSALs = ns1blankspace.financial.payroll.totals.employees.report.data[sVersion].msals;
 											var sType = 'sandbox';
+											//var sType = 'production';
 
 											oMSAL.tenant = oTenants[sType];
 											
