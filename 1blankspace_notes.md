@@ -87,6 +87,7 @@ https://mail.google.com/mail/u/0/#inbox/FMfcgzGmvLNPSXFDZXPFTLbqnlszTGSG
 
 Replacement EVTE ID - 71935 
 
+https://singletouch.b2clogin.com/singletouch.onmicrosoft.com/b2c_1_singletouch/oauth2/v2.0/authorize?response_type=token&scope=https%3A%2F%2Fsingletouch.onmicrosoft.com%2Fmydigitalstructure%2Fread%20https%3A%2F%2Fsingletouch.onmicrosoft.com%2Fmydigitalstructure%2Fuser_impersonation%20openid%20profile&client_id=198014d6-e28f-4835-b02e-1e5005df667d&redirect_uri=https%3A%2F%2Fmsal.mydigitalstructure.cloud%2F&state=eyJpZCI6ImFmMjc2NzQwLTM2OWQtNGMyZC04ZjcyLWRlZjI4MWY5NTRjYSIsInRzIjoxNjQ5MjIzMzM3LCJtZXRob2QiOiJwb3B1cEludGVyYWN0aW9uIn0%3D&nonce=dd408ca5-22e4-4e48-9881-097b309b9973&client_info=1&x-client-SKU=MSAL.JS&x-client-Ver=1.4.4&client-request-id=a5220b3a-80a5-4702-9629-f4ae9cd34d24&response_mode=fragment
 
 
 
