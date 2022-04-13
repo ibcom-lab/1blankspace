@@ -7907,8 +7907,7 @@ ns1blankspace.financial.payroll.totals =
                                                                 field: 'x',
                                                                 caption: 'Lump Sum E Financial Year',
                                                                 help: 'The financial year in which the Lump Sum E amount is to be distributed. Should only be supplied if the Type provided is "E".',
-                                                                spec: '',
-																currency: true
+                                                                spec: ''
                                                             }
                                                         ]
                                                     },
@@ -9513,6 +9512,8 @@ ns1blankspace.financial.payroll.totals =
 											var sType = 'sandbox';
 
 											var sURL = oURLs[sType];
+
+											console.log(ns1blankspace.financial.payroll.totals.employees.report.data.object)
 
 											var oData = 
 											{
