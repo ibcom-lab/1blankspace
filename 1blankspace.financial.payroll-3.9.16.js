@@ -7644,10 +7644,11 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'TaxTreatmentCode',
-                                                                field: 'lognotes',
+                                                                field: 'taxtreatmentcode',
                                                                 mustBeSet: true,
                                                                 caption: 'Tax Treatment',
-                                                                help: 'Indicates the PAYGW tax scales and other components that have been applied by the payer to determine payee withholding amounts. Must be included in every pay event.'
+                                                                help: 'Indicates the PAYGW tax scales and other components that have been applied by the payer to determine payee withholding amounts. Must be included in every pay event.',
+																url: 'https://developer.sbr.gov.au/collaborate/display/DSD/Tax+Treatment+Position+Paper?preview=/169346060/176422925/ATO%20STP%20Phase%202%20Tax%20Treatment%20Position%20Paper%20V1.1.pdf'
                                                             },
                                                             {
                                                                 name: 'TaxOffsetAmount',
@@ -7673,7 +7674,6 @@ ns1blankspace.financial.payroll.totals =
                                                             {
                                                                 name: 'SuperEntitlements',
 																caption: 'Super Entitlements',
-                                                                source: '_superannuation',
                                                                 value: [],
                                                                 mustBeSet: false,
                                                                 help: 'Contains any reportable superannuation entitlements for the employee.'
@@ -7681,7 +7681,7 @@ ns1blankspace.financial.payroll.totals =
                                                             {
                                                                 name: 'ReportableFringeBenefits',
 																caption: 'Reportable Fringe Benefits',
-                                                                source: '_fbt',
+                                                                
                                                                 value: [],
                                                                 mustBeSet: false,
                                                                 help: 'Contains any reportable fringe benefits for the employee.'
@@ -7703,7 +7703,7 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'IncomeStreamCountryCode',
-                                                                value: 'AU',
+                                                                value: 'au',
                                                                 caption: 'Income Stream Country',
                                                                 help: 'This represents the Country Code as prescribed by AS4590 and inherited from ISO 3166. Where income involves other tax jurisdictions, the income must be provided for the specific country for that tax jurisdiction. Australia has tax treaties with many countries to reduce or eliminate double taxation caused by overlapping tax jurisdictions. Refer to the BIG for more details.',
                                                                 spec: ''
@@ -7866,14 +7866,14 @@ ns1blankspace.financial.payroll.totals =
                                                         [
                                                             {
                                                                 name: 'Type',
-                                                                field: 'x',
+                                                                value: 'S',
                                                                 caption: 'SalarySacrifice Type',
                                                                 help: 'The type code for fringe benefit item [S/O].',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'Amount',
-                                                                field: 'x',
+                                                                value: '0',
                                                                 caption: 'Salary Sacrifice Amount',
                                                                 help: 'The --year-to-date-- amount for the particular salary sacrifice item.',
                                                                 spec: '',
@@ -7885,6 +7885,7 @@ ns1blankspace.financial.payroll.totals =
                                                         parentName: 'LumpSumPayments',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/LumpSumItem',
+														source: '_lumpsum',
                                                         fields:
                                                         [
                                                             {
@@ -8011,6 +8012,7 @@ ns1blankspace.financial.payroll.totals =
                                                         parentName: 'ReportableFringeBenefits',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/ReportableFringeBenefitsItem',
+														source: '_fringebenefits',
                                                         fields:
                                                         [
                                                             {
@@ -8060,7 +8062,7 @@ ns1blankspace.financial.payroll.totals =
 
 										if (sATOProductID == undefined)
 										{
-											sATOProductID = (ns1blankspace.session.labInstance?'10594':'582695')
+											sATOProductID = (ns1blankspace.session.labInstance?'10594':'71935') //582695
 										}
 
 										if (iPayPeriod == undefined)
@@ -8245,7 +8247,7 @@ ns1blankspace.financial.payroll.totals =
                                                 oSummary._leave = [];
                                                 oSummary._deductions = [];
                                                 oSummary._superannuation = [];
-
+												oSummary._fringebenefits = [];
                                             });
                                         
 											ns1blankspace.financial.payroll.totals.employees.report.payPeriodLeave(oParam);
@@ -8360,7 +8362,8 @@ ns1blankspace.financial.payroll.totals =
 											oSearch.addField('employee');
                                             oSearch.addField('notes');
 											
-                                            if (ns1blankspace.financial.payroll.data.startDate !== undefined)
+                                            /*
+											if (ns1blankspace.financial.payroll.data.startDate !== undefined)
                                             {
                                                 oSearch.addFilter('log.payperiod.paydate', 'GREATER_THAN_OR_EQUAL_TO', ns1blankspace.financial.payroll.data.startDate)
                                             }
@@ -8369,7 +8372,12 @@ ns1blankspace.financial.payroll.totals =
                                             {
                                                 oSearch.addFilter('log.payperiod.paydate', 'LESS_THAN_OR_EQUAL_TO', ns1blankspace.financial.payroll.data.endDate)
                                             }
-                                            
+											*/
+
+											oSearch.addFilter('payperiod', 'EQUAL_TO', ns1blankspace.financial.payroll.data.payPeriodID);
+											//oSearch.addFilter('notes', 'TEXT_STARTS_WITH', '[TAX-S');
+											
+                                          
                                             oSearch.rows = 99999;
 											oSearch.getResults(function(data)
 											{
@@ -8384,10 +8392,18 @@ ns1blankspace.financial.payroll.totals =
                                             {
                                                 oSummary.logs = _.filter(ns1blankspace.financial.payroll.data.payPeriodLogs, function (payPeriodLog)
                                                 {
-                                                    return oSummary.id == payPeriodLog['employee']
+                                                    return (oSummary.id == payPeriodLog['employee']) && (_.includes(payPeriodLog['notes'], '[TAX-S'))
                                                 });
 
-												oSummary.lognotes = _.join(_.map(oSummary.logs, 'notes'), ', ');
+												oSummary._lognotes = _.join(_.map(oSummary.logs, function (log)
+												{
+													log._notes = _.replace(log.notes, '[TAX-S:', '');
+													log._notes = _.replace(log._notes, '[TAX-S-a:', '');
+													log._notes = _.replace(log._notes, ']', '');
+													return log._notes;
+												}), ', ');
+
+												oSummary.taxtreatmentcode = 'RTXXXX';
                                             });
                                         
 											ns1blankspace.financial.payroll.totals.employees.report.create(oParam)
