@@ -4522,7 +4522,6 @@ ns1blankspace.financial.payroll =
 								$('#ns1blankspacePayrollPay_netsalary-' + iPay).html(oRow["netsalary"])	
 								$('#ns1blankspacePayrollPay_superannuation-' + iPay).html(oRow["superannuation"]);
 
-
 								var oSearch = new AdvancedSearch();
 								oSearch.method = 'FINANCIAL_PAYROLL_EMPLOYEE_LEAVE_SEARCH';
 								oSearch.addField('type,sum(hours) hours');
@@ -4726,8 +4725,10 @@ ns1blankspace.financial.payroll =
 								{
 									aHTML.push('<tr class="ns1blankspaceRow">');
 										
-									aHTML.push('<td id="ns1blankspaceFinancialPayPeriodItem_type-' + item.id + '" class="ns1blankspaceRow' + sClass + '">' +
-															item.typetext + '</td>');
+									aHTML.push('<td id="ns1blankspaceFinancialPayPeriodItem_type-' + item.id + '" class="ns1blankspaceRow ' + sClass + '">' +
+															'<div>' + item.typetext + '</div>' +
+															'<div class="ns1blankspaceSubNote">' + item.notes + '</div>' + 
+														'</td>');
 
 									var aIncludeIn = ns1blankspace.financial.payroll.util.linetypes.includeIn({id: item.type});
 									var oIncludeIn = $.grep(aIncludeIn, function (i) {return !i.dependant})[0];
@@ -4742,15 +4743,17 @@ ns1blankspace.financial.payroll =
 															'<br /><span class="ns1blankspaceSubNote">' + (bHours?'hours&nbsp;@&nbsp;' + ns1blankspace.option.currencySymbol + 
 															numeral(item.rate).format('(0,0.00)'):ns1blankspace.option.currencySymbol) + '</span>' +
 															'<br /><span class="ns1blankspaceSubNote">' + ns1blankspace.option.currencySymbol +
-															numeral(item.total).format('(0,0.00)') + '</span></td>');
+															numeral(item.total).format('(0,0.00)') + '</span>' +
+															
+														'</td>');
 									}
 									else
 									{
 										aHTML.push('<td id="ns1blankspaceFinancialPayPeriodItem_amount-' + item.id + '" class="ns1blankspaceRow" style="text-align:right;">' +
 															numeral(cAmount).format('(0,0.00)') +
 															'<br /><span class="ns1blankspaceSubNote">' + ns1blankspace.option.currencySymbol + 
-																numeral(item.total).format('(0,0.00)') + '</span> ' + 
-															'</td>');					 			
+																numeral(item.total).format('(0,0.00)') + '</span> ' +
+														'</td>');					 			
 									}
 
 									if (ns1blankspace.objectContextData.status == "1")
@@ -4905,6 +4908,12 @@ ns1blankspace.financial.payroll =
 										'<input id="ns1blankspacePayrollItemAmount" class="ns1blankspaceText">' +
 										'</td></tr>');
 
+						aHTML.push('<tr><td class="ns1blankspaceCaption">' +
+										'Additional Information</td></tr>' +
+										'<tr><td class="ns1blankspaceText">' +
+										'<input id="ns1blankspacePayrollItemNotes" class="ns1blankspaceText">' +
+										'</td></tr>');
+
 						aHTML.push('</table>');					
 						
 						$('#ns1blankspacePayrollPayRunColumn2').html(aHTML.join(''));
@@ -4948,7 +4957,8 @@ ns1blankspace.financial.payroll =
 								record: iPay,
 								type: $('#ns1blankspacePayrollItemType').attr('data-id'),
 								hours: iHours,
-								id: sID
+								id: sID,
+								notes: $('#ns1blankspacePayrollItemNotes').val()
 							};
 
 							if ($('#ns1blankspacePayrollItemAmount').is(':visible'))
@@ -5002,7 +5012,7 @@ ns1blankspace.financial.payroll =
 
 							var oSearch = new AdvancedSearch();
 							oSearch.method = 'FINANCIAL_PAYROLL_PAY_RECORD_ITEM_SEARCH';
-							oSearch.addField('hours,type,typetext,rate,total');
+							oSearch.addField('hours,type,typetext,rate,total,notes');
 							oSearch.addFilter('id', 'EQUAL_TO', sID);
 							oSearch.getResults(function(data) {
 									$.extend(true, oParam, {step: 5});
@@ -5031,6 +5041,7 @@ ns1blankspace.financial.payroll =
 							$('#ns1blankspacePayrollItemType').val(oObjectContext.typetext);
 							$('#ns1blankspacePayrollItemType').attr('data-id', oObjectContext.type);
 							$('#ns1blankspacePayrollItemPayRate').val(numeral(oObjectContext.rate).format('(0,0.00)'));
+							$('#ns1blankspacePayrollItemNotes').val(oObjectContext.notes);
 
 							ns1blankspace.financial.payroll.util.linetypes.showHide({lineType: oObjectContext.type});
 							$('.includein :visible:first').focus().select();
@@ -7017,7 +7028,7 @@ ns1blankspace.financial.payroll.totals =
                                                                 help: 'Set the Employee\'s Number.',
                                                                 caption: 'Payroll number',
                                                                 help: 'ID given to an employee (payee) in the payroll system identified by the BMSID provided',
-                                                spec: 'PAYEVNT 0002 2017/0003 2018: Identifiers.EmploymentPayrollNumber.Identifier'
+                                                				spec: 'PAYEVNT 0002 2017/0003 2018: Identifiers.EmploymentPayrollNumber.Identifier'
                                                             },
                                                             {
                                                                 name: 'PayeeTFN',
@@ -7103,8 +7114,9 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'PayeeCountry',
-                                                                value: 'au',
-                                                                caption: 'Country'
+                                                                value: '',
+                                                                caption: 'Country',
+																mustBeSet: false
                                                             },
                                                             {
                                                                 name: 'PayeeEmail',
@@ -7475,9 +7487,11 @@ ns1blankspace.financial.payroll.totals =
                                                         {
                                                             name: 'RunDateTimeStamp',
                                                             param: 'paydate',
+															dateAdd: {duration: -2, unit: 'day'},
 															dateFormat: 'YYYY-MM-DDTHH:mm:ssZ',
 															dateUTC: true,
-                                                            help: 'The date (and time) that this pay event was processed (within your payroll system).'
+                                                            help: 'The date (and time) that this pay event was processed (within your payroll system).',
+															spec: 'https://developer.sbr.gov.au/collaborate/display/DSD/STP02+Key+Dates+Guidance+Note?preview=/169346046/221052989/ATO%20STP%20Phase%202%20-%20Key%20Dates%20Guidance%20Note%20V1.1.pdf'
                                                         },
                                                         {
                                                             name: 'PayUpdateDate',
@@ -7579,8 +7593,9 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'PayeeCountry',
-                                                                value: 'au',
-                                                                caption: 'Country'
+                                                                value: '',
+                                                                caption: 'Country',
+																mustBeSet: false
                                                             },
                                                             {
                                                                 name: 'PayeeEmail',
@@ -7681,7 +7696,6 @@ ns1blankspace.financial.payroll.totals =
                                                             {
                                                                 name: 'ReportableFringeBenefits',
 																caption: 'Reportable Fringe Benefits',
-                                                                
                                                                 value: [],
                                                                 mustBeSet: false,
                                                                 help: 'Contains any reportable fringe benefits for the employee.'
@@ -7832,11 +7846,12 @@ ns1blankspace.financial.payroll.totals =
                                                         parentName: 'PayeeAllowances',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/AllowanceItem',
+														source: '_allowances',
                                                         fields:
                                                         [
                                                             {
                                                                 name: 'Type',
-                                                                value: 'CD',
+                                                                source: 'code',
                                                                 caption: 'Allowance Type',
                                                                 help: 'The type code for the allowance item [CD/AD/LD/MD/RD/TD/KN/QN/OD].',
                                                                 spec: ''
@@ -7850,7 +7865,7 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'Amount',
-                                                                summary: 'allowances',
+                                                                source: 'total',
                                                                 caption: 'Allowance Amount',
                                                                 help: 'The --year-to-date-- amount for the particular allowance type.',
                                                                 spec: '',
@@ -7862,18 +7877,19 @@ ns1blankspace.financial.payroll.totals =
                                                         parentName: 'SalarySacrifice',
                                                         mustBeSetDefault: true,
                                                         specURI: 'https://sandbox.singletouch.com.au/Support/SalarySacrificeItem',
+														source: '_salarysacrifice',
                                                         fields:
                                                         [
                                                             {
                                                                 name: 'Type',
-                                                                value: 'S',
+                                                                source: 'code',
                                                                 caption: 'SalarySacrifice Type',
                                                                 help: 'The type code for fringe benefit item [S/O].',
                                                                 spec: ''
                                                             },
                                                             {
                                                                 name: 'Amount',
-                                                                value: '0',
+                                                                source: 'total',
                                                                 caption: 'Salary Sacrifice Amount',
                                                                 help: 'The --year-to-date-- amount for the particular salary sacrifice item.',
                                                                 spec: '',
@@ -7969,7 +7985,7 @@ ns1blankspace.financial.payroll.totals =
                                                         [
                                                             {
                                                                 name: 'Type',
-                                                                source: 'type',
+                                                                source: 'code',
                                                                 caption: 'Type',
                                                                 help: 'The type code for the deduction item. [F/W/G/D]',
                                                                 spec: ''
@@ -8213,7 +8229,10 @@ ns1blankspace.financial.payroll.totals =
 											oSearch.method = 'FINANCIAL_PAYROLL_PAY_RECORD_ITEM_SEARCH';
 											oSearch.addField('payrecorditem.payrecord.employee');
                                             oSearch.addField('type');
-                                            oSearch.addField('sum(total) total');
+											oSearch.addField('notes');
+											oSearch.addField('total');
+
+                                            //oSearch.addField('sum(total) total');
 											
                                             if (ns1blankspace.financial.payroll.data.startDate !== undefined)
                                             {
@@ -8246,8 +8265,10 @@ ns1blankspace.financial.payroll.totals =
                                                 oSummary._termination = [];
                                                 oSummary._leave = [];
                                                 oSummary._deductions = [];
+												oSummary._allowances = [];
                                                 oSummary._superannuation = [];
 												oSummary._fringebenefits = [];
+												oSummary._salarysacrifice = [];
                                             });
                                         
 											ns1blankspace.financial.payroll.totals.employees.report.payPeriodLeave(oParam);
@@ -8257,59 +8278,146 @@ ns1blankspace.financial.payroll.totals =
 
                                     payPeriodLeave: function (oParam, oResponse)
                                     {
-                                        var itemTypes = ns1blankspace.financial.payroll.util.linetypes.search({includeIn: 'leave', ids: true})
+										/*
+											C (Cash out leave)
+											U: Unused leave on Termination
+											P: Paid parental leave
+											W: Workers compensation
+											A: Ancillary and defence leave
+											O: Other paid leave: 
+												 All other paid absences, regardless of rate of pay (full, half, reduced rate) must be reported as this payment type. It includes, but is not limited to annual leave, leave loading, long service leave, personal leave, RDOs. Services Australia categorise this type of payment as Employment Income or Lump Sum , depending on the payment frequency. These types of paid leave are OTE.
+										*/
+
+										var itemTypesLeaveReportingCodes = 
+										[
+											{
+												code: 'O',
+												itemLeaveTypes: ['1','2','3']
+											}
+										];
+
+                                        var itemTypes = ns1blankspace.financial.payroll.util.linetypes.search({includeIn: 'leave'});
+										var itemTypeIDs = _.map(itemTypes, 'id');
 
                                         _.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
                                         {
-                                            _.each(itemTypes, function (itemType)
-                                            {
-                                               var item =  _.find(oSummary.items, function (item)
-                                                            {
-                                                                return (itemType == item.type)
-                                                            });
+											var items =  _.filter(oSummary.items, function (item)
+											{
+												return (_.includes(itemTypeIDs, item.type))
+											});
 
-                                                if (item != undefined)
-                                                {
-                                                    oSummary._leave.push(
-                                                    {
-                                                        type: itemType,
-                                                        total: item.total
-                                                    });
-                                                }
-                                            });
+											if (items.length != 0)
+											{
+												_.each(itemTypesLeaveReportingCodes, function (itemTypesLeaveReportingCode)
+												{
+													var itemTypesBasedOnReportCode = _.filter(itemTypes, function (itemType)
+													{
+														return _.includes(itemTypesLeaveReportingCode.itemLeaveTypes, itemType.includeinleavetype)
+													});
+
+													if (itemTypesBasedOnReportCode.length != 0)
+													{
+														var itemTypesBasedOnReportCodeIDs = _.map(itemTypesBasedOnReportCode, 'id');
+
+														var itemsBasedOnTypeBasedOnReportCode = _.filter(items, function (item)
+														{
+															return _.includes(itemTypesBasedOnReportCodeIDs, item.type)
+														});
+
+														if (itemsBasedOnTypeBasedOnReportCode.length != 0)
+														{
+															var itemTotal = _.sumBy(itemsBasedOnTypeBasedOnReportCode, function (item) {return numeral(item.total).value()});
+
+															oSummary._leave.push(
+															{
+																code: itemTypesLeaveReportingCode.code,
+																total: itemTotal
+															});
+														}
+													}
+												});
+											}
                                         });
 
-                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriodDeductions(oParam)
+                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriodAllowances(oParam)
                                     },
 
-                                    payPeriodDeductions: function (oParam, oResponse)
+									payPeriodAllowances: function (oParam, oResponse)
                                     {
-                                        var itemTypes = ns1blankspace.financial.payroll.util.linetypes.search({includeIn: 'deductions', ids: true})
+                                        var itemTypeIDs = ns1blankspace.financial.payroll.util.linetypes.search({includeIn: 'allowancestaxable', ids: true});
 
-                                        _.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
-                                        {
-                                            _.each(itemTypes, function (itemType)
-                                            {
-                                               var item =  _.find(oSummary.items, function (item)
-                                                            {
-                                                                return (itemType == item.type)
-                                                            });
+										var itemTypeAllowanceReportingCodes = 
+										[
+											{code: 'CD'},
+											{code: 'AD'},
+											{code: 'LD'},
+											{code: 'RD'},
+											{code: 'TD'},
+											{code: 'OD'},
+											{code: 'KN'},
+											{code: 'QN'}
+										];
 
-                                                if (item != undefined)
-                                                {
-                                                    oSummary._deductions.push(
-                                                    {
-                                                        type: itemType,
-                                                        total: item.total
-                                                    });
-                                                }
-                                            });
-                                        });
+										_.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
+										{
+											var items =  _.filter(oSummary.items, function (item)
+											{
+												return (_.includes(itemTypeIDs, item.type))
+											});
+
+											if (items.length != 0)
+											{
+												_.each(itemTypeAllowanceReportingCodes, function (itemTypeAllowanceReportingCode)
+												{
+													var itemsBasedOnTypeBasedOnReportCode = _.filter(items, function (item)
+													{
+														return (item.notes.toUpperCase() == itemTypeAllowanceReportingCode.code)
+													});
+
+													if (itemsBasedOnTypeBasedOnReportCode.length != 0)
+													{
+														var itemTotal = _.sumBy(itemsBasedOnTypeBasedOnReportCode, function (item) {return numeral(item.total).value()});
+
+														oSummary._allowances.push(
+														{
+															code: itemTypeAllowanceReportingCode.code,
+															total: itemTotal
+														});
+													}
+												});
+											}
+										});
+										
+                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriodSalarySacrifice(oParam)
+                                    },
+
+									payPeriodSalarySacrifice: function (oParam, oResponse)
+                                    {
+										var itemTypeIDs = ns1blankspace.financial.payroll.util.linetypes.search({includeIn: 'salarysacrifice', ids: true});
+
+										_.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
+										{
+											var items =  _.filter(oSummary.items, function (item)
+											{
+												return (_.includes(itemTypeIDs, item.type))
+											});
+
+											if (items.length != 0)
+											{
+												var itemTotal = _.sumBy(items, function (item) {return numeral(item.total).value()});
+
+												oSummary._salarysacrifice.push(
+												{
+													code: 'S',
+													total: itemTotal
+												});
+											}
+										});
 
                                         ns1blankspace.financial.payroll.totals.employees.report.payPeriodTermination(oParam)
                                     },
-                                    
-                                    payPeriodTermination: function (oParam, oResponse)
+
+									payPeriodTermination: function (oParam, oResponse)
                                     {
                                         var itemTypes = ns1blankspace.financial.payroll.util.linetypes.search({text: 'Termination', ids: true})
 
@@ -8333,16 +8441,61 @@ ns1blankspace.financial.payroll.totals =
                                             });
                                         });
 
-                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriodSuperannuation(oParam)
+                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriodDeductions(oParam)
                                     },
 
+									payPeriodDeductions: function (oParam, oResponse)
+                                    {
+                                        var itemTypeIDs = ns1blankspace.financial.payroll.util.linetypes.search({includeIn: 'deductions', ids: true});
+
+										var itemTypeDeductionReportingCodes = 
+										[
+											{code: 'F'},
+											{code: 'W'},
+											{code: 'G'},
+											{code: 'D'}
+										];
+
+										_.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
+										{
+											var items =  _.filter(oSummary.items, function (item)
+											{
+												return (_.includes(itemTypeIDs, item.type))
+											});
+
+											if (items.length != 0)
+											{
+												_.each(itemTypeDeductionReportingCodes, function (itemTypeDeductionReportingCode)
+												{
+													var itemsBasedOnTypeBasedOnReportCode = _.filter(items, function (item)
+													{
+														return (item.notes.toUpperCase() == itemTypeDeductionReportingCode.code)
+													});
+
+													if (itemsBasedOnTypeBasedOnReportCode.length != 0)
+													{
+														var itemTotal = _.sumBy(itemsBasedOnTypeBasedOnReportCode, function (item) {return numeral(item.total).value()});
+
+														oSummary._deductions.push(
+														{
+															code: itemTypeDeductionReportingCode.code,
+															total: itemTotal
+														});
+													}
+												});
+											}
+										});
+										
+                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriodSuperannuation(oParam)
+                                    },
+   
                                     payPeriodSuperannuation: function (oParam, oResponse)
                                     {
 	                                    _.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
                                         {
 											oSummary._superannuation.push(
 											{
-												type: 'R',
+												type: 'L',
 												total: oSummary['superannuation']
 											});
                                                
@@ -8462,20 +8615,35 @@ ns1blankspace.financial.payroll.totals =
 													oData[field.name] = _.trim(oParam[field.param]);
 												}
 
-												if (field.dateFormat != undefined)
+												if (field.dateAdd != undefined)
+												{
+													var oDate = moment(oData[field.name], ns1blankspace.option.dateFormats)
+
+													if (oDate.isValid())
 													{
-														var oDate = moment(oData[field.name], ns1blankspace.option.dateFormats)
-
-														if (oDate.isValid())
+														if (field.dateAdd.duration.unit == undefined)
 														{
-															if (field.dateUTC)
-															{
-																oDate = oDate.utc();
-															}
-
-															oData[field.name] = oDate.format(field.dateFormat);
+															field.dateAdd.duration.unit = 'day'
 														}
+
+														oData[field.name] = oDate.add(field.dateAdd.duration, field.dateAdd.unit);
 													}
+												}
+
+												if (field.dateFormat != undefined)
+												{
+													var oDate = moment(oData[field.name], ns1blankspace.option.dateFormats)
+
+													if (oDate.isValid())
+													{
+														if (field.dateUTC)
+														{
+															oDate = oDate.utc();
+														}
+
+														oData[field.name] = oDate.format(field.dateFormat);
+													}
+												}
 
 												if (field.onlyIfData && oData[field.name] == undefined)
 												{
@@ -8944,7 +9112,7 @@ ns1blankspace.financial.payroll.totals =
 																	{
 																		if (sValue.length == 0)
 																		{
-																			sValue = "NO DATA"
+																			sValue = ''
 																		}
 																		else if (sValue.length == 1)
 																		{
@@ -10590,6 +10758,33 @@ ns1blankspace.financial.payroll.util =
 											{
 												$vq.add('<div class="ns1blankspaceSubNote" style="font-size:0.75em; padding-left:0px; padding-top:4px;"' +
 																' id="ns1blankspaceItemEditAbout-' + include.key + '">' + include.title + '</div>', {queue: 'edit-about'});
+											});
+
+											$.each(aIncludeIn, function (i, include)
+											{
+												if (include.title == 'Deductions')
+												{
+													$vq.add('<div class="ns1blankspaceSubNote" style="font-size:0.75em; padding-left:0px; padding-top:8px; color:#a94442;"' +
+																' id="ns1blankspaceItemEditAbout-' + include.key + '-AdditionalInfo">' +
+																	'For deductions you must set additional information as "F" (Fees), "W" (Workplace Giving), "G" (Child Support Garnish) or "D" (Child Support Deduction)'
+																+ '</div>', {queue: 'edit-about'});
+												}
+
+												if (include.key == 'allowancestaxable')
+												{
+													$vq.add('<div class="ns1blankspaceSubNote" style="font-size:0.75em; padding-left:0px; padding-top:8px; color:#a94442;"' +
+																' id="ns1blankspaceItemEditAbout-' + include.key + '-AdditionalInfo">' +
+																	'For allowances you must set additional information as ' +
+																	'"CD" (Cents per Kilometre), ' +
+																	'"AD" (Award Transport Payments), ' +
+																	'"LD" (Laundry), ' +
+																	'"RD" (Domestic or Overseas Travel Allowances and Overseas Accommodation Allowances), ' +
+																	'"TD" (Tool Allowances), ' +
+																	'"OD" (Other Allowances), ' +
+																	'"KN" (Task Allowances) & ' +
+																	'"QN" (Qualification Allowances) ' +
+																'</div>', {queue: 'edit-about'});
+												}
 											});
 
 											$vq.render('#ns1blankspaceItemEditAbout', {queue: 'edit-about'});
