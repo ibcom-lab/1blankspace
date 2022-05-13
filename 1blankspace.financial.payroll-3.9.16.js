@@ -7717,10 +7717,11 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'IncomeStreamCountryCode',
-                                                                value: 'au',
+                                                                value: '',
                                                                 caption: 'Income Stream Country',
                                                                 help: 'This represents the Country Code as prescribed by AS4590 and inherited from ISO 3166. Where income involves other tax jurisdictions, the income must be provided for the specific country for that tax jurisdiction. Australia has tax treaties with many countries to reduce or eliminate double taxation caused by overlapping tax jurisdictions. Refer to the BIG for more details.',
-                                                                spec: ''
+                                                                spec: '',
+																mustBeSet: false
                                                             },
                                                             {
                                                                 name: 'PAYGWAmount',
