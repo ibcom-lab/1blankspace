@@ -256,7 +256,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.contactBusiness',
-		source: '/site/1903/1blankspace.contactbusiness-3.6.6.js'
+		source: '/site/1903/1blankspace.contactbusiness-3.9.17.js'
 	},
 	{
 		nameSpace: '1blankspace.opportunity',
