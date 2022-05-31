@@ -133,4 +133,32 @@ Tax Offset = .taxadjustment
 
 Download to CSV
 
+### EXTENDED TESTING
+
+Hi MarkNicholas Byers 
+
+Your EVTE payloads have now been assessed. You will receive a Readiness Testpack for ECT testing shortly. Please be mindful of the following issues that were picked up in our review of a selection of your submissions:
+
+BMS id
+
+Will The Trustee for ibCom Unit Trust be updating their BMSID for Production purposes? we can see in testing the use of “mydigitalstructure”. Will this be updated to a Globally Unique Identifier (GUID) as per BIG Section 4.2 Key Identifiers & 5.2 Payer Key Identifiers?
+
+Tax Treatment Codes
+
+Only Tax Treatment Code RTXXXX has been reported in your submissions. You will be expected to report other Tax Treatment Codes when completing the full ECT Test case pack.
+
+Allowance Type Codes
+
+No Allowance Type has been reported in your submissions. You will be expected to report Allowance Type Codes when completing the full ECT Test case pack.
+
+Payment Basis Codes
+
+Only Payment Basis Code F has been reported in your submissions. You will be expected to report other Payment Basis Codes when completing the full ECT Test case pack.
+
+Thanks & Regards
+
+---
+
+
+
 
