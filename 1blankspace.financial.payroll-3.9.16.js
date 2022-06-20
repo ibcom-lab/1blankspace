@@ -6905,20 +6905,20 @@ ns1blankspace.financial.payroll.totals =
                                                             param: 'branchID',
                                                             caption: 'Branch ID',
                                                             help: 'The branch number of an organisation. ' +
-                                                    'Used for organisations that wish to sub-divide their activities in dealing with their tax obligations. ' +
-                                                    'It is used to identify the correct branch of an organisation for the PAYGW obligation. ' +
-                                                    'If the Payer does not have a branch number, this must be set to 1.'
+																'Used for organisations that wish to sub-divide their activities in dealing with their tax obligations. ' +
+																'It is used to identify the correct branch of an organisation for the PAYGW obligation. ' +
+																'If the Payer does not have a branch number, this must be set to 1.'
                                                         },
                                                         {
                                                             name: 'BMSID',
                                                             value: 'mydigitalstructure',
                                                             caption: 'BMS ID',
                                                             help: 'This identifies the Business Management System software used by the employer. ' +
-                                                    'This is allocated to each instance of a payroll solution and allows multiple payroll ' + 
-                                                    'reports submitted separately to be allocated to the same payee. ' +
-                                                    'It must be unique within an ABN/branch. ' +
-                                                    'Once established for that payroll instance, it should not be changed without reference to the ' +
-                                                    'STP Business Implementation Guide (BIG).'
+																	'This is allocated to each instance of a payroll solution and allows multiple payroll ' + 
+																	'reports submitted separately to be allocated to the same payee. ' +
+																	'It must be unique within an ABN/branch. ' +
+																	'Once established for that payroll instance, it should not be changed without reference to the ' +
+																	'STP Business Implementation Guide (BIG).'
                                                         },
                                                         {
                                                             name: 'PayrollGroupID',
@@ -6936,7 +6936,7 @@ ns1blankspace.financial.payroll.totals =
                                                             dateFormat: 'YYYY-MM-DDTHH:mm:ss',
                                                             param: 'now',
                                                             help: 'Date on which a payment has been made by an entity. Example: "2018-03-31T00:00:00"',
-                                                spec: 'PAYEVNT 0002 2017/0003 2018: PaymentRecord.Transaction.Date'
+                                                			spec: 'PAYEVNT 0002 2017/0003 2018: PaymentRecord.Transaction.Date'
                                                         },
                                                         {
                                                             name: 'PaymentDate',
@@ -7164,7 +7164,7 @@ ns1blankspace.financial.payroll.totals =
                                                                 currency: true,
                                                                 caption: 'Employee CDEP',
                                                                 help: 'Payee CDEP Payment Amount',
-                                                spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.IndividualNonBusinessCommunityDevelopmentEmploymentProject.Amount'
+                                                				spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.IndividualNonBusinessCommunityDevelopmentEmploymentProject.Amount'
                                                             },
                                                             {
                                                                 name: 'PayeeTotalINBPAYGWAmount',
@@ -7181,7 +7181,7 @@ ns1blankspace.financial.payroll.totals =
                                                                 currency: true,
                                                                 caption: 'Foreign income',
                                                                 help: 'Payee Exempt Foreign Income Amount',
-                                                spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.IndividualNonBusinessExemptForeignEmploymentIncome.Amount'
+                                               					spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.IndividualNonBusinessExemptForeignEmploymentIncome.Amount'
                                                             },
                                                             {
                                                                 name: 'SuperGuaranteeAmount',
@@ -7195,10 +7195,10 @@ ns1blankspace.financial.payroll.totals =
                                                                 mustBeSet: false,
                                                                 currency: true,
                                                                 help: 'This is the value, during the relevant period, for what an individual has earned ' +
-                                                        'during their ordinary hours of work.' +
-                                                        'Note: You must provide a value for either "OTEAmount" or "SuperGuaranteeAmount"' +
-                                                        'or both (recommended).',
-                                                spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.OrdinaryTimeEarnings.Amount'
+																		'during their ordinary hours of work.' +
+																		'Note: You must provide a value for either "OTEAmount" or "SuperGuaranteeAmount"' +
+																		'or both (recommended).',
+																spec: 'PAYEVNT 0002 2017/0003 2018: Remuneration.OrdinaryTimeEarnings.Amount'
                                                             },
                                                             {
                                                                 name: 'ReportableEmployerSuperContribution',
@@ -7207,9 +7207,9 @@ ns1blankspace.financial.payroll.totals =
                                                                 currency: true,
                                                                 caption: 'Reportable Employer Super Contribution (RESC)',
                                                                 help: 'This is the value, during the relevant period, for employer superannuation contributions ' +
-                                                        'that are additional to the compulsory contributions where the employee influenced ' +
-                                                        'the rate or amount of contribution.',
-                                                spec: 'PAYEVNT 0002 2017/0003 2018: SuperannuationContribution.EmployerReportable.Amount'
+																		'that are additional to the compulsory contributions where the employee influenced ' +
+																		'the rate or amount of contribution.',
+																spec: 'PAYEVNT 0002 2017/0003 2018: SuperannuationContribution.EmployerReportable.Amount'
                                                             },
                                                             {
                                                                 name: 'PayeeLumpSumPaymentAType',
@@ -7381,7 +7381,7 @@ ns1blankspace.financial.payroll.totals =
                                                         },
                                                         {
                                                             name: 'BMSID',
-                                                            value: 'mydigitalstructure',
+                                                            value: 'mydigtalstructure-2',
                                                             caption: 'BMS ID',
                                                             help: 'This identifies the Business Management System software used by the employer. ' +
                                                                 'This is allocated to each instance of a payroll solution and allows multiple payroll ' + 
@@ -7712,7 +7712,7 @@ ns1blankspace.financial.payroll.totals =
                                                                 name: 'IncomeStreamTypeCode',
                                                                 value: 'SAW',
                                                                 caption: 'Income Stream Type',
-                                                                help: 'The type of withholding payment that is being reported. i.e. SAW for Salary and Wages.',
+                                                                help: 'The type of withholding payment that is being reported. i.e. SAW for Salary and Wages & CHP for Closely HelD Payees',
                                                                 spec: ''
                                                             },
                                                             {
