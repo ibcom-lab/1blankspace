@@ -364,7 +364,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.setup.financial',
-		source: '/site/1903/1blankspace.setup.financial-3.9.17.js'
+		source: '/site/1903/1blankspace.setup.financial-3.9.18.js'
 	},
 	{
 		nameSpace: '1blankspace.setup.action',

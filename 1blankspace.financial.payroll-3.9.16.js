@@ -1456,7 +1456,8 @@ ns1blankspace.financial.payroll =
 																'employee.contactperson.firstname,employee.contactperson.surname,employee.contactperson.email,employee.contactperson.dateofbirth,' +
 																'superguaranteeapplyhighincomecap,' +
 																'employee.contactperson.streetaddress1,employee.contactperson.streetaddress2,employee.contactperson.streetsuburb,' +
-																'employee.contactperson.streetstate,employee.contactperson.streetpostcode,employee.contactperson.streetcountry');
+																'employee.contactperson.streetstate,employee.contactperson.streetpostcode,employee.contactperson.streetcountry,' +
+																'terminationtype,taxtreatmentcode,incometypecode');
 
 											oSearch.addFilter('id', 'EQUAL_TO', iEmployee);
 											oSearch.getResults(function(data) {ns1blankspace.financial.payroll.employees.show(oParam, data)});
@@ -1574,6 +1575,13 @@ ns1blankspace.financial.payroll =
 														'<input type="radio" id="radioStatus1" name="radioStatus" value="1"/>Proposed' +
 														'<br /><input type="radio" id="radioStatus2" name="radioStatus" value="2"/>Active' +
 														'<br /><input type="radio" id="radioStatus3" name="radioStatus" value="3"/>In-active' +
+														'<br /><input type="radio" id="radioStatus4" name="radioStatus" value="4"/>Full Time' +
+														'<br /><input type="radio" id="radioStatus5" name="radioStatus" value="5"/>Part Time' +
+														'<br /><input type="radio" id="radioStatus6" name="radioStatus" value="6"/>Casual' +
+														'<br /><input type="radio" id="radioStatus7" name="radioStatus" value="7"/>Labour Hire' +
+														'<br /><input type="radio" id="radioStatus8" name="radioStatus" value="8"/>Volunteer' +
+														'<br /><input type="radio" id="radioStatus9" name="radioStatus" value="9"/>Death Beneficiary' +
+														'<br /><input type="radio" id="radioStatus10" name="radioStatus" value="10"/>Terminated' +
 														'</td></tr>');
 
 										aHTML.push('<tr class="ns1blankspaceCaption">' +
@@ -1590,6 +1598,20 @@ ns1blankspace.financial.payroll =
 														'</td></tr>' +
 														'<tr><td class="ns1blankspaceDate">' +
 														'<input id="ns1blankspaceDetailsEndDate" class="ns1blankspaceDate">' +
+														'</td></tr>');
+
+										aHTML.push('<tr class="ns1blankspaceCaption">' +
+														'<td class="ns1blankspaceCaption">' +
+														'Termination Type' +
+														'</td></tr>' +
+														'<tr><td class="ns1blankspaceRadio">' +
+														'<input type="radio" id="radioTerminationType1" name="radioTerminationType" value="1"/>Not Terminated' +
+														'<br /><input type="radio" id="radioTerminationType2" name="radioTerminationType" value="2"/>Ill Health' +
+														'<br /><input type="radio" id="radioTerminationType3" name="radioTerminationType" value="3"/>Deceased' +
+														'<br /><input type="radio" id="radioTerminationType4" name="radioTerminationType" value="4"/>Redundancy' +
+														'<br /><input type="radio" id="radioTerminationType5" name="radioTerminationType" value="5"/>Dismissal' +
+														'<br /><input type="radio" id="radioTerminationType6" name="radioTerminationType" value="6"/>Contract Ended' +
+														'<br /><input type="radio" id="radioTerminationType7" name="radioTerminationType" value="7"/>Transfer' +
 														'</td></tr>');
 
 										aHTML.push('<tr class="ns1blankspaceCaption">' +
@@ -1703,6 +1725,7 @@ ns1blankspace.financial.payroll =
 											$('#ns1blankspaceDetailsMobile').val(ns1blankspace.financial.employee["employee.contactperson.mobile"]);
 											$('#ns1blankspaceDetailsDateOfBirth').val(ns1blankspace.financial.employee["employee.contactperson.dateofbirth"]);
 											$('[name="radioStatus"][value="' + ns1blankspace.financial.employee["status"] + '"]').attr('checked', true);
+											$('[name="radioTerminationType"][value="' + ns1blankspace.financial.employee["terminationtype"] + '"]').attr('checked', true);
 											$('#ns1blankspaceDetailsNotes').val(ns1blankspace.financial.employee["notes"]);
 											$('#ns1blankspaceDetailsStartDate').val(ns1blankspace.financial.employee["employmentstartdate"]);
 											$('#ns1blankspaceDetailsEndDate').val(ns1blankspace.financial.employee["employmentenddate"]);
@@ -1745,6 +1768,7 @@ ns1blankspace.financial.payroll =
 											{
 												id: iEmployee,
 												status: $('input[name="radioStatus"]:checked').val(),
+												terminationtype: $('input[name="radioTerminationType"]:checked').val(),
 												employmentstartdate: $('#ns1blankspaceDetailsStartDate').val(),
 												employmentenddate: $('#ns1blankspaceDetailsEndDate').val(),
 												employeenumber: $('#ns1blankspaceDetailsEmployeeNumber').val(),
@@ -1886,6 +1910,22 @@ ns1blankspace.financial.payroll =
 
 										aHTML.push('<tr class="ns1blankspaceCaption">' +
 														'<td class="ns1blankspaceCaption">' +
+														'Income Type Code' +
+														'</td></tr>' +	
+														'<tr><td class="ns1blankspaceText">' +
+														'<input id="ns1blankspaceDetailsIncomeTypeCode" class="ns1blankspaceText">' +
+														'</td></tr>');
+
+										aHTML.push('<tr class="ns1blankspaceCaption">' +
+														'<td class="ns1blankspaceCaption">' +
+														'Tax Treatment Code' +
+														'</td></tr>' +	
+														'<tr><td class="ns1blankspaceText">' +
+														'<input id="ns1blankspaceDetailsTaxTreatmentCode" class="ns1blankspaceText">' +
+														'</td></tr>');
+
+										aHTML.push('<tr class="ns1blankspaceCaption">' +
+														'<td class="ns1blankspaceCaption">' +
 														'Leaving Loading Rate' +
 														'</td></tr>' +	
 														'<tr><td class="ns1blankspaceText">' +
@@ -1910,7 +1950,7 @@ ns1blankspace.financial.payroll =
 
 										aHTML.push('<tr>' +
 														'<td class="ns1blankspaceHeaderCaption" style="padding-top:14px;">' +
-														'ALLOWANCES' +
+														'STANDARD ALLOWANCES' +
 														'</td></tr>');
 
 										aHTML.push('<tr class="ns1blankspaceCaption">' +
@@ -1949,7 +1989,7 @@ ns1blankspace.financial.payroll =
 
 										aHTML.push('<tr>' +
 														'<td class="ns1blankspaceHeaderCaption" style="padding-top:14px;">' +
-														'DEDUCATIONS' +
+														'STANDARD DEDUCATIONS' +
 														'</td></tr>');
 
 										aHTML.push('<tr class="ns1blankspaceCaption">' +
@@ -1977,10 +2017,9 @@ ns1blankspace.financial.payroll =
 														'<br /><input type="radio" id="radioDeductHELPN" name="radioDeductHELP" value="N"/>No' +
 														'</td></tr>');
 
-
 										aHTML.push('<tr>' +
 														'<td class="ns1blankspaceHeaderCaption" style="padding-top:14px;">' +
-														'TAX ADJUSTMENTS' +
+														'STANDARD TAX ADJUSTMENTS' +
 														'</td></tr>');
 
 										aHTML.push('<tr class="ns1blankspaceCaption">' +
@@ -2026,6 +2065,9 @@ ns1blankspace.financial.payroll =
 											
 											$('#ns1blankspaceDetailsTaxAdjustmentAmount').val(ns1blankspace.financial.employee["taxadjustment"]);
 											$('#ns1blankspaceDetailsTaxAdjustmentDescription').val(ns1blankspace.financial.employee["taxadjustmentdescription"]);
+
+											$('#ns1blankspaceDetailsTaxTreatmentCode').val(ns1blankspace.financial.employee["taxtreatmentcode"]);
+											$('#ns1blankspaceDetailsIncomeTypeCode').val(ns1blankspace.financial.employee["incometypecode"]);
 										}
 										else
 										{
@@ -2077,6 +2119,9 @@ ns1blankspace.financial.payroll =
 
 											sData += '&taxadjustment=' + ns1blankspace.util.fs($('#ns1blankspaceDetailsTaxAdjustmentAmount').val());
 											sData += '&taxadjustmentdescription=' + ns1blankspace.util.fs($('#ns1blankspaceDetailsTaxAdjustmentDescription').val());
+
+											sData += '&taxtreatmentcode=' + ns1blankspace.util.fs($('#ns1blankspaceDetailsTaxTreatmentCode').val());
+											sData += '&incometypecode=' + ns1blankspace.util.fs($('#ns1blankspaceDetailsIncomeTypeCode').val());
 
 											$.ajax(
 											{
@@ -5854,7 +5899,8 @@ ns1blankspace.financial.payroll.totals =
 															'employee.contactperson.streetstate,employee.contactperson.streetpostcode,employee.contactperson.streetcountry,employee.contactperson.dateofbirth,' +
 															'employee.contactbusiness.tradename,employee.contactbusiness.abn,employee.contactbusiness.streetaddress1,employee.contactbusiness.streetaddress2,' +
 															'employee.contactbusiness.streetsuburb,employee.contactbusiness.streetstate,employee.contactbusiness.streetpostcode,employee.contactbusiness.streetcountry,' +
-															'employee.taxfreethreshold,employee.deducthelp');
+															'employee.taxfreethreshold,employee.deducthelp,' +
+															'employee.terminationtype,employee.terminationtypetext,employee.status,employee.taxtreatmentcode,employee.incometypecode');
 
 										if (sStartDate != undefined)
 										{
@@ -6861,8 +6907,9 @@ ns1blankspace.financial.payroll.totals =
 								},
 
 					report: 	{
-									//STP - 1: https://sandbox.singletouch.com.au/Support/StpEventModel
-                                    //      2: https://sandbox.singletouch.com.au/Support/StpEventModel2020
+									//!!STP-START
+									// 	1: https://sandbox.singletouch.com.au/Support/StpEventModel
+                                    //  2: https://sandbox.singletouch.com.au/Support/StpEventModel2020
 
 									data:
 									{
@@ -7645,21 +7692,45 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'EmploymentBasisCode',
-                                                                value: 'F',
+                                                                field: 'employee.statustext',
                                                                 mustBeSet: true,
                                                                 caption: 'Employment Basis',
-                                                                help: 'Indicates whether this employee is full-time, part-time, casual, etc. [F/P/C/L/V/D/N]'
+                                                                help: 'Indicates whether this employee is full-time, part-time, casual, etc. [F/P/C/L/V/D/N]',
+																mappings:
+																{
+																	'Active': 'F',
+																	'Non Active': 'N',
+																	'Full Time': 'F',
+																	'Part Time': 'P',
+																	'Casual': 'C',
+																	'Labour Hire': 'L',
+																	'Volunteer': 'V', 
+																	'Death Beneficiary': 'D',
+																	'Terminated': 'N'
+																}
                                                             },
                                                             {
                                                                 name: 'CessationTypeCode',
-                                                                value: '',
+                                                                field: 'employee.terminationtypetext',
                                                                 mustBeSet: false,
                                                                 caption: 'Cessation Type',
-                                                                help: 'Describes the type of termination this employee is subject to i.e. redundancy, death, etc. [V/I/D/R/F/C/T]'
+                                                                help: 'Describes the type of termination this employee is subject to i.e. redundancy, death, etc. [V/I/D/R/F/C/T]',
+																mappings:
+																{
+																	'[N/A]': '',
+																	'Voluntary': 'V',
+																	'Ill Health': 'I',
+																	'Deceased': 'D',
+																	'Redundancy': 'R',
+																	'Dismissal': 'D',
+																	'Contract Ended': 'C',
+																	'Transfer': 'T'
+																}
                                                             },
                                                             {
                                                                 name: 'TaxTreatmentCode',
-                                                                field: 'taxtreatmentcode',
+                                                                field: 'employee.taxtreatmentcode',
+																defaultValue: 'RTXXXX',
                                                                 mustBeSet: true,
                                                                 caption: 'Tax Treatment',
                                                                 help: 'Indicates the PAYGW tax scales and other components that have been applied by the payer to determine payee withholding amounts. Must be included in every pay event.',
@@ -7710,9 +7781,10 @@ ns1blankspace.financial.payroll.totals =
                                                         [
                                                             {
                                                                 name: 'IncomeStreamTypeCode',
-                                                                value: 'SAW',
+                                                                summary: 'employee.incometypecode',
+																defaultValue: 'SAW',
                                                                 caption: 'Income Stream Type',
-                                                                help: 'The type of withholding payment that is being reported. i.e. SAW for Salary and Wages & CHP for Closely HelD Payees',
+                                                                help: 'The type of withholding payment that is being reported. i.e. SAW for Salary and Wages & CHP for Closely Held Payees',
                                                                 spec: ''
                                                             },
                                                             {
@@ -7859,7 +7931,7 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'AllowanceDescription',
-                                                                value: 'Standard',
+                                                                value: '',
                                                                 caption: 'Allowance Description',
                                                                 help: 'This is the description or justification of the type of allowance paid to an individual that is not classified elsewhere. [ND: NON-DECUCTIBLE/U1: UNIFORM/V1: PRIVATE VEHICLE/H1: HOME OFFICE/T1: TRANSPORT/FARES/G1: GENERAL/Jobkeeper & Jobmaker as is].  When reporting other allowances, report the code as above + the pay component description. Example: "ND Cents pr km Home Office.',
                                                                 spec: ''
@@ -7940,7 +8012,7 @@ ns1blankspace.financial.payroll.totals =
                                                                 name: 'ETPCode',
                                                                 value: 'O',
                                                                 caption: 'ETP Code',
-                                                                help: 'The ETP code of the termination payment item. [R/O/S/P/D/N/B/T] [Default 0,Other Reason',
+                                                                help: 'The ETP code of the termination payment item. [R/O/S/P/D/N/B/T] [Default 0,Other Reason]',
                                                                 spec: ''
                                                             },
                                                             {
@@ -8122,7 +8194,7 @@ ns1blankspace.financial.payroll.totals =
 
 												if (sIsFull == undefined)
 												{
-													sIsFull = (aActions.length == 0?'false':'true')
+													sIsFull = (aActions.length == 0?'false':'true');
 												}
 
 												if (oParam == undefined) {oParam = {}}
@@ -8557,7 +8629,7 @@ ns1blankspace.financial.payroll.totals =
 													return log._notes;
 												}), ', ');
 
-												oSummary.taxtreatmentcode = 'RTXXXX';
+												//oSummary.taxtreatmentcode = 'RTXXXX';
                                             });
                                         
 											ns1blankspace.financial.payroll.totals.employees.report.create(oParam)
@@ -8814,6 +8886,14 @@ ns1blankspace.financial.payroll.totals =
 																	{
 																		oDataFileItem[oField.caption] = oDate.format('D/M/YYYY');
 																	}
+																}
+															}
+
+															if (oField.mappings != undefined)
+															{
+																if (oField.mappings[oItemData[oField.name]] != undefined)
+																{
+																	oItemData[oField.name] = oField.mappings[oItemData[oField.name]];
 																}
 															}
 														});
@@ -12949,7 +13029,8 @@ ns1blankspace.financial.payroll.leave =
 										var oSearch = new AdvancedSearch();
 										oSearch.method = 'FINANCIAL_PAYROLL_EMPLOYEE_SEARCH';
 										oSearch.addField('employee.employmentstartdate,employee.employmentenddate,employee.statustext,employee.employeenumber,' +
-															'employee.contactperson,employee.contactperson.firstname,employee.contactperson.surname,employee.contactperson.email');
+															'employee.contactperson,employee.contactperson.firstname,employee.contactperson.surname,employee.contactperson.email,' +
+															'employee.terminationtype,employee.terminationtypetext,employee.status,employee.taxtreatmentcode');
 
 										if (!bShowAll)
 										{

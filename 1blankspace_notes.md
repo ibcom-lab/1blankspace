@@ -80,6 +80,32 @@ FINANCIAL_PAYROLL_EMPLOYEE_MANAGE
 - terminationType:
 [V/I/D/R/F/C/T]
 
+FINANCIAL_PAYROLL_EMPLOYE_ Add:
+- status: 'Full time', 'Part time', 'Casual', 'Labour Hire', 'Volunteer', 'Death Beneficiary', 'Non Active', 'Terminated'
+- terminationtype: 'Ill Health', 'Deceased', 'Redundancy', 'Dismissal', 'Contract Ended', 'Transfer'
+- taxtreatmentcode: varchar(25)
+- incometypecode: varchar(25)
+
+Status:
+1 = Proposed, 2 = Active [default], 3 = Non Active, 4 = Full Time, 5 = Part Time, 6 = Casual, 7 = Labour Hire, 8 = Volunteer, 9 = Death Beneficiary, 10 = Terminated
+
+Termination Type:
+1 = [N/A] [default], 2 = Ill Health, 3 = Deceased, 4 = Redundancy, 5 = Dismissal, 6 = Contract Ended, 7 = Transfer
+
+
+SETUP_FINANCIAL_PAYROLL_LINE_TYPE_ 
+
+Add: ReportingCode; varchar(25)
+
+SETUP_FINANCIAL_PAYROLL_LINE_TYPE_ .IncludeInLeaveType - need to add:
+
+- Cash out
+- Unused Leave On Termination
+- Parental
+- Workers Compensation
+- Ancillary & Defence Leave
+- Other
+
 
 ## ATO Testing etc
 https://softwaredevelopers.ato.gov.au/OnlineservicesforDSPs
