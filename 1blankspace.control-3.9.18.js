@@ -312,7 +312,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.financial.invoice',
-		source: '/site/1903/1blankspace.financial.invoice-3.6.5.js'
+		source: '/site/1903/1blankspace.financial.invoice-3.9.18.js'
 	},
 	{
 		nameSpace: '1blankspace.financial.expense',
