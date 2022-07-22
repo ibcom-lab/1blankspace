@@ -208,6 +208,9 @@ ns1blankspace.financial.invoice =
 								
 								aHTML.push('<td id="ns1blankspaceMostLikely_Contact-' + this.id + '" class="ns1blankspaceMostLikelySub">' +
 														sContact + '</td>');
+
+								aHTML.push('<td id="ns1blankspaceMostLikely_Description-' + this.id + '" class="ns1blankspaceMostLikelySub">' +
+												this.description + '</td>');
 									
 								aHTML.push('</tr>');
 							});
