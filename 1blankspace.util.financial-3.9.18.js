@@ -981,18 +981,20 @@ ns1blankspace.util.financial =
 				}					
 }	
 
-ns1blankspace.util.financial.reprocess =
+ns1blankspace.util.financial.health =
 {
 	data:
 	{
 		toBeProcessedIndex: 0,
-		toBeProcessed: []
+		object: {}
 	},
 
 	init: function (oParam, oResponse)
 	{
 		var iObject = ns1blankspace.util.getParam(oParam, 'object').value;
-		var sModifiedDate = ns1blankspace.util.getParam(oParam, 'modifiedDate').value;
+		var sModifiedDateLessThan = ns1blankspace.util.getParam(oParam, 'modifiedDateLessThan').value;
+		var sModifiedDateGreaterThan = ns1blankspace.util.getParam(oParam, 'modifiedDateGreaterThan').value;
+		var sMode = ns1blankspace.util.getParam(oParam, 'mode', {default: 'check'}).value;
 					
 		if (oResponse == undefined)
 		{	
@@ -1001,7 +1003,15 @@ ns1blankspace.util.financial.reprocess =
 			oSearch.addField('id,reference');
 			oSearch.rows = 500;
 			
-			oSearch.addFilter('modifieddate', 'LESS_THAN', sModifiedDate);
+			if (sModifiedDateLessThan != undefined)
+			{
+				oSearch.addFilter('modifieddate', 'LESS_THAN', sModifiedDateLessThan);
+			}
+
+			if (sModifiedDateGreaterThan != undefined)
+			{
+				oSearch.addFilter('modifieddate', 'GREATER_THAN', sModifiedDateGreaterThan);
+			}
 
 			oSearch.getResults(function(data)
 			{
@@ -1010,17 +1020,32 @@ ns1blankspace.util.financial.reprocess =
 		}
 		else
 		{
-			ns1blankspace.util.financial.reprocess.data.toBeProcessedIndex = 0;
-			ns1blankspace.util.financial.reprocess.data.toBeProcessed = oResponse.data.rows;
+			ns1blankspace.util.financial.reprocess.data.object[ns1blankspace.util.financial.notReconciled.data.methods[iObject]] = oResponse.data.rows;
+			ns1blankspace.util.financial.health[sMode].init(oParam);
 		}
 	},
 
-	process: function (oParam)
+	check:
 	{
-		if (ns1blankspace.util.financial.reprocess.data.toBeProcessedIndex < ns1blankspace.util.financial.reprocess.data.toBeProcessed.length)
+		init: function (oParam, oResponse)
 		{
-			var oToBeProcessed = ns1blankspace.util.financial.reprocess.data.toBeProcessed[ns1blankspace.util.financial.reprocess.data.toBeProcessedIndex]
+			var iObject = ns1blankspace.util.getParam(oParam, 'object').value;
 
+			console.log(ns1blankspace.util.financial.reprocess.data.object[ns1blankspace.util.financial.notReconciled.data.methods[iObject]]);
+		}
+	},
+
+	reprocess:
+	{
+		init: function (oParam)
+		{
+			var iObject = ns1blankspace.util.getParam(oParam, 'object').value;
+
+			if (ns1blankspace.util.financial.reprocess.data.toBeProcessedIndex < ns1blankspace.util.financial.reprocess.data.toBeProcessed.length)
+			{
+				var oToBeProcessed = ns1blankspace.util.financial.reprocess.data.toBeProcessed[ns1blankspace.util.financial.reprocess.data.toBeProcessedIndex]
+
+			}
 		}
 	}
 }
