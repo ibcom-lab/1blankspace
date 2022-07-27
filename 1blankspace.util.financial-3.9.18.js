@@ -986,7 +986,8 @@ ns1blankspace.util.financial.health =
 	data:
 	{
 		toBeProcessedIndex: 0,
-		object: {}
+		object: {},
+		objectsToBeReprocessed: {}
 	},
 
 	init: function (oParam, oResponse)
@@ -1013,15 +1014,27 @@ ns1blankspace.util.financial.health =
 				oSearch.addFilter('modifieddate', 'GREATER_THAN', sModifiedDateGreaterThan);
 			}
 
+			if (iObject == 5)
+			{
+				oSearch.addFilter('sent', 'EQUAL_TO', 'Y');
+			}
+
 			oSearch.getResults(function(data)
 			{
-				ns1blankspace.util.financial.reprocess.init(oParam, data)
+				ns1blankspace.util.financial.health.init(oParam, data)
 			});
 		}
 		else
 		{
-			ns1blankspace.util.financial.reprocess.data.object[ns1blankspace.util.financial.notReconciled.data.methods[iObject]] = oResponse.data.rows;
-			ns1blankspace.util.financial.health[sMode].init(oParam);
+			if (oResponse.morerows == "true")
+			{
+				$('#ns1blankspaceHealthCheckColumn2').html('<div class="text-muted">Too many to items!  You need to set the dates to reduce number of items.</div>');
+			}
+			else
+			{
+				ns1blankspace.util.financial.health.data.object[ns1blankspace.util.financial.notReconciled.data.methods[iObject]] = oResponse.data.rows;
+				ns1blankspace.util.financial.health[sMode].init(oParam);
+			}
 		}
 	},
 
@@ -1030,8 +1043,69 @@ ns1blankspace.util.financial.health =
 		init: function (oParam, oResponse)
 		{
 			var iObject = ns1blankspace.util.getParam(oParam, 'object').value;
+			var aObjects = ns1blankspace.util.financial.health.data.object[ns1blankspace.util.financial.notReconciled.data.methods[iObject]];
 
-			console.log(ns1blankspace.util.financial.reprocess.data.object[ns1blankspace.util.financial.notReconciled.data.methods[iObject]]);
+			if (aObjects.length == 0)
+			{
+				console.log('NOTHING TO PROCESS');
+				$('#ns1blankspaceHealthCheckColumn2').html('<div class="text-muted">All good! (Nothing to reprocess).</div>');
+			}
+			else
+			{
+				var sObjectContexts = _.join(_.map(aObjects , 'id'), ',');
+
+				var oSearch = new AdvancedSearch();
+				oSearch.method = 'FINANCIAL_TRANSACTION_SEARCH';
+				oSearch.addField('id,objectcontext');
+				oSearch.rows = 9999;
+				oSearch.addFilter('object', 'EQUAL_TO', iObject);
+				oSearch.addFilter('objectcontext', 'IN_LIST', sObjectContexts);
+				
+				oSearch.getResults(function(data)
+				{
+					ns1blankspace.util.financial.health.check.process(oParam, data)
+				});
+			}
+		},
+		process: function (oParam, oResponse)
+		{
+			var bReprocess = ns1blankspace.util.getParam(oParam, 'reprocess', {default: false}).value;
+			var iObject = ns1blankspace.util.getParam(oParam, 'object').value;
+			var aObjects = ns1blankspace.util.financial.health.data.object[ns1blankspace.util.financial.notReconciled.data.methods[iObject]];
+			var aTransactions = oResponse.data.rows;
+
+			_.each(aObjects, function (oObject)
+			{	
+				oObject.transactions = _.filter(aTransactions, function (oTransaction)
+				{
+					return (oTransaction.objectcontext == oObject.id)
+				});
+
+				oObject.reprocess = (oObject.transactions.length == 0);
+			});
+
+			console.log(aObjects)
+
+			var aObjectsToReprocess = _.filter(aObjects, function(oObject) {return oObject.reprocess});
+			console.log(aObjectsToReprocess);
+
+			if (bReprocess)
+			{
+				ns1blankspace.util.financial.health.data.objectsToBeReprocessed[ns1blankspace.util.financial.notReconciled.data.methods[iObject]] = aObjectsToReprocess;
+				ns1blankspace.util.financial.health.data.toBeProcessedIndex = 0;
+				ns1blankspace.util.financial.health.reprocess.init(oParam);
+			}
+			else
+			{
+				var aHTML = [];
+
+				_.each(aObjectsToReprocess, function (oObjectsToReprocess)
+				{
+					aHTML.push('<div class="text-muted">' + oObjectsToReprocess.reference + '</div>')
+				})
+
+				$('#ns1blankspaceHealthCheckColumn2').html(aHTML.join(''));
+			}
 		}
 	},
 
@@ -1039,12 +1113,33 @@ ns1blankspace.util.financial.health =
 	{
 		init: function (oParam)
 		{
-			var iObject = ns1blankspace.util.getParam(oParam, 'object').value;
+			var iObject = ns1blankspace.util.getParam(oParam, 'object').value;			
+			var aObjectsToBeReprocessed = ns1blankspace.util.financial.health.data.objectsToBeReprocessed[ns1blankspace.util.financial.notReconciled.data.methods[iObject]];
 
-			if (ns1blankspace.util.financial.reprocess.data.toBeProcessedIndex < ns1blankspace.util.financial.reprocess.data.toBeProcessed.length)
+			if (ns1blankspace.util.financial.health.data.toBeProcessedIndex < aObjectsToBeReprocessed.length)
 			{
-				var oToBeProcessed = ns1blankspace.util.financial.reprocess.data.toBeProcessed[ns1blankspace.util.financial.reprocess.data.toBeProcessedIndex]
+				var oToBeProcessed = aObjectsToBeReprocessed[ns1blankspace.util.financial.health.data.toBeProcessedIndex];
 
+				$('#ns1blankspaceHealthCheckColumn2').html('<div class="text-muted">' + oToBeProcessed.reference + '</div>')
+
+				var oData =
+				{
+					object: iObject,
+					objectcontext: oToBeProcessed.id
+				}
+
+				$.ajax(
+				{
+					type: 'POST',
+					url: ns1blankspace.util.endpointURI('FINANCIAL_ITEM_COMPLETE'),
+					data: oData,
+					dataType: 'json',
+					success: function(data)
+					{
+						ns1blankspace.util.financial.health.data.toBeProcessedIndex = ns1blankspace.util.financial.health.data.toBeProcessedIndex + 1
+						ns1blankspace.util.financial.health.reprocess.init(oParam);
+					}
+				});
 			}
 		}
 	}
