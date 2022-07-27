@@ -7900,7 +7900,8 @@ ns1blankspace.financial.payroll.totals =
                                                         [
                                                             {
                                                                 name: 'Type',
-                                                                value: 'O',
+																source: 'code',
+                                                                valueDefault: 'O',
                                                                 caption: 'Paid Leave Type',
                                                                 help: 'The type code for leave item [C/U/P/W/A/O] [Detail O,Other Paid Leave].',
                                                                 spec: ''
@@ -8365,7 +8366,7 @@ ns1blankspace.financial.payroll.totals =
 										[
 											{
 												code: 'O',
-												itemLeaveTypes: ['1','2','3']
+												itemLeaveTypes: ['1','2', '3']
 											}
 										];
 
@@ -8401,9 +8402,19 @@ ns1blankspace.financial.payroll.totals =
 														{
 															var itemTotal = _.sumBy(itemsBasedOnTypeBasedOnReportCode, function (item) {return numeral(item.total).value()});
 
+															var code = itemTypesLeaveReportingCode.code;
+															var itemBasedOnTypeBasedOnReportCodeWithNotes = _.find(itemsBasedOnTypeBasedOnReportCode, function (item) {return item.notes != ''});
+															
+															if (itemBasedOnTypeBasedOnReportCodeWithNotes != undefined)
+															{
+																code = itemBasedOnTypeBasedOnReportCodeWithNotes.notes;
+															}
+
+															//code: itemTypesLeaveReportingCode.code,
+
 															oSummary._leave.push(
 															{
-																code: itemTypesLeaveReportingCode.code,
+																code: code,
 																total: itemTotal
 															});
 														}
