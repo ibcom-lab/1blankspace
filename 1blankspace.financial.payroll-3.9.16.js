@@ -7543,6 +7543,7 @@ ns1blankspace.financial.payroll.totals =
                                                         {
                                                             name: 'PayUpdateDate',
                                                             param: 'paydate',
+															dateAdd: {duration: 1, unit: 'day'},
 															dateFormat: 'YYYY-MM-DDTHH:mm:ss',
                                                             help: 'The date the payment (monies) are to be paid to the employees.'
                                                         },
@@ -7829,7 +7830,7 @@ ns1blankspace.financial.payroll.totals =
                                                             },
                                                             {
                                                                 name: 'OvertimeAmount',
-                                                                value: '0',
+                                                                summary: 'overtime',
                                                                 caption: 'Overtime Amount',
                                                                 help: 'The --year-to-date-- gross overtime amount.',
                                                                 spec: '',
@@ -8190,7 +8191,8 @@ ns1blankspace.financial.payroll.totals =
 
 												if (sIsUpdate == undefined)
 												{
-													sIsUpdate = (aActions.length == 0?'false':'true')
+													//sIsUpdate = (aActions.length == 0?'false':'true')
+													sIsUpdate = 'false'
 												}
 
 												if (sIsFull == undefined)
@@ -8244,51 +8246,10 @@ ns1blankspace.financial.payroll.totals =
 														ns1blankspace.financial.payroll.data.payPeriod = oResponse.data.rows[0];
 														ns1blankspace.financial.payroll.data.report = _.assign({}, ns1blankspace.financial.payroll.data.payPeriod);
 														
-														ns1blankspace.financial.payroll.totals.employees.report.payPeriod(oParam)
+														ns1blankspace.financial.payroll.totals.employees.report.payPeriodItems(oParam)
 													});
 												}
 											}
-										}
-									},
-
-									payPeriod: function (oParam, oResponse)
-									{
-										if (oResponse == undefined)
-										{
-											var oSearch = new AdvancedSearch();
-											oSearch.method = 'FINANCIAL_PAYROLL_PAY_RECORD_SEARCH';
-											oSearch.addField('period');
-											oSearch.addSummaryField('sum(grosssalary) grosssalary');
-											oSearch.addSummaryField('sum(netsalary) netsalary');
-											oSearch.addSummaryField('sum(superannuation) superannuation');
-											oSearch.addSummaryField('sum(taxbeforerebate) taxbeforerebate');
-											oSearch.addSummaryField('sum(taxadjustments) taxadjustments');
-											oSearch.addFilter('period', 'EQUAL_TO', ns1blankspace.financial.payroll.data.payPeriodID)
-											oSearch.rows = 0;
-											oSearch.getResults(function(data)
-											{
-												//ns1blankspace.financial.payroll.data.payPeriodID = undefined;
-												ns1blankspace.financial.payroll.totals.employees.report.payPeriod(oParam, data)
-											});
-										}
-										else
-										{
-											ns1blankspace.financial.payroll.data.payPeriod = $.extend(true, ns1blankspace.financial.payroll.data.payPeriod, oResponse.summary)
-
-											oParam.employerPeriodW1 = numeral(numeral(ns1blankspace.financial.payroll.data.payPeriod.grosssalary).value()).format('0.00');
-											oParam.employerPeriodW2 = numeral(numeral(ns1blankspace.financial.payroll.data.payPeriod.taxbeforerebate).value()).format('0.00');
-
-											oParam.guid = oParam.guid + '-' + moment(ns1blankspace.financial.payroll.data.payPeriod.startdate, ns1blankspace.option.dateFormats).format('YYYY-MM-DD')  + '-' + moment(ns1blankspace.financial.payroll.data.payPeriod.paydate, ns1blankspace.option.dateFormats).format('YYYY-MM-DD'),
-
-											ns1blankspace.financial.payroll.data.report = _.assign(ns1blankspace.financial.payroll.data.report,
-											{
-												employerPeriodW1: oParam.employerPeriodW1,
-												employerPeriodW2: oParam.employerPeriodW2,
-												guid: oParam.guid
-
-											});
-
-											ns1blankspace.financial.payroll.totals.employees.report.payPeriodItems(oParam)
 										}
 									},
 
@@ -8343,6 +8304,7 @@ ns1blankspace.financial.payroll.totals =
                                                 oSummary._superannuation = [];
 												oSummary._fringebenefits = [];
 												oSummary._salarysacrifice = [];
+												oSummary._overtime = [];
                                             });
                                         
 											ns1blankspace.financial.payroll.totals.employees.report.payPeriodLeave(oParam);
@@ -8382,7 +8344,20 @@ ns1blankspace.financial.payroll.totals =
 
 											if (items.length != 0)
 											{
-												_.each(itemTypesLeaveReportingCodes, function (itemTypesLeaveReportingCode)
+												var itemsByNotes = _.groupBy(items, 'notes');
+
+												_.each(itemsByNotes, function (items, note)
+												{
+													var itemTotal = _.sumBy(items, function (item) {return numeral(item.total).value()});
+
+													oSummary._leave.push(
+													{
+														code: note,
+														total: itemTotal
+													});
+												});
+
+												/*_.each(itemTypesLeaveReportingCodes, function (itemTypesLeaveReportingCode)
 												{
 													var itemTypesBasedOnReportCode = _.filter(itemTypes, function (itemType)
 													{
@@ -8420,6 +8395,7 @@ ns1blankspace.financial.payroll.totals =
 														}
 													}
 												});
+												*/
 											}
                                         });
 
@@ -8585,8 +8561,89 @@ ns1blankspace.financial.payroll.totals =
                                                
                                         });
 
-                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriodLogs(oParam)
+                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriodOvertime(oParam)
                                     },
+
+									payPeriodOvertime: function (oParam, oResponse)
+                                    {
+                                        var itemTypes = ns1blankspace.financial.payroll.util.linetypes.search({text: 'Overtime', ids: true})
+
+                                        _.each(ns1blankspace.financial.payroll.data.summaries, function (oSummary)
+                                        {
+											oSummary.overtime = 0;
+
+                                            _.each(itemTypes, function (itemType)
+                                            {
+                                               var item =  _.find(oSummary.items, function (item)
+                                                            {
+                                                                return (itemType == item.type)
+                                                            });
+
+                                                if (item != undefined)
+                                                {
+                                                    oSummary._overtime.push(
+                                                    {
+                                                        type: itemType,
+                                                        total: item.total
+                                                    });
+
+													oSummary.overtime = item.total;
+													oSummary.grosssalary = numeral(oSummary.grosssalary).value() - numeral(item.total).value();
+                                                }
+                                            });
+                                        });
+
+                                        ns1blankspace.financial.payroll.totals.employees.report.payPeriod(oParam)
+                                    },
+
+									payPeriod: function (oParam, oResponse)
+									{
+										if (oResponse == undefined)
+										{
+											var oSearch = new AdvancedSearch();
+											oSearch.method = 'FINANCIAL_PAYROLL_PAY_RECORD_SEARCH';
+											oSearch.addField('period');
+											oSearch.addSummaryField('sum(grosssalary) grosssalary');
+											oSearch.addSummaryField('sum(netsalary) netsalary');
+											oSearch.addSummaryField('sum(allowances) allowances');
+											oSearch.addSummaryField('sum(superannuation) superannuation');
+											oSearch.addSummaryField('sum(taxbeforerebate) taxbeforerebate');
+											oSearch.addSummaryField('sum(taxadjustments) taxadjustments');
+											oSearch.addFilter('period', 'EQUAL_TO', ns1blankspace.financial.payroll.data.payPeriodID)
+											oSearch.rows = 0;
+											oSearch.getResults(function(data)
+											{
+												//ns1blankspace.financial.payroll.data.payPeriodID = undefined;
+												ns1blankspace.financial.payroll.totals.employees.report.payPeriod(oParam, data)
+											});
+										}
+										else
+										{
+											var overtimeTotal = _.sum(_.map(ns1blankspace.financial.payroll.data.summaries, function (summary)
+											{
+												return numeral(summary.overtime).value()
+											}))
+
+											ns1blankspace.financial.payroll.data.payPeriod = $.extend(true, ns1blankspace.financial.payroll.data.payPeriod, oResponse.summary)
+
+											oParam.employerPeriodW1 = numeral(numeral(ns1blankspace.financial.payroll.data.payPeriod.grosssalary).value() + 
+																			numeral(ns1blankspace.financial.payroll.data.payPeriod.allowances).value()).format('0.00');
+
+											oParam.employerPeriodW2 = numeral(numeral(ns1blankspace.financial.payroll.data.payPeriod.taxbeforerebate).value()).format('0.00');
+
+											oParam.guid = oParam.guid + '-' + moment(ns1blankspace.financial.payroll.data.payPeriod.startdate, ns1blankspace.option.dateFormats).format('YYYY-MM-DD')  + '-' + moment(ns1blankspace.financial.payroll.data.payPeriod.paydate, ns1blankspace.option.dateFormats).format('YYYY-MM-DD'),
+
+											ns1blankspace.financial.payroll.data.report = _.assign(ns1blankspace.financial.payroll.data.report,
+											{
+												employerPeriodW1: oParam.employerPeriodW1,
+												employerPeriodW2: oParam.employerPeriodW2,
+												guid: oParam.guid
+
+											});
+
+											ns1blankspace.financial.payroll.totals.employees.report.payPeriodLogs(oParam)
+										}
+									},
 
 									payPeriodLogs: function (oParam, oResponse)
                                     {
