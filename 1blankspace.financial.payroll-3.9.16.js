@@ -6432,7 +6432,7 @@ ns1blankspace.financial.payroll.totals =
 
 																var oSearch = new AdvancedSearch();
 																oSearch.method = 'FINANCIAL_PAYROLL_PAY_RECORD_SEARCH';
-																oSearch.addField('grosssalary,netsalary,deductions,allowances,superannuation,taxbeforerebate,taxadjustments,payrecord.payperiod.paydate');
+																oSearch.addField('grosssalary,netsalary,deductions,allowances,superannuation,taxbeforerebate,taxadjustments,payrecord.payperiod.paydate,payrecord.payperiod.startdate');
 																oSearch.addSummaryField('sum(grosssalary) grosssalary');
 																oSearch.addSummaryField('sum(netsalary) netsalary');
 																oSearch.addSummaryField('sum(superannuation) superannuation');
@@ -6477,7 +6477,11 @@ ns1blankspace.financial.payroll.totals =
 																		ns1blankspace.financial.payroll.data.summaries[iDataIndex].deductions = (oResponse.summary.deductions).parseCurrency().formatMoney(2, '.', ',');
 																		ns1blankspace.financial.payroll.data.summaries[iDataIndex].contactbusinesstext = ns1blankspace.financial.payroll.data.summaries[iDataIndex]['employee.contactbusiness.tradename'];
 																		ns1blankspace.financial.payroll.data.summaries[iDataIndex].year = Date.parse(oResponse.summary.paydate).getFullYear();
-																		ns1blankspace.financial.payroll.data.summaries[iDataIndex].startdate = sStartDate;
+																		//ns1blankspace.financial.payroll.data.summaries[iDataIndex].startdate = sStartDate;
+
+																		var oPay = _.last(oResponse.data.rows);
+																		ns1blankspace.financial.payroll.data.summaries[iDataIndex].startdate = oPay['payrecord.payperiod.startdate'];
+
 																		ns1blankspace.financial.payroll.data.summaries[iDataIndex].enddate = sEndDate;
 																		ns1blankspace.financial.payroll.data.summaries[iDataIndex].tax = numeral(numeral(oResponse.summary.taxbeforerebate).value() - numeral(oResponse.summary.taxadjustments).value()).format('(0,0.00)');
 
