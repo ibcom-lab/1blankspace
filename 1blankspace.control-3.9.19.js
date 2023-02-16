@@ -372,7 +372,7 @@ ns1blankspace.scripts =
 	},
 	{
 		nameSpace: '1blankspace.setup.messaging',
-		source: '/site/1903/1blankspace.setup.messaging-3.9.18.js'
+		source: '/site/1903/1blankspace.setup.messaging-3.9.19.js'
 	},
 	{
 		nameSpace: '1blankspace.setup.networkGroup',
