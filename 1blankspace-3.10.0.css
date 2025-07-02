@@ -1,3 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,300,500,700");
+
 @media only screen
 {
 	div.mce-fullscreen
@@ -35,7 +39,7 @@
 	
 	.progress-bar
 	{
-		background-color: #ee8f00;
+		background-color: #255de1;
 	}
 
 	.btn.active, .btn:active
@@ -136,8 +140,8 @@
 
 	body 
 	{
-		font-size: 170%;
-		font-family: "Europa", "Verdana", "Arial", "Helvetica", "Sans-Serif";
+		font-size: 160%;
+		font-family: "Poppins", "Poppins", "system-ui", "open sans", "Verdana", "Arial", "Helvetica", "Sans-Serif";
 		margin: 0px;
 		margin-top: 0px;
 		background-color: transparent;
@@ -154,7 +158,7 @@
 
 	span, div, textarea, input, td
 	{
-		font-family: "Europa", "Verdana", "Arial", "Helvetica", "Sans-Serif";
+		font-family: "Poppins", "system-ui", "open sans", "Verdana", "Arial", "Helvetica", "Sans-Serif";
 		vertical-align: top;
 	}
 
@@ -173,15 +177,15 @@
 
 	a:link, a:visited, a:active
 	{
-		font-family: "Europa", "Verdana", "Arial", "Helvetica", "Sans-Serif";
-		color: #ee8f00; 
+		font-family: "Poppins", "system-ui", "open sans", "Verdana", "Arial", "Helvetica", "Sans-Serif";
+		color: #255de1; 
 		text-decoration: none;
 	}
 
 	a:hover
 	{
-		font-family: "Europa", "Verdana", "Arial", "Helvetica", "Sans-Serif";
-		color: #006EBA;
+		font-family: "Poppins", "system-ui", "open sans", "Verdana", "Arial", "Helvetica", "Sans-Serif";
+		color: #2fdb88;
 	}
 
 	.ns1blankspaceInactive
@@ -395,7 +399,7 @@
 	.ns1blankspaceViewLink
 	{
 		cursor: pointer;
-		color: #ee8f00;
+		color: #255de1;
 		text-decoration: none;
 	}
 
@@ -676,7 +680,7 @@
 	td.ns1blankspaceRowSelect, div.ns1blankspaceRowSelect
 	{
 		cursor: pointer;
-		color: #ee8f00;
+		color: #255de1;
 		text-decoration: none;
 		font-size: 0.875em;
 	}
@@ -747,14 +751,14 @@
 	td.ns1blankspaceHighlight
 	{
 		font-weight: bold;	
-		color: #DA8300;	
+		color: #255de1;	
 	}
 
 	input.ns1blankspaceHighlight
 	{
 		border-style: solid;
 		border-width: 1px;
-		border-color: #ee8f00;
+		border-color: #255de1;
 		background-color: #f2f2f2;
 	}
 
@@ -762,13 +766,13 @@
 	{
 		border-style:solid;
 		border-width: 1px;
-		border-color: #ee8f00;
+		border-color: #255de1;
 	}
 
 	td.ns1blankspaceMostLikely
 	{
 		cursor: pointer;
-		color: #EE8F00;
+		color: #255de1;
 		text-decoration: none;
 		font-size: 0.875em;
 	}	
@@ -924,6 +928,7 @@
 		font-size: 1.25em;
 		padding-top: 2px;
 		text-align: right;
+		padding-top:4px;
 	}
 
 	#ns1blankspaceViewControlHomeContainer
@@ -1679,7 +1684,7 @@
 	body 
 	{
 		font-size: 105%;
-		font-family: "Europa", "Verdana", "Arial", "Helvetica", "Sans-Serif";
+		font-family: "open sans", "Verdana", "Arial", "Helvetica", "Sans-Serif";
 		margin: 0px;
 		margin-top: 10px;
 		background-color: transparent;
